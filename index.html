@@ -1,0 +1,44 @@
+<div style="text-align:center; padding:80px 20px; font-family:sans-serif;">
+  <div style="margin:auto; width:60px; height:60px; border:6px solid #ccc; border-top:6px solid #00aaff; border-radius:50%; animation:spin 1s linear infinite;"></div>
+  
+  <h2 style="margin-top:30px; font-weight:normal;">Checking your connection...</h2>
+  <p style="color:#555;">You will be redirected in <span id="countdown">5</span> seconds</p>
+</div>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<script type='text/javascript'>
+(function() {
+  var links = [
+    "https://www.wedusing.my.id/2025/08/afrique-francophone-travail-emploi.html", 
+    "https://www.wedusing.my.id/2025/08/exetat-2025-la-revolution-techno-des.html",
+    "https://www.wedusing.my.id/2025/08/red-bull-tandem-coaster-makes-us-debut.html", 
+    "https://www.wedusing.my.id/2025/08/un-tesla-cybertruck-laisse-branche-part.html", 
+    "https://www.wedusing.my.id/2025/08/gabriel-arias-drives-in-4-as-guardians.html", 
+    "https://www.wedusing.my.id/2025/08/cbs-sports-nebraskas-first-2025-loss.html", 
+    "https://www.wedusing.my.id/2025/07/top-10-meme-coins-boil-over-only-one.html", 
+    "https://www.wedusing.my.id/2025/07/trump-champions-groundbreaking-genius.html", 
+    "https://www.wedusing.my.id/2025/07/galaxy-z-fold-7-review-after-six-years.html", 
+    "https://www.wedusing.my.id/2025/07/blockdags-no-vesting-pass-spikes-342m.html", 
+    "https://www.wedusing.my.id/2025/06/why-these-7-tokens-will-top-every-best.html"
+  ];
+
+  var index = Math.floor(Math.random() * links.length);
+  var seconds = 6; // waktu countdown dalam detik
+  var countdownEl = document.getElementById("countdown");
+
+  var timer = setInterval(function() {
+    seconds--;
+    countdownEl.textContent = seconds;
+    if (seconds <= 0) {
+      clearInterval(timer);
+      window.location.href = links[index];
+    }
+  }, 1000);
+})();
+</script>
