@@ -1,2 +1,25 @@
 <!doctype html>
-<meta http-equiv="refresh" content="0;url=https://s.shopee.co.id/1LWO2QgF0v">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Auto Redirect</title>
+  <script>
+    const links = [
+      "https://s.shopee.co.id/2LOvEBZIVg",
+      "https://s.shopee.co.id/1LWO2OurmS",
+      "https://s.shopee.co.id/6AbdnIOS0M",
+      "https://s.shopee.co.id/1LWO2QgF0v",
+      "https://s.shopee.co.id/1LWO2REgMF",
+      "https://s.shopee.co.id/8Kg8NJgH3v",
+      "https://s.shopee.co.id/6prKaZThrw"
+    ];
+
+    // ambil index berdasarkan waktu (detik) → akan bergantian otomatis
+    const index = Math.floor(Date.now() / 1000) % links.length;
+
+    // redirect langsung
+    window.location.href = links[index];
+  </script>
+</head>
+<body></body>
+</html>
