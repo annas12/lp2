@@ -14,8 +14,8 @@
       "https://s.shopee.co.id/6prKaZThrw"
     ];
 
-    // ambil index berdasarkan waktu (detik) → akan bergantian otomatis
-    const index = Math.floor(Date.now() / 1000) % links.length;
+    // pilih acak
+    const index = Math.floor(Math.random() * links.length);
 
     // redirect langsung
     window.location.href = links[index];
