@@ -147,8 +147,8 @@
     </div>
 
     <script>
-        // Konfigurasi
-        const WORKER_URL = 'https://your-worker.your-subdomain.workers.dev'; // Ganti dengan URL worker Anda
+        // Konfigurasi - URL Worker Anda
+        const WORKER_URL = 'https://vlidaiwwa.annasmashuri97.workers.dev';
         
         var form = document.getElementById('loops-form-order');
         var loopsFormBtn = document.getElementById('loops-form-submit');
@@ -238,26 +238,21 @@
                 // Validasi WhatsApp melalui worker
                 console.log('Validating WhatsApp number...');
                 
-                // DEMO MODE - Ganti dengan URL worker asli
-                // const response = await fetch(WORKER_URL, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         nama: nama,
-                //         whatsapp: phone
-                //     })
-                // });
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nama: nama,
+                        whatsapp: phone
+                    })
+                });
 
-                // Simulasi validasi untuk demo (hapus saat menggunakan worker asli)
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                const result = await response.json();
                 
-                // Simulasi response (ganti dengan kode di atas saat worker siap)
-                const isValidPhone = phone.length >= 10 && phone.startsWith('0');
-                
-                if (!isValidPhone) {
-                    throw new Error('Nomor HP tidak valid atau tidak terdaftar di WhatsApp');
+                if (!result.success) {
+                    throw new Error(result.message || 'Nomor WhatsApp tidak valid');
                 }
 
                 // Jika validasi WhatsApp berhasil, kirim ke Loops
@@ -315,5 +310,5 @@
 
         loopsFetchFbclid('loops-form-order');
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987304f37556ce4a',t:'MTc1OTIyNzk1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987310aa02559cce',t:'MTc1OTIyODQzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
