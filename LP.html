@@ -95,6 +95,11 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        .warning-message {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
         .loading-spinner {
             display: inline-block;
             width: 16px;
@@ -116,6 +121,9 @@
         <div id="statusMessage" class="status-message">
             <div id="successMessage" class="success-message" style="display: none;">
                 ✅ Pesanan berhasil! Anda akan dialihkan ke WhatsApp...
+            </div>
+            <div id="warningMessage" class="warning-message" style="display: none;">
+                ⚠️ <span id="warningText">Validasi WhatsApp tidak tersedia, menggunakan validasi format.</span>
             </div>
             <div id="errorMessage" class="error-message" style="display: none;">
                 ❌ <span id="errorText">Terjadi kesalahan. Silakan coba lagi.</span>
@@ -158,17 +166,24 @@
         // Status message elements
         const statusMessage = document.getElementById('statusMessage');
         const successMessage = document.getElementById('successMessage');
+        const warningMessage = document.getElementById('warningMessage');
         const errorMessage = document.getElementById('errorMessage');
+        const warningText = document.getElementById('warningText');
         const errorText = document.getElementById('errorText');
 
         function showMessage(type, message) {
             statusMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            warningMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
             if (type === 'success') {
                 successMessage.style.display = 'block';
-                errorMessage.style.display = 'none';
+            } else if (type === 'warning') {
+                warningMessage.style.display = 'block';
+                warningText.textContent = message;
             } else {
                 errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
                 errorText.textContent = message;
             }
         }
@@ -176,6 +191,7 @@
         function hideMessages() {
             statusMessage.style.display = 'none';
             successMessage.style.display = 'none';
+            warningMessage.style.display = 'none';
             errorMessage.style.display = 'none';
         }
 
@@ -235,29 +251,68 @@
                     throw new Error('Nama dan nomor HP harus diisi');
                 }
 
-                // Validasi WhatsApp melalui worker
-                console.log('Validating WhatsApp number...');
-                
-                const response = await fetch(WORKER_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        nama: nama,
-                        whatsapp: phone
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(result.message || 'Nomor WhatsApp tidak valid');
+                // Validasi format dasar
+                const phoneRegex = /^08[0-9]{8,11}$/;
+                if (!phoneRegex.test(phone)) {
+                    throw new Error('Format nomor HP tidak valid. Gunakan format: 081234567890');
                 }
 
-                // Jika validasi WhatsApp berhasil, kirim ke Loops
-                console.log('WhatsApp valid, sending to Loops...');
+                console.log('Basic validation passed, trying WhatsApp validation...');
                 
+                let validationMethod = 'format';
+                let showWarning = false;
+                
+                // Coba validasi WhatsApp melalui worker dengan timeout
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 detik timeout
+                    
+                    const response = await fetch(WORKER_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            nama: nama,
+                            whatsapp: phone
+                        }),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            validationMethod = 'whatsapp';
+                            console.log('WhatsApp validation successful');
+                        } else {
+                            throw new Error(result.message || 'Nomor WhatsApp tidak valid');
+                        }
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (workerError) {
+                    console.warn('Worker validation failed:', workerError.message);
+                    
+                    // Jika timeout atau network error, lanjutkan dengan warning
+                    if (workerError.name === 'AbortError' || 
+                        workerError.message.includes('fetch') || 
+                        workerError.message.includes('HTTP')) {
+                        
+                        showWarning = true;
+                        validationMethod = 'format-fallback';
+                        console.log('Using fallback validation due to network issues');
+                    } else {
+                        // Error lain (nomor tidak valid), lempar error
+                        throw workerError;
+                    }
+                }
+
+                // Jika sampai sini, validasi berhasil (baik via WhatsApp atau fallback)
+                console.log('Validation passed, sending to Loops...');
+                
+                // Kirim ke Loops
                 const loopsResponse = await fetch(form.action, {
                     method: 'POST',
                     body: formData
@@ -268,7 +323,12 @@
                 }
 
                 // Berhasil
-                showMessage('success');
+                if (showWarning) {
+                    showMessage('warning', 'Validasi WhatsApp tidak tersedia, pesanan tetap berhasil dikirim!');
+                } else {
+                    showMessage('success');
+                }
+                
                 form.reset();
 
                 // Redirect ke WhatsApp setelah 3 detik
@@ -310,5 +370,5 @@
 
         loopsFetchFbclid('loops-form-order');
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987310aa02559cce',t:'MTc1OTIyODQzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98732c68c4809998',t:'MTc1OTIyOTU3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
