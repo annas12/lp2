@@ -1,167 +1,213 @@
-<!-- ======= FORM ORDER (KUNING–HIJAU) ======= -->
+<!-- ======= ORDER FORM – ELEGANT GREEN–YELLOW ======= -->
 <style>
   :root{
-    --green: #22a06b;          /* hijau utama */
-    --green-dark:#16885a;
-    --yellow:#ffd44d;          /* kuning utama */
-    --yellow-soft:#fff5cc;
-    --ink:#173B2C;             /* teks utama */
-    --muted:#7a8a80;
-    --error:#c02929;
-    --bg:#f7faf7;
-    --card:#ffffff;
-    --shadow: 0 10px 30px rgba(23,59,44,.10), 0 2px 10px rgba(23,59,44,.05);
+    --green:#22a06b; --green-2:#32b77d; --green-dark:#16885a;
+    --yellow:#ffd44d; --yellow-soft:#fff5cc;
+    --ink:#173B2C; --muted:#7a8a8a; --error:#c02929;
+    --bg:#f7faf7; --card:#ffffff; --shadow:0 10px 30px rgba(23,59,44,.10),0 2px 10px rgba(23,59,44,.05);
     --radius:18px;
   }
-  @media (prefers-color-scheme: dark){
-    :root{ --card:#0f1a15; --bg:#07120e; --ink:#eaf6ef; --muted:#9fb5a9; --shadow: 0 10px 30px rgba(0,0,0,.35); }
-  }
-  *{ box-sizing:border-box }
-  body{ background:var(--bg); font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial; color:var(--ink); }
-  .wrap{
-    max-width:760px; margin:28px auto; padding:0 16px;
-  }
-  .card{
-    background:linear-gradient(180deg, var(--card) 0%, var(--card) 55%, var(--bg) 100%);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    overflow:hidden;
-    position:relative;
-  }
-  .ribbon{
-    position:absolute; inset:auto 18px -14px auto; background:var(--yellow);
-    color:#4a4a00; font-weight:700; padding:8px 14px; border-radius:10px;
-    box-shadow:0 6px 16px rgba(255,212,77,.35);
-  }
-  .header{
-    padding:28px 28px 10px; display:flex; align-items:center; gap:14px;
-  }
-  .logo-circle{
-    width:46px; height:46px; border-radius:50%;
-    background: radial-gradient(120% 120% at 30% 20%, var(--yellow) 0%, #ffe680 55%, #fff 100%);
-    border:2px solid #fff; box-shadow:0 6px 18px rgba(255,212,77,.45);
-  }
-  .title{ font-size:22px; font-weight:800; letter-spacing:.2px; }
-  .subtitle{ color:var(--muted); margin-top:2px; }
+  *{box-sizing:border-box}
+  body{background:var(--bg);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--ink)}
+  .wrap{max-width:900px;margin:28px auto;padding:0 16px}
 
-  form.loops-forms{ padding:18px 28px 28px; }
-  .row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  @media (max-width:640px){ .row{ grid-template-columns:1fr; } }
+  /* Hero */
+  .hero{
+    border-radius:22px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:22px;
+    background:linear-gradient(135deg,#fff 0%,var(--yellow-soft) 65%,#fff 100%);
+    position:relative; isolation:isolate;
+  }
+  .hero .bar{height:8px;background:linear-gradient(90deg,var(--green) 0%,var(--yellow) 100%)}
+  .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;align-items:center;padding:22px}
+  @media (max-width:820px){ .hero-inner{grid-template-columns:1fr} }
+  .hero h1{margin:0;font-size:28px;line-height:1.15;font-weight:900}
+  .hero p{margin:8px 0 0;color:#5a6e65}
+  .hero-illus{
+    aspect-ratio: 4/3; border-radius:16px; background:
+    radial-gradient(120% 120% at 20% 15%, var(--yellow) 0%, #ffe680 55%, #fff 100%);
+    border:2px solid #fff; box-shadow:0 10px 24px rgba(255,212,77,.35);
+  }
 
-  .loops-group{ margin-bottom:16px; }
-  .label{
-    font-weight:700; display:flex; align-items:center; justify-content:space-between;
-    margin-bottom:8px;
-  }
-  .required{ color:var(--error); font-weight:800; margin-left:4px; }
-  .input, .textarea, .select{
-    width:100%; border:1.5px solid #e4efe9; background:#fff; color:var(--ink);
-    border-radius:12px; padding:12px 14px; height:46px; transition:.2s border, .2s box-shadow, .2s transform;
-    outline:none;
-  }
-  .textarea{ height:auto; min-height:110px; resize:vertical; }
-  .input:focus, .textarea:focus, .select:focus{
-    border-color:var(--green); box-shadow:0 0 0 3px rgba(34,160,107,.15);
-  }
-  .input::placeholder{ color:#9fb5a9 }
-  .help{ color:var(--muted); font-size:12px; margin-top:6px }
-  .msg{ font-size:13px; margin-top:8px; display:none }
-  .msg.err{ color:var(--error) }
-  .msg.ok{ color:var(--green-dark) }
+  /* Card */
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .card-head{padding:20px 24px;border-bottom:1px solid #eef3ef;display:flex;justify-content:space-between;align-items:center}
+  .title{font-size:20px;font-weight:800}
+  .badge{padding:6px 10px;border-radius:10px;background:linear-gradient(180deg,var(--yellow-soft),#fff);border:1px dashed #ffe083;color:#564a00;font-weight:700}
+  .card-body{padding:22px 24px}
 
-  .cta{
-    display:flex; gap:12px; align-items:center; margin-top:8px;
+  /* Grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:820px){ .grid{grid-template-columns:1fr} }
+
+  /* Inputs */
+  .group{margin-bottom:16px}
+  .label{font-weight:800;margin-bottom:8px;display:flex;justify-content:space-between}
+  .req{color:var(--error)}
+  .input,.select,.textarea{
+    width:100%;border:1.5px solid #e4efe9;background:#fff;border-radius:12px;
+    padding:12px 14px;height:46px;outline:none;transition:.2s border,.2s box-shadow;
   }
+  .select{height:46px}
+  .textarea{height:auto;min-height:110px;resize:vertical}
+  .input:focus,.select:focus,.textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,160,107,.15)}
+  .help{font-size:12px;color:var(--muted);margin-top:6px}
+
+  .row-inline{display:flex;gap:12px;align-items:center}
+  .qty{width:110px;text-align:center;font-weight:800}
+
+  .msg{font-size:13px;margin-top:8px;display:none}
+  .msg.err{color:var(--error)}
+  .msg.ok{color:var(--green-dark)}
+  .total{font-weight:900;font-size:18px}
+
+  /* Buttons */
+  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px}
   .btn{
-    appearance:none; border:0; cursor:pointer; border-radius:14px;
-    padding:12px 18px; font-weight:800; letter-spacing:.3px;
-    background:linear-gradient(90deg, var(--green) 0%, #32b77d 100%);
-    color:#fff; box-shadow:0 10px 22px rgba(34,160,107,.28);
-    transition: transform .15s ease, box-shadow .15s ease;
+    appearance:none;border:0;cursor:pointer;border-radius:14px;padding:12px 18px;font-weight:800;letter-spacing:.3px;
+    background:linear-gradient(90deg,var(--green) 0%,var(--green-2) 100%);color:#fff;box-shadow:0 10px 22px rgba(34,160,107,.28);
+    transition:transform .15s, box-shadow .15s;
   }
-  .btn:hover{ transform:translateY(-1px); box-shadow:0 14px 26px rgba(34,160,107,.33); }
-  .btn:active{ transform:translateY(0); box-shadow:0 8px 18px rgba(34,160,107,.22); }
-  .btn.secondary{
-    background:linear-gradient(90deg, var(--yellow) 0%, #ffe27d 100%); color:#4a4a00;
-    box-shadow:0 10px 22px rgba(255,212,77,.35);
-  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(34,160,107,.33)}
+  .btn:active{transform:translateY(0);box-shadow:0 8px 18px rgba(34,160,107,.22)}
+  .btn.alt{background:linear-gradient(90deg,var(--yellow) 0%,#ffe27d 100%);color:#4a4a00;box-shadow:0 10px 22px rgba(255,212,77,.35)}
 
-  .footer{
-    padding:12px 28px 26px; font-size:12px; color:var(--muted);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .badge{
-    display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
-    background:linear-gradient(180deg, var(--yellow-soft), #fff); border:1px dashed #ffe083;
-    border-radius:12px; color:#564a00; font-weight:700;
-  }
+  .tnc{display:flex;gap:10px;align-items:flex-start;color:#41574b}
+  .footer-note{padding:12px 0;color:var(--muted);font-size:12px;text-align:center}
 </style>
 
 <div class="wrap">
-  <div class="card">
-    <div class="ribbon">garansi validasi WA</div>
-
-    <div class="header">
-      <div class="logo-circle"></div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="bar"></div>
+    <div class="hero-inner">
       <div>
-        <div class="title">Form Pemesanan</div>
-        <div class="subtitle">Kami cek nomor WhatsApp Anda dulu—baru pesanan dikirim ke CS.</div>
+        <h1>Pesan Sekarang — <span style="background:linear-gradient(90deg,var(--yellow),var(--green));-webkit-background-clip:text;color:transparent">cek nomor WhatsApp</span> otomatis</h1>
+        <p>Kami validasi nomor Anda via WatZap sebelum pesanan diteruskan ke tim CS. Aman, cepat, dan akurat.</p>
       </div>
+      <div class="hero-illus"></div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-head">
+      <div class="title">Form Pemesanan</div>
+      <div class="badge">✅ Validasi WA aktif</div>
     </div>
 
-    <form id="loops-form-order" class="loops-forms" action="https://app.loops.id/save-order/test-lp-wa" method="POST" novalidate>
-      <div class="row">
-        <div class="loops-group">
-          <label class="label" for="name">Nama lengkap <span class="required">*</span></label>
-          <input class="input" type="text" id="name" name="name" placeholder="Tulis nama Anda" required>
+    <form id="loops-form-order" class="card-body" action="https://app.loops.id/save-order/test-lp-wa" method="POST" novalidate>
+      <!-- DATA PEMESAN -->
+      <div class="grid">
+        <div class="group">
+          <label class="label" for="name">Nama lengkap <span class="req">*</span></label>
+          <input class="input" id="name" name="name" placeholder="Tulis nama Anda" required>
         </div>
 
-        <div class="loops-group">
-          <label class="label" for="phone">No. WhatsApp <span class="required">*</span></label>
-          <input class="input" type="tel" id="phone" name="phone" placeholder="0812xxxx / +62812xxxx" required>
-          <div class="help">Format bebas (08/62/+62) — kami normalisasi otomatis.</div>
+        <div class="group">
+          <label class="label" for="phone">No. WhatsApp <span class="req">*</span></label>
+          <input class="input" id="phone" name="phone" placeholder="0812xxxx / +62812xxxx" required>
+          <div class="help">Format bebas (08/62/+62) — sistem akan normalisasi otomatis.</div>
           <div id="msg" class="msg err"></div>
           <div id="msgOk" class="msg ok"></div>
         </div>
       </div>
 
-      <div class="cta">
-        <input id="loops-form-submit" type="submit" value="Beli Sekarang" class="btn">
-        <button type="button" id="btnChat" class="btn secondary">Chat Admin</button>
+      <!-- PRODUK -->
+      <div class="grid">
+        <div class="group">
+          <label class="label" for="product">Pilih produk <span class="req">*</span></label>
+          <select class="select" id="product" name="product" required>
+            <!-- TODO: atur label & harga (data-price) -->
+            <option value="" disabled selected>— Pilih —</option>
+            <option value="paket-a" data-price="149000">Paket A — Starter (Rp149.000)</option>
+            <option value="paket-b" data-price="249000">Paket B — Pro (Rp249.000)</option>
+            <option value="paket-c" data-price="399000">Paket C — Premium (Rp399.000)</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <label class="label" for="qty">Jumlah <span class="req">*</span></label>
+          <div class="row-inline">
+            <button type="button" class="btn alt" id="minus">−</button>
+            <input class="input qty" id="qty" name="qty" value="1" inputmode="numeric" required>
+            <button type="button" class="btn alt" id="plus">+</button>
+            <div class="total" id="total">Rp0</div>
+          </div>
+          <div class="help">Total dihitung otomatis berdasarkan pilihan produk dan jumlah.</div>
+        </div>
       </div>
 
-      <!-- Hidden fields Loops -->
-      <input type="hidden" id="current" name="current" value="">
-      <input type="hidden" name="redirect" value="">
-      <input type="hidden" name="_loops_nonce" value="">
+      <!-- ALAMAT & KURIR -->
+      <div class="grid">
+        <div class="group">
+          <label class="label" for="address">Alamat pengiriman <span class="req">*</span></label>
+          <textarea class="textarea" id="address" name="address" placeholder="Nama jalan, RT/RW, kelurahan, kecamatan, kota, kode pos" required></textarea>
+        </div>
+
+        <div class="group">
+          <label class="label" for="shipping">Metode pengiriman</label>
+          <select class="select" id="shipping" name="shipping">
+            <option value="jne">JNE Regular</option>
+            <option value="jnt">J&T Express</option>
+            <option value="sicepat">SiCepat</option>
+            <option value="pickup">Ambil di tempat</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CATATAN -->
+      <div class="group">
+        <label class="label" for="notes">Catatan (opsional)</label>
+        <textarea class="textarea" id="notes" name="notes" placeholder="Instruksi khusus, waktu kirim, dsb."></textarea>
+      </div>
+
+      <!-- TNC -->
+      <div class="group tnc">
+        <input type="checkbox" id="tnc" required>
+        <label for="tnc">Saya setuju dengan Syarat & Ketentuan pemesanan ini.</label>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="actions">
+        <input id="submitBtn" class="btn" type="submit" value="Beli Sekarang">
+        <button type="button" id="btnChat" class="btn alt">Chat Admin</button>
+      </div>
+
+      <!-- Hidden fields ikut ke Loops -->
       <input type="hidden" id="phone_normalized" name="phone_normalized" value="">
+      <input type="hidden" name="redirect" value="">
+      <input type="hidden" id="_loops_nonce" name="_loops_nonce" value="">
     </form>
 
-    <div class="footer">
-      <span class="badge">💬 Terhubung WatZap + Cloudflare</span>
-      <span>Powered by Loops.id</span>
-    </div>
+    <div class="footer-note">Powered by Loops • Validasi via WatZap • UI by kamu ✨</div>
   </div>
 </div>
 
 <script>
-  /* ===== KONFIG VIA JS ===== */
-  const WORKER_VALIDATE_URL = "https://<your-worker>.workers.dev/validate"; // Ganti!
-  const WA_START_CHAT       = "https://wa.me/6289674494567?text=Start";     // opsional
+  /* ====== CONFIG ====== */
+  const WORKER_VALIDATE_URL = "https://<your-worker>.workers.dev/validate"; // TODO: isi
+  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start";           // opsional
 
-  /* ===== ELEMENTS ===== */
+  /* ====== ELEMENTS ====== */
   const form = document.getElementById('loops-form-order');
-  const btn = document.getElementById('loops-form-submit');
+  const submitBtn = document.getElementById('submitBtn');
   const btnChat = document.getElementById('btnChat');
   const phoneInput = document.getElementById('phone');
   const msg = document.getElementById('msg');
   const ok = document.getElementById('msgOk');
   const hiddenNorm = document.getElementById('phone_normalized');
   const redirectField = form.querySelector('input[name="redirect"]');
+  const productSel = document.getElementById('product');
+  const qtyInput = document.getElementById('qty');
+  const minus = document.getElementById('minus');
+  const plus = document.getElementById('plus');
+  const totalEl = document.getElementById('total');
 
   let submitting = false;
 
-  /* ===== HELPERS ===== */
+  /* ====== HELPERS ====== */
+  const parsePrice = opt => Number(opt?.dataset?.price || 0);
+  const rupiah = n => n.toLocaleString('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
   function normalize62(input){
     const s = String(input||"").replace(/[^\d+]/g,"");
     if(!s) return "";
@@ -171,54 +217,63 @@
     if(s.startsWith("8"))   return "62"+s;
     return s.replace(/^0+/,"");
   }
-  const busy = (b)=>{
+  function calcTotal(){
+    const opt = productSel.options[productSel.selectedIndex];
+    const price = parsePrice(opt);
+    const qty = Math.max(1, parseInt(qtyInput.value||"1",10));
+    totalEl.textContent = rupiah(price*qty);
+  }
+  function setBusy(b){
     submitting = b;
-    btn.value = b ? "Mengecek WhatsApp..." : "Beli Sekarang";
-    btn.disabled = b;
-  };
-  const showErr = (t)=>{ msg.textContent=t; msg.style.display="block"; ok.style.display="none"; };
-  const showOk  = (t)=>{ ok.textContent=t;  ok.style.display="block";  msg.style.display="none"; };
+    submitBtn.value = b ? "Mengecek WhatsApp..." : "Beli Sekarang";
+    submitBtn.disabled = b;
+  }
+  function showErr(t){ msg.textContent=t; msg.style.display="block"; ok.style.display="none"; }
+  function showOk(t){ ok.textContent=t; ok.style.display="block"; msg.style.display="none"; }
+
+  // init total
+  productSel.addEventListener('change', calcTotal);
+  qtyInput.addEventListener('input', ()=>{ qtyInput.value = qtyInput.value.replace(/[^\d]/g,''); calcTotal(); });
+  minus.addEventListener('click', ()=>{ qtyInput.value = Math.max(1,(parseInt(qtyInput.value||"1",10)-1)); calcTotal(); });
+  plus.addEventListener('click',  ()=>{ qtyInput.value = Math.max(1,(parseInt(qtyInput.value||"1",10)+1)); calcTotal(); });
+  calcTotal();
 
   btnChat.addEventListener('click', ()=> window.open(WA_START_CHAT, '_blank'));
+
+  phoneInput.addEventListener('input', ()=>{ msg.style.display="none"; ok.style.display="none"; });
 
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     if(submitting) return;
 
-    showErr(""); showOk(""); msg.style.display="none"; ok.style.display="none";
-    busy(true);
+    // Validasi dasar
+    if(!document.getElementById('name').value.trim()){ showErr("Nama lengkap wajib diisi."); return; }
+    if(!productSel.value){ showErr("Silakan pilih produk."); return; }
+    if(!document.getElementById('address').value.trim()){ showErr("Alamat pengiriman wajib diisi."); return; }
+    if(!document.getElementById('tnc').checked){ showErr("Anda harus menyetujui S&K."); return; }
 
-    try {
+    setBusy(true); showErr(""); showOk("");
+
+    try{
+      // normalisasi & cek WA
       const norm = normalize62(phoneInput.value);
-      if(!/^62\d{7,15}$/.test(norm)){
-        showErr("Nomor tidak valid. Gunakan 08xxxxx atau +628xxxxx.");
-        busy(false); return;
-      }
+      if(!/^62\d{7,15}$/.test(norm)){ showErr("Nomor tidak valid. Gunakan 08xxxxx atau +628xxxxx."); setBusy(false); return; }
 
-      const res = await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`, { cache: "no-store" });
+      const res = await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`, { cache:'no-store' });
       const j = await res.json();
+      if(!j.ok){ showErr("Validasi gagal: "+(j.error||"server")); setBusy(false); return; }
+      if(!j.exists){ showErr("Nomor belum terdaftar WhatsApp. Mohon cek kembali."); setBusy(false); return; }
 
-      if(!j.ok){
-        showErr("Validasi gagal: " + (j.error || "server"));
-        busy(false); return;
-      }
-      if(!j.exists){
-        showErr("Nomor belum terdaftar WhatsApp. Mohon cek kembali.");
-        busy(false); return;
-      }
-
-      // lolos validasi
+      // sukses – submit ke Loops
       hiddenNorm.value = norm;
       if (WA_START_CHAT) redirectField.value = WA_START_CHAT;
       showOk("Nomor terverifikasi ✓, mengirim pesanan...");
       setTimeout(()=> form.submit(), 160);
 
-    } catch(err){
+    }catch(err){
       console.error(err);
       showErr("Terjadi kesalahan koneksi.");
-      busy(false);
+      setBusy(false);
     }
   });
-
-  phoneInput.addEventListener('input', ()=>{ msg.style.display="none"; ok.style.display="none"; });
 </script>
