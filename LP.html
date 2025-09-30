@@ -35,65 +35,65 @@
       <div id="msg" class="msg err"></div>
       <div id="msgOk" class="msg ok"></div>
     </div>
+
     <button id="submitBtn" class="btn" type="submit">Ambil Promo</button>
 
-    <!-- hidden untuk Loops -->
+    <!-- hidden ikut ke Loops -->
     <input type="hidden" id="phone_normalized" name="phone_normalized" value="">
+    <!-- BIARKAN KOSONG: Loops yang akan redirect ke CS operator + greeting -->
     <input type="hidden" name="redirect" value="">
   </form>
 </div>
 
 <script>
-  // GANTI ke URL worker kamu
-  const WORKER_VALIDATE_URL = "https://watzap.annasmashuri97.workers.dev/validate";
+  // GANTI ke URL worker kamu (endpoint /validate)
+  const WORKER_VALIDATE_URL = "https://<your-worker>.workers.dev/validate";
 
-  // Penting: TANPA ?text=... — biarkan Loops yang menambahkan greeting otomatis.
-  const WA_REDIRECT_BASE = "https://wa.me/6289674494567";
-
-  const form=document.getElementById('orderForm');
-  const phone=document.getElementById('phone');
-  const hiddenNorm=document.getElementById('phone_normalized');
-  const msg=document.getElementById('msg');
-  const msgOk=document.getElementById('msgOk');
-  const btn=document.getElementById('submitBtn');
-  let busy=false;
+  const form = document.getElementById('orderForm');
+  const phone = document.getElementById('phone');
+  const hiddenNorm = document.getElementById('phone_normalized');
+  const msg = document.getElementById('msg');
+  const msgOk = document.getElementById('msgOk');
+  const btn = document.getElementById('submitBtn');
+  let busy = false;
 
   function normalize62(input){
-    const s=String(input||"").replace(/[^\d+]/g,"");
+    const s = String(input||"").replace(/[^\d+]/g,"");
     if(!s) return "";
     if(s.startsWith("+62")) return s.slice(1);
-    if(s.startsWith("62")) return s;
-    if(s.startsWith("0")) return "62"+s.slice(1);
-    if(s.startsWith("8")) return "62"+s;
-    return s.replace(/^0+/,"");
+    if(s.startsWith("62"))  return s;
+    if(s.startsWith("0"))   return "62"+s.slice(1);
+    if(s.startsWith("8"))   return "62"+s;
+    return s.replace(/^0+/, "");
   }
-  function showErr(t){msg.textContent=t;msg.style.display="block";msgOk.style.display="none";}
-  function showOk(t){msgOk.textContent=t;msgOk.style.display="block";msg.style.display="none";}
-  function setBusy(b){busy=b;btn.textContent=b?"Mengecek...":"Ambil Promo";btn.disabled=b;}
+  function showErr(t){ msg.textContent=t; msg.style.display="block"; msgOk.style.display="none"; }
+  function showOk(t){ msgOk.textContent=t; msgOk.style.display="block"; msg.style.display="none"; }
+  function setBusy(b){ busy=b; btn.textContent=b?"Mengecek...":"Ambil Promo"; btn.disabled=b; }
 
-  form.addEventListener('submit',async e=>{
+  form.addEventListener('submit', async (e)=>{
     e.preventDefault(); if(busy) return;
     setBusy(true); showErr(""); showOk("");
-    const norm=normalize62(phone.value);
-    if(!/^62\d{7,15}$/.test(norm)){showErr("Nomor tidak valid.");setBusy(false);return;}
+
+    const norm = normalize62(phone.value);
+    if(!/^62\d{7,15}$/.test(norm)){
+      showErr("Nomor tidak valid."); setBusy(false); return;
+    }
+
     try{
-      const res=await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`);
-      const j=await res.json();
-      if(!j.ok){showErr("Validasi gagal");setBusy(false);return;}
-      if(!j.exists){showErr("Nomor bukan WA aktif");setBusy(false);return;}
+      const res = await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`, { cache:"no-store" });
+      const j = await res.json();
 
-      // Set nomor normalisasi & redirect ke WA TANPA text; Loops akan menambahkan greeting.
-      hiddenNorm.value=norm;
-      const rd = new URL(WA_REDIRECT_BASE);
-      // opsional: jika ingin teruskan fbclid ke WA
-      const fbclid = new URL(window.location.href).searchParams.get('fbclid');
-      if (fbclid) rd.searchParams.set('fbclid', fbclid);
-      form.querySelector('input[name="redirect"]').value = rd.toString();
+      if(!j.ok){ showErr("Validasi gagal."); setBusy(false); return; }
+      if(!j.exists){ showErr("Nomor bukan WA aktif."); setBusy(false); return; }
 
+      // Set nomor normalisasi, submit ke Loops
+      hiddenNorm.value = norm;
+      // PENTING: kita TIDAK mengubah field 'redirect' — Loops yang akan redirect ke CS + greeting
       showOk("Nomor terverifikasi ✓");
-      setTimeout(()=>form.submit(),150);
+      setTimeout(()=> form.submit(), 150);
+
     }catch(err){
-      showErr("Error koneksi"); setBusy(false);
+      showErr("Error koneksi."); setBusy(false);
     }
   });
 </script>
