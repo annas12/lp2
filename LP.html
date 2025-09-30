@@ -123,7 +123,7 @@
                 ✅ Pesanan berhasil! Anda akan dialihkan ke WhatsApp...
             </div>
             <div id="warningMessage" class="warning-message" style="display: none;">
-                ⚠️ <span id="warningText">Validasi WhatsApp tidak tersedia, menggunakan validasi format.</span>
+                ⚠️ <span id="warningText">Validasi WhatsApp tidak tersedia, pesanan tetap berhasil!</span>
             </div>
             <div id="errorMessage" class="error-message" style="display: none;">
                 ❌ <span id="errorText">Terjadi kesalahan. Silakan coba lagi.</span>
@@ -132,7 +132,7 @@
 
         <form id="loops-form-order" class="loops-forms" action="https://app.loops.id/save-order/test-lp-wa" method="POST">
             <div class="loops-group">
-                <label for="name">Nama lengkap1 <span class="red">*</span></label>
+                <label for="name">Nama lengkap <span class="red">*</span></label>
                 <input type="text" id="name" name="name" value="" placeholder="Tulis nama Anda" required>
             </div>
             
@@ -155,7 +155,7 @@
     </div>
 
     <script>
-        // Konfigurasi - URL Worker Anda
+        // Konfigurasi
         const WORKER_URL = 'https://vlidaiwwa.annasmashuri97.workers.dev';
         
         var form = document.getElementById('loops-form-order');
@@ -190,9 +190,6 @@
 
         function hideMessages() {
             statusMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-            warningMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
         }
 
         function setButtonLoading(loading) {
@@ -209,12 +206,10 @@
         document.getElementById('phone').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             
-            // Pastikan dimulai dengan 0
             if (value && !value.startsWith('0')) {
                 value = '0' + value;
             }
             
-            // Batasi panjang maksimal
             if (value.length > 13) {
                 value = value.substring(0, 13);
             }
@@ -222,6 +217,7 @@
             e.target.value = value;
         });
 
+        // Event listener dari kode asli Loops
         loopsFormBtn.addEventListener('click', function(event) { 
             console.log('clicking');
             if (submiting) {
@@ -231,6 +227,7 @@
             } 
         });
 
+        // Enhanced form submission dengan validasi WhatsApp
         form.addEventListener('submit', async function(e){
             e.preventDefault(); // Prevent default form submission
             console.log('submiting');
@@ -257,9 +254,53 @@
                     throw new Error('Format nomor HP tidak valid. Gunakan format: 081234567890');
                 }
 
+                console.log('Basic validation passed, trying WhatsApp validation...');
+                
+                let validationMethod = 'format';
+                let showWarning = false;
+                
+                // Coba validasi WhatsApp melalui worker
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    
+                    const response = await fetch(WORKER_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            nama: nama,
+                            whatsapp: phone
+                        }),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            validationMethod = 'whatsapp';
+                            console.log('WhatsApp validation successful');
+                        } else {
+                            showWarning = true;
+                            validationMethod = 'format-fallback';
+                            console.log('WhatsApp number not found, using fallback');
+                        }
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (workerError) {
+                    console.warn('Worker validation failed:', workerError.message);
+                    showWarning = true;
+                    validationMethod = 'format-fallback';
+                    console.log('Using fallback validation due to worker issues');
+                }
+
                 console.log('Validation passed, sending to Loops...');
                 
-                // Kirim ke Loops langsung
+                // Kirim ke Loops menggunakan fetch (seperti kode asli tapi dengan fetch)
                 const loopsResponse = await fetch(form.action, {
                     method: 'POST',
                     body: formData
@@ -270,7 +311,12 @@
                 }
 
                 // Berhasil
-                showMessage('success');
+                if (showWarning) {
+                    showMessage('warning', 'Validasi WhatsApp tidak tersedia, pesanan tetap berhasil dikirim!');
+                } else {
+                    showMessage('success');
+                }
+                
                 form.reset();
 
                 // Redirect ke WhatsApp setelah 3 detik
@@ -278,7 +324,6 @@
                     const message = encodeURIComponent(`Halo! Saya ${nama}, saya baru saja melakukan pemesanan melalui website. Terima kasih!`);
                     let waNumber = phone;
                     
-                    // Convert ke format internasional
                     if (waNumber.startsWith('0')) {
                         waNumber = '62' + waNumber.substring(1);
                     }
@@ -296,7 +341,7 @@
             }
         });
 
-        // Fungsi untuk fetch fbclid (dari kode asli Loops)
+        // Fungsi fbclid dari kode asli Loops
         function loopsFetchFbclid(linkId) {
             try {
                 const LoopsUrl = new URL(window.location.href);
@@ -312,5 +357,5 @@
 
         loopsFetchFbclid('loops-form-order');
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98733385b55d9998',t:'MTc1OTIyOTg2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98733e81543f9998',t:'MTc1OTIzMDMxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
