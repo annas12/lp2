@@ -1,279 +1,99 @@
-<!-- ======= ORDER FORM – ELEGANT GREEN–YELLOW ======= -->
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Form Pemesanan</title>
 <style>
   :root{
-    --green:#22a06b; --green-2:#32b77d; --green-dark:#16885a;
-    --yellow:#ffd44d; --yellow-soft:#fff5cc;
-    --ink:#173B2C; --muted:#7a8a8a; --error:#c02929;
-    --bg:#f7faf7; --card:#ffffff; --shadow:0 10px 30px rgba(23,59,44,.10),0 2px 10px rgba(23,59,44,.05);
-    --radius:18px;
+    --green:#22a06b; --yellow:#ffd44d; --ink:#173B2C; --error:#c02929;
   }
-  *{box-sizing:border-box}
-  body{background:var(--bg);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--ink)}
-  .wrap{max-width:900px;margin:28px auto;padding:0 16px}
-
-  /* Hero */
-  .hero{
-    border-radius:22px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:22px;
-    background:linear-gradient(135deg,#fff 0%,var(--yellow-soft) 65%,#fff 100%);
-    position:relative; isolation:isolate;
-  }
-  .hero .bar{height:8px;background:linear-gradient(90deg,var(--green) 0%,var(--yellow) 100%)}
-  .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;align-items:center;padding:22px}
-  @media (max-width:820px){ .hero-inner{grid-template-columns:1fr} }
-  .hero h1{margin:0;font-size:28px;line-height:1.15;font-weight:900}
-  .hero p{margin:8px 0 0;color:#5a6e65}
-  .hero-illus{
-    aspect-ratio: 4/3; border-radius:16px; background:
-    radial-gradient(120% 120% at 20% 15%, var(--yellow) 0%, #ffe680 55%, #fff 100%);
-    border:2px solid #fff; box-shadow:0 10px 24px rgba(255,212,77,.35);
-  }
-
-  /* Card */
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-  .card-head{padding:20px 24px;border-bottom:1px solid #eef3ef;display:flex;justify-content:space-between;align-items:center}
-  .title{font-size:20px;font-weight:800}
-  .badge{padding:6px 10px;border-radius:10px;background:linear-gradient(180deg,var(--yellow-soft),#fff);border:1px dashed #ffe083;color:#564a00;font-weight:700}
-  .card-body{padding:22px 24px}
-
-  /* Grid */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  @media (max-width:820px){ .grid{grid-template-columns:1fr} }
-
-  /* Inputs */
+  body{margin:0; font:16px/1.4 Inter,system-ui,Arial; background:#f9faf7; color:var(--ink); display:flex; justify-content:center; padding:20px}
+  .form-box{max-width:420px; width:100%; background:#fff; padding:24px; border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.08)}
+  h2{text-align:center; margin:0 0 20px; font-weight:800; font-size:22px; color:var(--green)}
   .group{margin-bottom:16px}
-  .label{font-weight:800;margin-bottom:8px;display:flex;justify-content:space-between}
-  .req{color:var(--error)}
-  .input,.select,.textarea{
-    width:100%;border:1.5px solid #e4efe9;background:#fff;border-radius:12px;
-    padding:12px 14px;height:46px;outline:none;transition:.2s border,.2s box-shadow;
+  label{display:block; font-weight:600; margin-bottom:6px}
+  .input{
+    width:100%; padding:12px; border:1.5px solid #e0e6e2; border-radius:10px; font-size:16px;
+    outline:none; transition:.2s border;
   }
-  .select{height:46px}
-  .textarea{height:auto;min-height:110px;resize:vertical}
-  .input:focus,.select:focus,.textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,160,107,.15)}
-  .help{font-size:12px;color:var(--muted);margin-top:6px}
-
-  .row-inline{display:flex;gap:12px;align-items:center}
-  .qty{width:110px;text-align:center;font-weight:800}
-
-  .msg{font-size:13px;margin-top:8px;display:none}
+  .input:focus{border-color:var(--green)}
+  .msg{font-size:13px; margin-top:6px; display:none}
   .msg.err{color:var(--error)}
-  .msg.ok{color:var(--green-dark)}
-  .total{font-weight:900;font-size:18px}
-
-  /* Buttons */
-  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px}
+  .msg.ok{color:var(--green)}
   .btn{
-    appearance:none;border:0;cursor:pointer;border-radius:14px;padding:12px 18px;font-weight:800;letter-spacing:.3px;
-    background:linear-gradient(90deg,var(--green) 0%,var(--green-2) 100%);color:#fff;box-shadow:0 10px 22px rgba(34,160,107,.28);
-    transition:transform .15s, box-shadow .15s;
+    width:100%; padding:14px; border:none; border-radius:12px;
+    background:linear-gradient(90deg,var(--green),var(--yellow)); color:#fff;
+    font-weight:700; font-size:17px; cursor:pointer; transition:.2s transform;
   }
-  .btn:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(34,160,107,.33)}
-  .btn:active{transform:translateY(0);box-shadow:0 8px 18px rgba(34,160,107,.22)}
-  .btn.alt{background:linear-gradient(90deg,var(--yellow) 0%,#ffe27d 100%);color:#4a4a00;box-shadow:0 10px 22px rgba(255,212,77,.35)}
-
-  .tnc{display:flex;gap:10px;align-items:flex-start;color:#41574b}
-  .footer-note{padding:12px 0;color:var(--muted);font-size:12px;text-align:center}
+  .btn:active{transform:scale(.98)}
 </style>
+</head>
+<body>
 
-<div class="wrap">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="bar"></div>
-    <div class="hero-inner">
-      <div>
-        <h1>Pesan Sekarang — <span style="background:linear-gradient(90deg,var(--yellow),var(--green));-webkit-background-clip:text;color:transparent">cek nomor WhatsApp</span> otomatis</h1>
-        <p>Kami validasi nomor Anda via WatZap sebelum pesanan diteruskan ke tim CS. Aman, cepat, dan akurat.</p>
-      </div>
-      <div class="hero-illus"></div>
+<div class="form-box">
+  <h2>Form Pemesanan</h2>
+  <form id="orderForm" action="https://app.loops.id/save-order/test-lp-wa" method="POST" novalidate>
+    <div class="group">
+      <label for="name">Nama lengkap</label>
+      <input class="input" id="name" name="name" required>
     </div>
-  </section>
-
-  <!-- FORM -->
-  <div class="card">
-    <div class="card-head">
-      <div class="title">Form Pemesanan</div>
-      <div class="badge">✅ Validasi WA aktif</div>
+    <div class="group">
+      <label for="phone">No. WhatsApp</label>
+      <input class="input" id="phone" name="phone" placeholder="0812xxxx" required>
+      <div id="msg" class="msg err"></div>
+      <div id="msgOk" class="msg ok"></div>
     </div>
+    <button id="submitBtn" class="btn" type="submit">Ambil Promo</button>
 
-    <form id="loops-form-order" class="card-body" action="https://app.loops.id/save-order/test-lp-wa" method="POST" novalidate>
-      <!-- DATA PEMESAN -->
-      <div class="grid">
-        <div class="group">
-          <label class="label" for="name">Nama lengkap <span class="req">*</span></label>
-          <input class="input" id="name" name="name" placeholder="Tulis nama Anda" required>
-        </div>
-
-        <div class="group">
-          <label class="label" for="phone">No. WhatsApp <span class="req">*</span></label>
-          <input class="input" id="phone" name="phone" placeholder="0812xxxx / +62812xxxx" required>
-          <div class="help">Format bebas (08/62/+62) — sistem akan normalisasi otomatis.</div>
-          <div id="msg" class="msg err"></div>
-          <div id="msgOk" class="msg ok"></div>
-        </div>
-      </div>
-
-      <!-- PRODUK -->
-      <div class="grid">
-        <div class="group">
-          <label class="label" for="product">Pilih produk <span class="req">*</span></label>
-          <select class="select" id="product" name="product" required>
-            <!-- TODO: atur label & harga (data-price) -->
-            <option value="" disabled selected>— Pilih —</option>
-            <option value="paket-a" data-price="149000">Paket A — Starter (Rp149.000)</option>
-            <option value="paket-b" data-price="249000">Paket B — Pro (Rp249.000)</option>
-            <option value="paket-c" data-price="399000">Paket C — Premium (Rp399.000)</option>
-          </select>
-        </div>
-
-        <div class="group">
-          <label class="label" for="qty">Jumlah <span class="req">*</span></label>
-          <div class="row-inline">
-            <button type="button" class="btn alt" id="minus">−</button>
-            <input class="input qty" id="qty" name="qty" value="1" inputmode="numeric" required>
-            <button type="button" class="btn alt" id="plus">+</button>
-            <div class="total" id="total">Rp0</div>
-          </div>
-          <div class="help">Total dihitung otomatis berdasarkan pilihan produk dan jumlah.</div>
-        </div>
-      </div>
-
-      <!-- ALAMAT & KURIR -->
-      <div class="grid">
-        <div class="group">
-          <label class="label" for="address">Alamat pengiriman <span class="req">*</span></label>
-          <textarea class="textarea" id="address" name="address" placeholder="Nama jalan, RT/RW, kelurahan, kecamatan, kota, kode pos" required></textarea>
-        </div>
-
-        <div class="group">
-          <label class="label" for="shipping">Metode pengiriman</label>
-          <select class="select" id="shipping" name="shipping">
-            <option value="jne">JNE Regular</option>
-            <option value="jnt">J&T Express</option>
-            <option value="sicepat">SiCepat</option>
-            <option value="pickup">Ambil di tempat</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- CATATAN -->
-      <div class="group">
-        <label class="label" for="notes">Catatan (opsional)</label>
-        <textarea class="textarea" id="notes" name="notes" placeholder="Instruksi khusus, waktu kirim, dsb."></textarea>
-      </div>
-
-      <!-- TNC -->
-      <div class="group tnc">
-        <input type="checkbox" id="tnc" required>
-        <label for="tnc">Saya setuju dengan Syarat & Ketentuan pemesanan ini.</label>
-      </div>
-
-      <!-- ACTIONS -->
-      <div class="actions">
-        <input id="submitBtn" class="btn" type="submit" value="Beli Sekarang">
-        <button type="button" id="btnChat" class="btn alt">Chat Admin</button>
-      </div>
-
-      <!-- Hidden fields ikut ke Loops -->
-      <input type="hidden" id="phone_normalized" name="phone_normalized" value="">
-      <input type="hidden" name="redirect" value="">
-      <input type="hidden" id="_loops_nonce" name="_loops_nonce" value="">
-    </form>
-
-    <div class="footer-note">Powered by Loops • Validasi via WatZap • UI by kamu ✨</div>
-  </div>
+    <!-- hidden untuk Loops -->
+    <input type="hidden" id="phone_normalized" name="phone_normalized" value="">
+    <input type="hidden" name="redirect" value="">
+  </form>
 </div>
 
 <script>
-  /* ====== CONFIG ====== */
-  const WORKER_VALIDATE_URL = "https://<your-worker>.workers.dev/validate"; // TODO: isi
-  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start";           // opsional
+  const WORKER_VALIDATE_URL = "https://<your-worker>.workers.dev/validate"; // ganti URL worker
+  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start";
 
-  /* ====== ELEMENTS ====== */
-  const form = document.getElementById('loops-form-order');
-  const submitBtn = document.getElementById('submitBtn');
-  const btnChat = document.getElementById('btnChat');
-  const phoneInput = document.getElementById('phone');
-  const msg = document.getElementById('msg');
-  const ok = document.getElementById('msgOk');
-  const hiddenNorm = document.getElementById('phone_normalized');
-  const redirectField = form.querySelector('input[name="redirect"]');
-  const productSel = document.getElementById('product');
-  const qtyInput = document.getElementById('qty');
-  const minus = document.getElementById('minus');
-  const plus = document.getElementById('plus');
-  const totalEl = document.getElementById('total');
+  const form=document.getElementById('orderForm');
+  const phone=document.getElementById('phone');
+  const hiddenNorm=document.getElementById('phone_normalized');
+  const msg=document.getElementById('msg');
+  const msgOk=document.getElementById('msgOk');
+  const btn=document.getElementById('submitBtn');
+  let busy=false;
 
-  let submitting = false;
-
-  /* ====== HELPERS ====== */
-  const parsePrice = opt => Number(opt?.dataset?.price || 0);
-  const rupiah = n => n.toLocaleString('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
   function normalize62(input){
-    const s = String(input||"").replace(/[^\d+]/g,"");
+    const s=String(input||"").replace(/[^\d+]/g,"");
     if(!s) return "";
     if(s.startsWith("+62")) return s.slice(1);
-    if(s.startsWith("62"))  return s;
-    if(s.startsWith("0"))   return "62"+s.slice(1);
-    if(s.startsWith("8"))   return "62"+s;
+    if(s.startsWith("62")) return s;
+    if(s.startsWith("0")) return "62"+s.slice(1);
+    if(s.startsWith("8")) return "62"+s;
     return s.replace(/^0+/,"");
   }
-  function calcTotal(){
-    const opt = productSel.options[productSel.selectedIndex];
-    const price = parsePrice(opt);
-    const qty = Math.max(1, parseInt(qtyInput.value||"1",10));
-    totalEl.textContent = rupiah(price*qty);
-  }
-  function setBusy(b){
-    submitting = b;
-    submitBtn.value = b ? "Mengecek WhatsApp..." : "Beli Sekarang";
-    submitBtn.disabled = b;
-  }
-  function showErr(t){ msg.textContent=t; msg.style.display="block"; ok.style.display="none"; }
-  function showOk(t){ ok.textContent=t; ok.style.display="block"; msg.style.display="none"; }
+  function showErr(t){msg.textContent=t;msg.style.display="block";msgOk.style.display="none";}
+  function showOk(t){msgOk.textContent=t;msgOk.style.display="block";msg.style.display="none";}
+  function setBusy(b){busy=b;btn.textContent=b?"Mengecek...":"Ambil Promo";btn.disabled=b;}
 
-  // init total
-  productSel.addEventListener('change', calcTotal);
-  qtyInput.addEventListener('input', ()=>{ qtyInput.value = qtyInput.value.replace(/[^\d]/g,''); calcTotal(); });
-  minus.addEventListener('click', ()=>{ qtyInput.value = Math.max(1,(parseInt(qtyInput.value||"1",10)-1)); calcTotal(); });
-  plus.addEventListener('click',  ()=>{ qtyInput.value = Math.max(1,(parseInt(qtyInput.value||"1",10)+1)); calcTotal(); });
-  calcTotal();
-
-  btnChat.addEventListener('click', ()=> window.open(WA_START_CHAT, '_blank'));
-
-  phoneInput.addEventListener('input', ()=>{ msg.style.display="none"; ok.style.display="none"; });
-
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    if(submitting) return;
-
-    // Validasi dasar
-    if(!document.getElementById('name').value.trim()){ showErr("Nama lengkap wajib diisi."); return; }
-    if(!productSel.value){ showErr("Silakan pilih produk."); return; }
-    if(!document.getElementById('address').value.trim()){ showErr("Alamat pengiriman wajib diisi."); return; }
-    if(!document.getElementById('tnc').checked){ showErr("Anda harus menyetujui S&K."); return; }
-
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); if(busy) return;
     setBusy(true); showErr(""); showOk("");
-
+    const norm=normalize62(phone.value);
+    if(!/^62\d{7,15}$/.test(norm)){showErr("Nomor tidak valid.");setBusy(false);return;}
     try{
-      // normalisasi & cek WA
-      const norm = normalize62(phoneInput.value);
-      if(!/^62\d{7,15}$/.test(norm)){ showErr("Nomor tidak valid. Gunakan 08xxxxx atau +628xxxxx."); setBusy(false); return; }
-
-      const res = await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`, { cache:'no-store' });
-      const j = await res.json();
-      if(!j.ok){ showErr("Validasi gagal: "+(j.error||"server")); setBusy(false); return; }
-      if(!j.exists){ showErr("Nomor belum terdaftar WhatsApp. Mohon cek kembali."); setBusy(false); return; }
-
-      // sukses – submit ke Loops
-      hiddenNorm.value = norm;
-      if (WA_START_CHAT) redirectField.value = WA_START_CHAT;
-      showOk("Nomor terverifikasi ✓, mengirim pesanan...");
-      setTimeout(()=> form.submit(), 160);
-
-    }catch(err){
-      console.error(err);
-      showErr("Terjadi kesalahan koneksi.");
-      setBusy(false);
-    }
+      const res=await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`);
+      const j=await res.json();
+      if(!j.ok){showErr("Validasi gagal");setBusy(false);return;}
+      if(!j.exists){showErr("Nomor bukan WA aktif");setBusy(false);return;}
+      hiddenNorm.value=norm;
+      form.querySelector('input[name="redirect"]').value=WA_START_CHAT;
+      showOk("Nomor terverifikasi ✓");
+      setTimeout(()=>form.submit(),150);
+    }catch(err){showErr("Error koneksi");setBusy(false);}
   });
 </script>
+
+</body>
+</html>
