@@ -132,7 +132,7 @@
 
         <form id="loops-form-order" class="loops-forms" action="https://app.loops.id/save-order/test-lp-wa" method="POST">
             <div class="loops-group">
-                <label for="name">Nama lengkap1 <span class="red">*</span></label>
+                <label for="name">Nama lengkap <span class="red">*</span></label>
                 <input type="text" id="name" name="name" value="" placeholder="Tulis nama Anda" required>
             </div>
             
@@ -264,15 +264,8 @@
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 8000);
                     
-                    const response = await fetch(WORKER_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            nama: nama,
-                            whatsapp: phone
-                        }),
+                    const response = await fetch(`${WORKER_URL}?nama=${encodeURIComponent(nama)}&whatsapp=${encodeURIComponent(phone)}`, {
+                        method: 'GET',
                         signal: controller.signal
                     });
 
@@ -293,17 +286,26 @@
                 } catch (workerError) {
                     console.warn('Worker validation failed:', workerError.message);
                     
-                    // Jika timeout atau network error, lanjutkan dengan warning
-                    if (workerError.name === 'AbortError') {
+                    // Jika timeout, network error, atau CORS error - lanjutkan dengan warning
+                    if (workerError.name === 'AbortError' || 
+                        workerError.message.includes('fetch') || 
+                        workerError.message.includes('Failed to fetch') ||
+                        workerError.message.includes('NetworkError') ||
+                        workerError.message.includes('CORS') ||
+                        workerError.message.includes('TypeError')) {
+                        
                         showWarning = true;
                         validationMethod = 'format-fallback';
-                        console.log('Timeout - using fallback validation');
-                    } else if (workerError.message.includes('fetch') || workerError.message.includes('Failed to fetch')) {
+                        console.log('Network/CORS error - using fallback validation');
+                        
+                    } else if (workerError.message.includes('Server error')) {
+                        // Server error - lanjutkan dengan warning
                         showWarning = true;
                         validationMethod = 'format-fallback';
-                        console.log('Network error - using fallback validation');
+                        console.log('Server error - using fallback validation');
+                        
                     } else {
-                        // Error lain (termasuk nomor tidak valid) - lempar error
+                        // Error lain (nomor tidak valid) - lempar error
                         throw workerError;
                     }
                 }
@@ -367,5 +369,5 @@
 
         loopsFetchFbclid('loops-form-order');
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98734571832f9998',t:'MTc1OTIzMDYwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98734d389796fde7',t:'MTc1OTIzMDkxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
