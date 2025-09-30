@@ -132,7 +132,7 @@
 
         <form id="loops-form-order" class="loops-forms" action="https://app.loops.id/save-order/test-lp-wa" method="POST">
             <div class="loops-group">
-                <label for="name">Nama lengkap <span class="red">*</span></label>
+                <label for="name">Nama lengkap1 <span class="red">*</span></label>
                 <input type="text" id="name" name="name" value="" placeholder="Tulis nama Anda" required>
             </div>
             
@@ -257,62 +257,9 @@
                     throw new Error('Format nomor HP tidak valid. Gunakan format: 081234567890');
                 }
 
-                console.log('Basic validation passed, trying WhatsApp validation...');
-                
-                let validationMethod = 'format';
-                let showWarning = false;
-                
-                // Coba validasi WhatsApp melalui worker dengan timeout
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 detik timeout
-                    
-                    const response = await fetch(WORKER_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            nama: nama,
-                            whatsapp: phone
-                        }),
-                        signal: controller.signal
-                    });
-
-                    clearTimeout(timeoutId);
-
-                    if (response.ok) {
-                        const result = await response.json();
-                        if (result.success) {
-                            validationMethod = 'whatsapp';
-                            console.log('WhatsApp validation successful');
-                        } else {
-                            throw new Error(result.message || 'Nomor WhatsApp tidak valid');
-                        }
-                    } else {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                } catch (workerError) {
-                    console.warn('Worker validation failed:', workerError.message);
-                    
-                    // Jika timeout atau network error, lanjutkan dengan warning
-                    if (workerError.name === 'AbortError' || 
-                        workerError.message.includes('fetch') || 
-                        workerError.message.includes('HTTP')) {
-                        
-                        showWarning = true;
-                        validationMethod = 'format-fallback';
-                        console.log('Using fallback validation due to network issues');
-                    } else {
-                        // Error lain (nomor tidak valid), lempar error
-                        throw workerError;
-                    }
-                }
-
-                // Jika sampai sini, validasi berhasil (baik via WhatsApp atau fallback)
                 console.log('Validation passed, sending to Loops...');
                 
-                // Kirim ke Loops
+                // Kirim ke Loops langsung
                 const loopsResponse = await fetch(form.action, {
                     method: 'POST',
                     body: formData
@@ -323,12 +270,7 @@
                 }
 
                 // Berhasil
-                if (showWarning) {
-                    showMessage('warning', 'Validasi WhatsApp tidak tersedia, pesanan tetap berhasil dikirim!');
-                } else {
-                    showMessage('success');
-                }
-                
+                showMessage('success');
                 form.reset();
 
                 // Redirect ke WhatsApp setelah 3 detik
@@ -370,5 +312,5 @@
 
         loopsFetchFbclid('loops-form-order');
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98732c68c4809998',t:'MTc1OTIyOTU3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98733385b55d9998',t:'MTc1OTIyOTg2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
