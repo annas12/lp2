@@ -1,459 +1,147 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pemesanan dengan Validasi WhatsApp</title>
-    <style>
-        body {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<!-- ====== STYLE RINGKAS ====== -->
+<style>
+  .loops-group { display:block; margin-bottom:20px; }
+  .loops-group label { font-weight:bold; }
+  .loops-group input, .loops-group select, .loops-group textarea {
+    display:block; width:100%; border:1px solid #ccc; border-radius:3px;
+  }
+  .loops-group input { height:36px; padding:6px 10px; }
+  .loops-group select { height:45px; color:#7A7A7A; padding:5px 15px; background:#fff; }
+  .loops-group input.loops-submit { background:#81bd4b; color:#fff; cursor:pointer; }
+  .loops-footer { font-size:11px; color:#999; font-style:italic; }
+  .red { color:#B30000; }
+  .hint { font-size:12px; color:#666; margin-top:6px; }
+  .error { color:#B30000; font-size:13px; margin-top:6px; display:none; }
+  .success { color:#2b8a3e; font-size:13px; margin-top:6px; display:none; }
+  .is-disabled { opacity:0.65; pointer-events:none; }
+</style>
 
-        .form-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-        }
+<!-- ====== FORM LOOPS ====== -->
+<form id="loops-form-order" class="loops-forms"
+      action="https://app.loops.id/save-order/test-lp-wa"
+      method="POST" novalidate>
 
-        .form-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+  <div class="loops-group">
+    <label for="name">Nama lengkap <span class="red">*</span></label>
+    <input type="text" id="name" name="name" placeholder="Tulis nama Anda" required />
+  </div>
 
-        .form-header h1 {
-            color: #333;
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 600;
-        }
+  <div class="loops-group">
+    <label for="phone">No HP (WhatsApp) <span class="red">*</span></label>
+    <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel"
+           placeholder="081234567890 / +62812xxxx" required />
+    <div id="phone-hint" class="hint">Format: 08xxxx / +62xxxx / 62xxxx</div>
+    <div id="phone-error" class="error"></div>
+    <div id="phone-success" class="success"></div>
+  </div>
 
-        .form-header p {
-            color: #666;
-            margin: 0;
-            font-size: 16px;
-        }
+  <div class="loops-group">
+    <input id="loops-form-submit" type="submit" value="Beli Sekarang" class="loops-submit" />
+  </div>
 
-        .loops-group {
-            display: block;
-            margin-bottom: 25px;
-        }
+  <!-- Hidden yang dikirim ke Loops -->
+  <input type="hidden" id="current" name="current" value="" />
+  <input type="hidden" id="redirect" name="redirect" value="" />
+  <input type="hidden" id="_loops_nonce" name="_loops_nonce" value="" />
+  <input type="hidden" id="phone_normalized" name="phone_normalized" value="" />
 
-        .loops-group label {
-            font-weight: 600;
-            color: #333;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+  <p class="loops-footer">Powered by <a href="https://loops.id/?utm_source=form-embed&utm_content=289729">Loops.id</a>.</p>
+</form>
 
-        .loops-group input {
-            display: block;
-            width: 100%;
-            height: 50px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            padding: 0 15px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
+<!-- ====== SCRIPT VALIDASI ====== -->
+<script>
+  // === KONFIGURASI ===
+  const WORKER_VALIDATE_URL = "https://vlidaiwwa.annasmashuri97.workers.dev/validate"; // <-- ganti ini
+  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start"; // opsional (auto buka WA)
 
-        .loops-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+  // === HELPER ===
+  function normalizeIDNPhone(input) {
+    const s = String(input || "").replace(/[^\d+]/g, "");
+    if (!s) return "";
+    if (s.startsWith("+62")) return s.slice(1);
+    if (s.startsWith("62")) return s;
+    if (s.startsWith("0")) return "62" + s.slice(1);
+    if (s.startsWith("8")) return "62" + s;
+    return "";
+  }
+  function basicPhoneCheck(norm) {
+    return /^62\d{8,13}$/.test(norm);
+  }
 
-        .loops-group input.loops-submit {
-            background: linear-gradient(135deg, #81bd4b 0%, #6ba83a 100%);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+  const form = document.getElementById("loops-form-order");
+  const btn = document.getElementById("loops-form-submit");
+  const inpPhone = document.getElementById("phone");
+  const err = document.getElementById("phone-error");
+  const ok = document.getElementById("phone-success");
+  const hiddenNorm = document.getElementById("phone_normalized");
+  const hiddenRedirect = document.getElementById("redirect");
 
-        .loops-group input.loops-submit:hover:not(:disabled) {
-            background: linear-gradient(135deg, #6ba83a 0%, #5a9129 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(129, 189, 75, 0.3);
-        }
+  function setBusy(b) {
+    if (b) { btn.classList.add("is-disabled"); btn.value = "Mengecek WhatsApp..."; }
+    else  { btn.classList.remove("is-disabled"); btn.value = "Beli Sekarang"; }
+  }
+  function showErr(msg) { err.textContent = msg; err.style.display = "block"; ok.style.display = "none"; }
+  function showOk(msg) { ok.textContent = msg; ok.style.display = "block"; err.style.display = "none"; }
 
-        .loops-group input.loops-submit:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // tahan submit sampai valid
 
-        .red {
-            color: #e74c3c;
-        }
+    setBusy(true);
+    try {
+      const norm = normalizeIDNPhone(inpPhone.value);
+      if (!norm || !basicPhoneCheck(norm)) {
+        showErr("Nomor tidak valid. Gunakan format 08xxxx / +62xxxx / 62xxxx.");
+        setBusy(false);
+        inpPhone.focus();
+        return;
+      }
 
-        .loops-footer {
-            font-size: 12px;
-            color: #999;
-            font-style: italic;
-            text-align: center;
-            margin-top: 20px;
-        }
+      const url = `${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`;
+      const res = await fetch(url, { method: "GET", cache: "no-store" });
+      const data = await res.json();
 
-        .loops-footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
+      if (!data?.ok) {
+        showErr("Validasi gagal: " + (data?.error || "Server error"));
+        setBusy(false);
+        return;
+      }
 
-        .status-message {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
-            text-align: center;
-            display: none;
-        }
+      if (!data.exists) {
+        showErr("Nomor ini belum terdaftar di WhatsApp. Mohon cek kembali.");
+        setBusy(false);
+        return;
+      }
 
-        .status-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
+      // Lulus validasi
+      hiddenNorm.value = norm;
 
-        .status-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+      // (Opsional) minta Loops redirect ke WA setelah submit sukses
+      hiddenRedirect.value = WA_START_CHAT;
 
-        .status-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
+      showOk("Nomor terverifikasi di WhatsApp. Mengirim pesanan...");
+      setTimeout(() => {
+        form.submit(); // kirim ke Loops
+      }, 120);
+    } catch (ex) {
+      console.error(ex);
+      showErr("Terjadi kesalahan koneksi. Coba lagi.");
+      setBusy(false);
+    }
+  });
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
+  inpPhone.addEventListener("input", () => {
+    err.style.display = "none";
+    ok.style.display = "none";
+  });
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .validation-step {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .validation-step h3 {
-            margin: 0 0 10px 0;
-            color: #495057;
-            font-size: 16px;
-        }
-
-        .validation-step p {
-            margin: 0;
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .form-container {
-                padding: 30px 20px;
-                margin: 10px;
-            }
-            
-            .form-header h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <div class="form-header">
-            <h1>📱 Form Pemesanan</h1>
-            <p>Isi data Anda untuk melanjutkan pemesanan</p>
-        </div>
-
-        <div id="status-message" class="status-message"></div>
-        
-        <div id="validation-info" class="validation-step">
-            <h3>🔍 Memvalidasi Nomor WhatsApp</h3>
-            <p>Sedang memeriksa apakah nomor WhatsApp Anda terdaftar...</p>
-        </div>
-
-        <form id="loops-form-order" class="loops-forms">
-            <div class="loops-group">
-                <label for="name">Nama Lengkap <span class="red">*</span></label>
-                <input type="text" id="name" name="name" value="" placeholder="Tulis nama Anda" required>
-            </div>
-            
-            <div class="loops-group">
-                <label for="phone">No HP <span class="red">*</span></label>
-                <input type="text" id="phone" name="phone" value="" placeholder="Contoh: 081234567890" pattern="[0]{1}[0-9]{8,12}" required>
-            </div>
-            
-            <div class="loops-group">
-                <input id="loops-form-submit" type="submit" value="Validasi & Pesan Sekarang" class="loops-submit">
-            </div>
-            
-            <input type="hidden" id="current" name="current" value="">
-            <input type="hidden" name="redirect" value="">
-            <input type="hidden" name="_loops_nonce" value="">
-            
-            <p class="loops-footer">Powered by <a href="https://loops.id/?utm_source=form-embed&utm_content=289729" target="_blank">Loops.id</a></p>
-        </form>
-    </div>
-
-    <script>
-        const form = document.getElementById('loops-form-order');
-        const submitBtn = document.getElementById('loops-form-submit');
-        const statusMessage = document.getElementById('status-message');
-        const validationInfo = document.getElementById('validation-info');
-        const phoneInput = document.getElementById('phone');
-        const nameInput = document.getElementById('name');
-        
-        let isSubmitting = false;
-
-        // Konfigurasi API WhatsApp melalui Cloudflare Worker
-        const WHAPI_CONFIG = {
-            workerUrl: 'https://vlidaiwwa.annasmashuri97.workers.dev/'
-        };
-
-        // Konfigurasi Loops.id
-        const LOOPS_CONFIG = {
-            actionUrl: 'https://app.loops.id/save-order/test-lp-wa'
-        };
-
-        function showMessage(message, type) {
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message status-${type}`;
-            statusMessage.style.display = 'block';
-            
-            // Auto hide success messages after 5 seconds
-            if (type === 'success') {
-                setTimeout(() => {
-                    statusMessage.style.display = 'none';
-                }, 5000);
-            }
-        }
-
-        function hideMessage() {
-            statusMessage.style.display = 'none';
-        }
-
-        function formatPhoneNumber(phone) {
-            // Remove all non-numeric characters
-            let cleaned = phone.replace(/\D/g, '');
-            
-            // Convert to international format
-            if (cleaned.startsWith('0')) {
-                cleaned = '62' + cleaned.substring(1);
-            } else if (!cleaned.startsWith('62')) {
-                cleaned = '62' + cleaned;
-            }
-            
-            return cleaned;
-        }
-
-        async function validateWhatsAppNumber(phoneNumber) {
-            const formattedPhone = formatPhoneNumber(phoneNumber);
-            
-            try {
-                const response = await fetch(WHAPI_CONFIG.workerUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        phone: formattedPhone
-                    })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        return {
-                            isValid: true,
-                            data: data.data,
-                            formattedPhone: formattedPhone
-                        };
-                    } else {
-                        return {
-                            isValid: false,
-                            error: data.error || 'Nomor WhatsApp tidak terdaftar',
-                            formattedPhone: formattedPhone
-                        };
-                    }
-                } else {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-            } catch (error) {
-                console.error('WhatsApp validation error:', error);
-                return {
-                    isValid: false,
-                    error: 'Gagal memvalidasi nomor WhatsApp. Silakan coba lagi.',
-                    formattedPhone: formattedPhone
-                };
-            }
-        }
-
-        async function submitToLoops(formData) {
-            try {
-                const response = await fetch(LOOPS_CONFIG.actionUrl, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    return { success: true };
-                } else {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-            } catch (error) {
-                console.error('Loops submission error:', error);
-                return { 
-                    success: false, 
-                    error: 'Gagal mengirim pesanan. Silakan coba lagi.' 
-                };
-            }
-        }
-
-        function openWhatsAppChat(phoneNumber) {
-            const formattedPhone = formatPhoneNumber(phoneNumber);
-            const waUrl = `https://wa.me/${formattedPhone}?text=Start`;
-            window.open(waUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            if (isSubmitting) return;
-            
-            const name = nameInput.value.trim();
-            const phone = phoneInput.value.trim();
-            
-            if (!name || !phone) {
-                showMessage('Mohon lengkapi semua field yang wajib diisi', 'error');
-                return;
-            }
-
-            // Validate phone format
-            const phoneRegex = /^0[0-9]{8,12}$/;
-            if (!phoneRegex.test(phone)) {
-                showMessage('Format nomor HP tidak valid. Gunakan format: 081234567890', 'error');
-                return;
-            }
-
-            isSubmitting = true;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading-spinner"></span>Memvalidasi...';
-            
-            hideMessage();
-            validationInfo.style.display = 'block';
-
-            try {
-                // Step 1: Validate WhatsApp number
-                const validation = await validateWhatsAppNumber(phone);
-                
-                validationInfo.style.display = 'none';
-                
-                if (!validation.isValid) {
-                    showMessage(validation.error || 'Nomor WhatsApp tidak valid atau tidak terdaftar', 'error');
-                    return;
-                }
-
-                // Step 2: Submit to Loops.id
-                submitBtn.innerHTML = '<span class="loading-spinner"></span>Mengirim Pesanan...';
-                showMessage('✅ Nomor WhatsApp valid! Mengirim pesanan...', 'info');
-
-                const formData = new FormData();
-                formData.append('name', name);
-                formData.append('phone', phone);
-                formData.append('current', document.getElementById('current').value);
-                formData.append('redirect', '');
-                formData.append('_loops_nonce', '');
-
-                const submission = await submitToLoops(formData);
-                
-                if (submission.success) {
-                    showMessage('🎉 Pesanan berhasil dikirim! Anda akan dihubungi segera.', 'success');
-                    
-                    // Optional: Open WhatsApp chat
-                    setTimeout(() => {
-                        if (confirm('Ingin membuka chat WhatsApp sekarang?')) {
-                            openWhatsAppChat(phone);
-                        }
-                    }, 2000);
-                    
-                    // Reset form
-                    form.reset();
-                } else {
-                    showMessage(submission.error || 'Gagal mengirim pesanan. Silakan coba lagi.', 'error');
-                }
-
-            } catch (error) {
-                console.error('Form submission error:', error);
-                showMessage('Terjadi kesalahan. Silakan coba lagi.', 'error');
-            } finally {
-                isSubmitting = false;
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Validasi & Pesan Sekarang';
-                validationInfo.style.display = 'none';
-            }
-        });
-
-        // Format phone number as user types
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0 && !value.startsWith('0')) {
-                value = '0' + value;
-            }
-            if (value.length > 13) {
-                value = value.substring(0, 13);
-            }
-            e.target.value = value;
-        });
-
-        // Handle fbclid parameter for tracking
-        function loopsFetchFbclid() {
-            try {
-                const url = new URL(window.location.href);
-                const fbclid = url.searchParams.get('fbclid');
-                if (fbclid) {
-                    document.getElementById('current').value = fbclid;
-                }
-            } catch (error) {
-                console.log('Error fetching fbclid:', error);
-            }
-        }
-
-        // Initialize
-        loopsFetchFbclid();
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98736271b3f07ae1',t:'MTc1OTIzMTc4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+  // Simpan fbclid ke field hidden "current" agar ikut terkirim
+  (function keepFbclid() {
+    try {
+      const u = new URL(window.location.href);
+      const fbclid = u.searchParams.get("fbclid");
+      if (!fbclid) return;
+      const current = document.getElementById("current");
+      if (current) current.value = fbclid;
+    } catch (_) {}
+  })();
+</script>
