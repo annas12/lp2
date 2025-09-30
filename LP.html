@@ -1,147 +1,145 @@
-<!-- ====== STYLE RINGKAS ====== -->
 <style>
   .loops-group { display:block; margin-bottom:20px; }
   .loops-group label { font-weight:bold; }
-  .loops-group input, .loops-group select, .loops-group textarea {
-    display:block; width:100%; border:1px solid #ccc; border-radius:3px;
-  }
-  .loops-group input { height:36px; padding:6px 10px; }
-  .loops-group select { height:45px; color:#7A7A7A; padding:5px 15px; background:#fff; }
+  .loops-group input { display:block; width:100%; height:36px; border:1px solid #ccc; border-radius:3px; }
+  .loops-group select { display:block; width:100%; height:45px; border:1px solid #ccc; border-radius:3px; color:#7A7A7A; padding:5px 15px; background:white; }
+  .loops-group textarea { display:block; width:100%; border:1px solid #ccc; border-radius:3px; }
   .loops-group input.loops-submit { background:#81bd4b; color:#fff; cursor:pointer; }
-  .loops-footer { font-size:11px; color:#999; font-style:italic; }
+  .loops-footer { font-size:11px; color:#ccc; font-style:italic; }
   .red { color:#B30000; }
-  .hint { font-size:12px; color:#666; margin-top:6px; }
-  .error { color:#B30000; font-size:13px; margin-top:6px; display:none; }
-  .success { color:#2b8a3e; font-size:13px; margin-top:6px; display:none; }
-  .is-disabled { opacity:0.65; pointer-events:none; }
+  .msg { font-size:13px; margin-top:6px; display:none }
+  .msg.err { color:#B30000; }
+  .msg.ok  { color:#2b8a3e; }
+  .is-disabled { opacity:.6; pointer-events:none; }
 </style>
 
-<!-- ====== FORM LOOPS ====== -->
-<form id="loops-form-order" class="loops-forms"
-      action="https://app.loops.id/save-order/test-lp-wa"
-      method="POST" novalidate>
-
+<form id="loops-form-order" class="loops-forms" action="https://app.loops.id/save-order/test-lp-wa" method="POST" novalidate>
   <div class="loops-group">
     <label for="name">Nama lengkap <span class="red">*</span></label>
-    <input type="text" id="name" name="name" placeholder="Tulis nama Anda" required />
+    <input type="text" id="name" name="name" value="" placeholder="Tulis nama Anda" required>
   </div>
 
   <div class="loops-group">
-    <label for="phone">No HP (WhatsApp) <span class="red">*</span></label>
-    <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel"
-           placeholder="081234567890 / +62812xxxx" required />
-    <div id="phone-hint" class="hint">Format: 08xxxx / +62xxxx / 62xxxx</div>
-    <div id="phone-error" class="error"></div>
-    <div id="phone-success" class="success"></div>
+    <label for="phone">No HP <span class="red">*</span></label>
+    <!-- biarkan user isi bebas (0812 / +62812 / 62812), kita normalisasi via JS -->
+    <input type="text" id="phone" name="phone" value="" placeholder="081234567890 / +62812xxxx" required>
+    <div id="msg" class="msg err"></div>
+    <div id="msgOk" class="msg ok"></div>
   </div>
 
   <div class="loops-group">
-    <input id="loops-form-submit" type="submit" value="Beli Sekarang" class="loops-submit" />
+    <input id="loops-form-submit" type="submit" value="Beli Sekarang" class="loops-submit">
   </div>
 
-  <!-- Hidden yang dikirim ke Loops -->
-  <input type="hidden" id="current" name="current" value="" />
-  <input type="hidden" id="redirect" name="redirect" value="" />
-  <input type="hidden" id="_loops_nonce" name="_loops_nonce" value="" />
-  <input type="hidden" id="phone_normalized" name="phone_normalized" value="" />
+  <!-- hidden untuk Loops -->
+  <input type="hidden" id="current" name="current" value="">
+  <input type="hidden" name="redirect" value="">
+  <input type="hidden" name="_loops_nonce" value="">
+  <input type="hidden" id="phone_normalized" name="phone_normalized" value=""> <!-- ikut terkirim ke Loops -->
 
   <p class="loops-footer">Powered by <a href="https://loops.id/?utm_source=form-embed&utm_content=289729">Loops.id</a>.</p>
 </form>
 
-<!-- ====== SCRIPT VALIDASI ====== -->
 <script>
-  // === KONFIGURASI ===
-  const WORKER_VALIDATE_URL = "https://vlidaiwwa.annasmashuri97.workers.dev/validate"; // <-- ganti ini
-  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start"; // opsional (auto buka WA)
+  // ======= KONFIGURASI =======
+  const WORKER_VALIDATE_URL = "https://watzap.annasmashuri97.workers.dev/validate"; // GANTI ke worker kamu
+  const WA_START_CHAT = "https://wa.me/6289674494567?text=Start";          // opsional: redirect setelah submit
 
-  // === HELPER ===
-  function normalizeIDNPhone(input) {
-    const s = String(input || "").replace(/[^\d+]/g, "");
+  // ======= ELEMENT =======
+  const form = document.getElementById('loops-form-order');
+  const btn  = document.getElementById('loops-form-submit');
+  const phoneInput = document.getElementById('phone');
+  const msg  = document.getElementById('msg');
+  const ok   = document.getElementById('msgOk');
+  const hiddenNorm = document.getElementById('phone_normalized');
+  let submitting = false;
+
+  // ======= HELPER =======
+  function normalize62(input){
+    const s = String(input||"").replace(/[^\d+]/g,"");
     if (!s) return "";
     if (s.startsWith("+62")) return s.slice(1);
-    if (s.startsWith("62")) return s;
-    if (s.startsWith("0")) return "62" + s.slice(1);
-    if (s.startsWith("8")) return "62" + s;
-    return "";
+    if (s.startsWith("62"))  return s;
+    if (s.startsWith("0"))   return "62"+s.slice(1);
+    if (s.startsWith("8"))   return "62"+s;
+    return s.replace(/^0+/,"");
   }
-  function basicPhoneCheck(norm) {
-    return /^62\d{8,13}$/.test(norm);
+  function setBusy(b){
+    submitting = b;
+    btn.value = b ? "Mengecek WhatsApp..." : "Beli Sekarang";
+    if (b) btn.classList.add("is-disabled"); else btn.classList.remove("is-disabled");
   }
+  function showErr(t){ msg.textContent=t; msg.style.display="block"; ok.style.display="none"; }
+  function showOk(t){ ok.textContent=t; ok.style.display="block"; msg.style.display="none"; }
 
-  const form = document.getElementById("loops-form-order");
-  const btn = document.getElementById("loops-form-submit");
-  const inpPhone = document.getElementById("phone");
-  const err = document.getElementById("phone-error");
-  const ok = document.getElementById("phone-success");
-  const hiddenNorm = document.getElementById("phone_normalized");
-  const hiddenRedirect = document.getElementById("redirect");
+  btn.addEventListener('click', (e) => {
+    if (submitting) {
+      setTimeout(() => { e.target.disabled = true; }, 0);
+    }
+  });
 
-  function setBusy(b) {
-    if (b) { btn.classList.add("is-disabled"); btn.value = "Mengecek WhatsApp..."; }
-    else  { btn.classList.remove("is-disabled"); btn.value = "Beli Sekarang"; }
-  }
-  function showErr(msg) { err.textContent = msg; err.style.display = "block"; ok.style.display = "none"; }
-  function showOk(msg) { ok.textContent = msg; ok.style.display = "block"; err.style.display = "none"; }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (submitting) return;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // tahan submit sampai valid
-
+    showErr(""); showOk(""); msg.style.display="none"; ok.style.display="none";
     setBusy(true);
+
     try {
-      const norm = normalizeIDNPhone(inpPhone.value);
-      if (!norm || !basicPhoneCheck(norm)) {
-        showErr("Nomor tidak valid. Gunakan format 08xxxx / +62xxxx / 62xxxx.");
-        setBusy(false);
-        inpPhone.focus();
-        return;
-      }
+      // 1) normalisasi no hp → 62xxxxxxxxxx
+      const norm = normalize62(phoneInput.value);
 
-      const url = `${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`;
-      const res = await fetch(url, { method: "GET", cache: "no-store" });
-      const data = await res.json();
-
-      if (!data?.ok) {
-        showErr("Validasi gagal: " + (data?.error || "Server error"));
+      if (!/^62\d{7,15}$/.test(norm)) {
+        showErr("Nomor tidak valid. Gunakan 08xxxxx atau +628xxxxx.");
         setBusy(false);
         return;
       }
 
-      if (!data.exists) {
-        showErr("Nomor ini belum terdaftar di WhatsApp. Mohon cek kembali.");
+      // 2) panggil worker watzap untuk validasi
+      const res = await fetch(`${WORKER_VALIDATE_URL}?phone=${encodeURIComponent(norm)}`, { cache: "no-store" });
+      const j = await res.json();
+
+      if (!j.ok) {
+        showErr("Validasi gagal: " + (j.error || "server"));
+        setBusy(false);
+        return;
+      }
+      if (!j.exists) {
+        showErr("Nomor belum terdaftar di WhatsApp. Silakan cek kembali.");
         setBusy(false);
         return;
       }
 
-      // Lulus validasi
+      // 3) lolos validasi -> submit ke Loops
       hiddenNorm.value = norm;
+      const redirectInput = form.querySelector('input[name="redirect"]');
+      if (redirectInput && WA_START_CHAT) redirectInput.value = WA_START_CHAT;
 
-      // (Opsional) minta Loops redirect ke WA setelah submit sukses
-      hiddenRedirect.value = WA_START_CHAT;
+      showOk("Nomor terverifikasi. Mengirim pesanan...");
+      setTimeout(() => form.submit(), 150);
 
-      showOk("Nomor terverifikasi di WhatsApp. Mengirim pesanan...");
-      setTimeout(() => {
-        form.submit(); // kirim ke Loops
-      }, 120);
-    } catch (ex) {
-      console.error(ex);
-      showErr("Terjadi kesalahan koneksi. Coba lagi.");
+    } catch (err) {
+      console.error(err);
+      showErr("Terjadi kesalahan koneksi.");
       setBusy(false);
     }
   });
 
-  inpPhone.addEventListener("input", () => {
-    err.style.display = "none";
+  phoneInput.addEventListener('input', () => {
+    msg.style.display = "none";
     ok.style.display = "none";
   });
 
-  // Simpan fbclid ke field hidden "current" agar ikut terkirim
-  (function keepFbclid() {
+  // ===== fbclid helper (biarkan jika kamu butuh) =====
+  function loopsFetchFbclid(linkId) {
     try {
-      const u = new URL(window.location.href);
-      const fbclid = u.searchParams.get("fbclid");
-      if (!fbclid) return;
-      const current = document.getElementById("current");
-      if (current) current.value = fbclid;
-    } catch (_) {}
-  })();
+      const LoopsUrl = new URL(window.location.href);
+      const loopsFBClid = LoopsUrl.searchParams.get('fbclid');
+      var loopsWaLink = document.getElementById(linkId).href;
+      const separator = loopsWaLink.includes('?') ? '&' : '?';
+      loopsWaLink = `${loopsWaLink}${separator}${'fbclid'}=${loopsFBClid}`;
+      document.getElementById(linkId).setAttribute('href', loopsWaLink);
+    } catch (error) { console.log(error); }
+  }
+  // loopsFetchFbclid('loops-form-order'); // tidak wajib untuk form
 </script>
