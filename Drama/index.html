@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Drama Short</title>
+<script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+<style>
+body{background:#111;color:#fff;font-family:Arial}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,140px);gap:12px}
+.card img{width:100%;border-radius:8px}
+.card{cursor:pointer}
+#player{width:100%;max-height:60vh}
+input{padding:6px;width:200px}
+</style>
+</head>
+<body>
+
+<h2>🔥 Trending</h2>
+<div id="trending" class="grid"></div>
+
+<h2>🆕 Latest</h2>
+<div id="latest" class="grid"></div>
+
+<h2>🔍 Search</h2>
+<input id="q" placeholder="Cari drama">
+<button onclick="search()">Cari</button>
+<div id="search" class="grid"></div>
+
+<hr>
+<h3 id="title"></h3>
+<video id="player" controls></video>
+<div id="episodes"></div>
+
+<script>
+const API = 'https://magma-api.biz.id/dramabox'
+
+function render(list, target){
+  document.getElementById(target).innerHTML =
+    list.map(d=>`
+      <div class="card" onclick="loadEpisodes('${d.id}')">
+        <img src="${d.cover||d.image}">
+        <small>${d.title}</small>
+      </div>`).join('')
+}
+
+fetch(API+'/trending').then(r=>r.json()).then(d=>render(d,'trending'))
+fetch(API+'/latest').then(r=>r.json()).then(d=>render(d,'latest'))
+
+function search(){
+  const q=document.getElementById('q').value
+  fetch(API+'/search?q='+q).then(r=>r.json()).then(d=>render(d,'search'))
+}
+
+function loadEpisodes(id){
+  fetch(API+'/allepisode?id='+id)
+    .then(r=>r.json())
+    .then(list=>{
+      document.getElementById('episodes').innerHTML =
+        list.map(e=>`
+          <button onclick="play('${e.video}')">
+            Episode ${e.episode}
+          </button>`).join('')
+    })
+}
+
+function play(url){
+  const video=document.getElementById('player')
+  if(Hls.isSupported()){
+    const hls=new Hls()
+    hls.loadSource(url)
+    hls.attachMedia(video)
+  }else{
+    video.src=url
+  }
+}
+</script>
+
+</body>
+</html>
