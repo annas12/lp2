@@ -1,68 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <title>Drama Short</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+
 <style>
-body{background:#111;color:#fff;font-family:Arial}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,140px);gap:12px}
-.card img{width:100%;border-radius:8px}
+body{margin:0;background:#111;color:#fff;font-family:Arial}
+header{position:sticky;top:0;background:#000;padding:10px;z-index:9}
+button{margin:4px;padding:6px 10px;border:none;border-radius:4px}
+input{padding:6px;border-radius:4px;border:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,140px);gap:12px;padding:10px}
 .card{cursor:pointer}
-#player{width:100%;max-height:60vh}
-button{margin:4px}
+.card img{width:100%;border-radius:8px}
+.card p{font-size:12px;margin:4px 0}
+video{width:100%;max-height:60vh;background:#000}
+#episodes{padding:10px}
+#episodes button{margin:4px}
 </style>
 </head>
+
 <body>
 
-<h2>🔥 Trending</h2>
-<div id="trending" class="grid"></div>
+<header>
+  <button onclick="loadList('trending')">🔥 Trending</button>
+  <button onclick="loadList('latest')">🆕 Latest</button>
+  <button onclick="loadList('foryou')">🎯 For You</button>
+  <button onclick="loadList('random')">🎲 Random</button>
+  <button onclick="loadList('vip')">👑 VIP</button>
+  <button onclick="loadList('dubindo')">🇮🇩 Dub Indo</button>
+  <br><br>
+  <input id="q" placeholder="Cari drama">
+  <button onclick="search()">Cari</button>
+</header>
 
-<h2>🆕 Latest</h2>
-<div id="latest" class="grid"></div>
+<div id="list" class="grid"></div>
 
-<hr>
 <video id="player" controls></video>
 <div id="episodes"></div>
 
 <script>
-const PROXY = 'https://corsproxy.io/?'
-const API = PROXY + 'https://magma-api.biz.id/dramabox'
+const API = 'https://dramabox-proxy.annasmashuri97.workers.dev'
 
-function render(list, target){
-  document.getElementById(target).innerHTML =
-    list.map(d=>`
-      <div class="card" onclick="loadEpisodes('${d.id || d.slug}')">
-        <img src="${d.cover||d.image}">
-        <small>${d.title}</small>
-      </div>`).join('')
+function loadList(type){
+  fetch(`${API}/${type}`)
+    .then(r => r.json())
+    .then(showList)
+    .catch(err => alert('Gagal load data'))
 }
 
-fetch(API+'/trending').then(r=>r.json()).then(d=>render(d,'trending'))
-fetch(API+'/latest').then(r=>r.json()).then(d=>render(d,'latest'))
+function search(){
+  const q = document.getElementById('q').value
+  fetch(`${API}/search?q=${encodeURIComponent(q)}`)
+    .then(r => r.json())
+    .then(showList)
+}
+
+function showList(data){
+  document.getElementById('episodes').innerHTML = ''
+  document.getElementById('player').pause()
+
+  document.getElementById('list').innerHTML =
+    data.map(d => `
+      <div class="card" onclick="loadEpisodes('${d.id || d.slug}')">
+        <img src="${d.cover || d.image}">
+        <p>${d.title}</p>
+      </div>
+    `).join('')
+}
 
 function loadEpisodes(id){
-  fetch(API+'/allepisode?id='+id)
-    .then(r=>r.json())
-    .then(list=>{
+  fetch(`${API}/allepisode?id=${id}`)
+    .then(r => r.json())
+    .then(list => {
       document.getElementById('episodes').innerHTML =
-        list.map(e=>`
-          <button onclick="play('${e.video||e.url}')">
-            Ep ${e.episode||''}
-          </button>`).join('')
+        list.map(e => `
+          <button onclick="play('${e.video || e.url}')">
+            Episode ${e.episode || ''}
+          </button>
+        `).join('')
     })
 }
 
 function play(url){
-  const video=document.getElementById('player')
-  if(Hls.isSupported() && url.includes('.m3u8')){
-    const hls=new Hls()
+  const video = document.getElementById('player')
+  video.pause()
+
+  if (Hls.isSupported() && url.includes('.m3u8')) {
+    const hls = new Hls()
     hls.loadSource(url)
     hls.attachMedia(video)
-  }else{
-    video.src=url
+  } else {
+    video.src = url
   }
+  video.play()
 }
+
+// load default
+loadList('trending')
 </script>
 
 </body>
