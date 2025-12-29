@@ -2,102 +2,136 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Drama Short</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
-
+<title>DramaBox Web</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{margin:0;background:#111;color:#fff;font-family:Arial}
-header{position:sticky;top:0;background:#000;padding:10px;z-index:9}
-button{margin:4px;padding:6px 10px;border:none;border-radius:4px}
-input{padding:6px;border-radius:4px;border:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,140px);gap:12px;padding:10px}
-.card{cursor:pointer}
-.card img{width:100%;border-radius:8px}
-.card p{font-size:12px;margin:4px 0}
-video{width:100%;max-height:60vh;background:#000}
-#episodes{padding:10px}
-#episodes button{margin:4px}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+}
+header {
+  padding: 12px;
+  background: #020617;
+  text-align: center;
+  font-weight: bold;
+}
+nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 10px;
+}
+button {
+  background: #1e293b;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover {
+  background: #334155;
+}
+#list {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
+  gap: 12px;
+}
+.card {
+  background: #020617;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card h4 {
+  font-size: 14px;
+  padding: 6px;
+}
+video {
+  width: 100%;
+  max-height: 80vh;
+  background: black;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-  <button onclick="loadList('trending')">🔥 Trending</button>
-  <button onclick="loadList('latest')">🆕 Latest</button>
-  <button onclick="loadList('foryou')">🎯 For You</button>
-  <button onclick="loadList('random')">🎲 Random</button>
-  <button onclick="loadList('vip')">👑 VIP</button>
-  <button onclick="loadList('dubindo')">🇮🇩 Dub Indo</button>
-  <br><br>
-  <input id="q" placeholder="Cari drama">
-  <button onclick="search()">Cari</button>
-</header>
+<header>🎬 DramaBox Web</header>
 
-<div id="list" class="grid"></div>
+<nav>
+  <button onclick="loadData('vip')">VIP</button>
+  <button onclick="loadData('random')">Random</button>
+  <button onclick="loadData('foryou')">For You</button>
+  <button onclick="loadData('latest')">Latest</button>
+  <button onclick="loadData('trending')">Trending</button>
+  <button onclick="loadData('dubindo')">Dub Indo</button>
+</nav>
 
-<video id="player" controls></video>
-<div id="episodes"></div>
+<div id="player"></div>
+<div id="list"></div>
 
 <script>
-const API = 'https://dramabox-proxy.annasmashuri97.workers.dev'
+const BASE = "https://dramabox-proxy.annasmashuri97.workers.dev";
 
-function loadList(type){
-  fetch(`${API}/${type}`)
-    .then(r => r.json())
-    .then(showList)
-    .catch(err => alert('Gagal load data'))
-}
+async function loadData(endpoint) {
+  document.getElementById("list").innerHTML = "Loading...";
+  document.getElementById("player").innerHTML = "";
 
-function search(){
-  const q = document.getElementById('q').value
-  fetch(`${API}/search?q=${encodeURIComponent(q)}`)
-    .then(r => r.json())
-    .then(showList)
-}
+  try {
+    const res = await fetch(`${BASE}/${endpoint}`);
+    const json = await res.json();
+    const data = json.data || json;
 
-function showList(data){
-  document.getElementById('episodes').innerHTML = ''
-  document.getElementById('player').pause()
+    document.getElementById("list").innerHTML = "";
 
-  document.getElementById('list').innerHTML =
-    data.map(d => `
-      <div class="card" onclick="loadEpisodes('${d.id || d.slug}')">
-        <img src="${d.cover || d.image}">
-        <p>${d.title}</p>
-      </div>
-    `).join('')
-}
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${item.cover || item.thumbnail || ''}">
+        <h4>${item.title || 'Tanpa Judul'}</h4>
+      `;
+      card.onclick = () => play(item);
+      document.getElementById("list").appendChild(card);
+    });
 
-function loadEpisodes(id){
-  fetch(`${API}/allepisode?id=${id}`)
-    .then(r => r.json())
-    .then(list => {
-      document.getElementById('episodes').innerHTML =
-        list.map(e => `
-          <button onclick="play('${e.video || e.url}')">
-            Episode ${e.episode || ''}
-          </button>
-        `).join('')
-    })
-}
-
-function play(url){
-  const video = document.getElementById('player')
-  video.pause()
-
-  if (Hls.isSupported() && url.includes('.m3u8')) {
-    const hls = new Hls()
-    hls.loadSource(url)
-    hls.attachMedia(video)
-  } else {
-    video.src = url
+  } catch (err) {
+    document.getElementById("list").innerHTML = "❌ Gagal load data";
+    console.error(err);
   }
-  video.play()
 }
 
-// load default
-loadList('trending')
+function play(item) {
+  const videoUrl =
+    item.video ||
+    item.play_url ||
+    item.url ||
+    "";
+
+  if (!videoUrl) {
+    alert("Video tidak tersedia");
+    return;
+  }
+
+  document.getElementById("player").innerHTML = `
+    <video controls autoplay>
+      <source src="${videoUrl}">
+    </video>
+  `;
+}
+
+// auto load
+loadData('random');
 </script>
 
 </body>
