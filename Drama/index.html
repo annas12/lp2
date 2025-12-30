@@ -151,6 +151,9 @@
             padding: 8px 16px;
             border-radius: 4px;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .nav-link:hover {
@@ -160,6 +163,11 @@
         .nav-link.active {
             background-color: var(--primary-color);
             color: white;
+        }
+        
+        .nav-link.vip {
+            background-color: var(--accent-color);
+            color: #000;
         }
         
         /* Hero Section */
@@ -280,6 +288,18 @@
             background-color: var(--light-dark);
         }
         
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
         .card-content {
             padding: 20px;
         }
@@ -346,7 +366,7 @@
             transform: scale(1.1);
         }
         
-        /* Filter Section */
+        /* Filter Section - DIPERBAIKI */
         .filter-section {
             background-color: var(--card-bg);
             padding: 20px;
@@ -354,31 +374,82 @@
             margin-bottom: 30px;
         }
         
-        .filter-row {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
+        .filter-category {
+            margin-bottom: 20px;
         }
         
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .filter-category:last-child {
+            margin-bottom: 0;
         }
         
         .filter-label {
-            font-size: 14px;
-            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--text-color);
         }
         
-        .filter-select {
-            padding: 10px 15px;
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 8px 16px;
             background-color: var(--light-dark);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .filter-tag:hover {
+            background-color: var(--dark-color);
+            border-color: var(--primary-color);
+        }
+        
+        .filter-tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-dark);
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-btn {
+            padding: 8px 16px;
+            background-color: var(--light-dark);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        
+        .sort-btn:hover {
+            background-color: var(--dark-color);
             color: var(--text-color);
-            border: 1px solid var(--light-dark);
-            border-radius: var(--border-radius);
-            min-width: 180px;
+        }
+        
+        .sort-btn.active {
+            background-color: var(--primary-color);
+            color: white;
         }
         
         /* Modal Player */
@@ -444,29 +515,45 @@
             border: none;
         }
         
+        .episodes-container {
+            background-color: var(--card-bg);
+            padding: 20px;
+        }
+        
+        .episodes-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
         .episodes-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
             max-height: 300px;
             overflow-y: auto;
-            background-color: var(--card-bg);
-            padding: 15px;
+            padding-right: 10px;
         }
         
         .episode-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--light-dark);
+            background-color: var(--light-dark);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            display: flex;
-            justify-content: space-between;
+            font-size: 14px;
         }
         
         .episode-item:hover {
-            background-color: var(--card-hover);
+            background-color: var(--dark-color);
+            transform: scale(1.05);
         }
         
         .episode-item.active {
-            background-color: rgba(229, 9, 20, 0.1);
-            border-left: 3px solid var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
         }
         
         /* Loading Spinner */
@@ -563,6 +650,10 @@
             .hero h2 {
                 font-size: 36px;
             }
+            
+            .episodes-list {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
         }
         
         @media (max-width: 768px) {
@@ -576,6 +667,11 @@
                 max-width: 100%;
             }
             
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
             .hero {
                 padding: 50px 0;
             }
@@ -586,6 +682,20 @@
             
             .section-title {
                 font-size: 24px;
+            }
+            
+            .filter-tags {
+                gap: 8px;
+            }
+            
+            .filter-tag {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .sort-btn {
+                padding: 6px 12px;
+                font-size: 13px;
             }
         }
         
@@ -601,11 +711,12 @@
             
             .filter-row {
                 flex-direction: column;
+                gap: 15px;
                 align-items: flex-start;
             }
             
-            .filter-select {
-                min-width: 100%;
+            .episodes-list {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             }
         }
     </style>
@@ -626,9 +737,10 @@
             </div>
             
             <div class="nav-links">
-                <a href="#" class="nav-link active" data-section="for-you"><i class="fas fa-fire"></i> Untuk Anda</a>
-                <a href="#" class="nav-link" data-section="new"><i class="fas fa-star"></i> Terbaru</a>
-                <a href="#" class="nav-link" data-section="rank"><i class="fas fa-trophy"></i> Ranking</a>
+                <a href="#" class="nav-link active" data-section="for-you"><i class="fas fa-fire"></i> Terbaru</a>
+                <a href="#" class="nav-link" data-section="rank"><i class="fas fa-trophy"></i> Daftar Peringkat</a>
+                <a href="#" class="nav-link" data-section="classify"><i class="fas fa-list"></i> Kategori</a>
+                <a href="#" class="nav-link vip"><i class="fas fa-crown"></i> VIP</a>
             </div>
         </div>
     </header>
@@ -636,9 +748,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container hero-content">
-            <h2>Nonton Drama Cina Terlengkap</h2>
+            <h2>Q. Rahasia di Balik Orang...</h2>
             <p>Streaming drama Cina dengan subtitle Indonesia berkualitas tinggi. Ribuan drama populer tersedia untuk ditonton kapan saja dan di mana saja.</p>
-            <button class="btn" id="exploreBtn"><i class="fas fa-play"></i> Jelajahi Sekarang</button>
+            <button class="btn" id="exploreBtn"><i class="fas fa-play"></i> Nonton Sekarang</button>
         </div>
     </section>
 
@@ -647,25 +759,13 @@
         <!-- For You Section -->
         <section id="for-you-section">
             <div class="section-header">
-                <h2 class="section-title">Rekomendasi Untuk Anda</h2>
+                <h2 class="section-title">Drama Terbaru</h2>
                 <a href="#" class="view-all" id="view-all-for-you">Lihat Semua <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="drama-grid" id="for-you-grid">
                 <!-- Drama cards will be loaded here -->
             </div>
             <div class="spinner" id="for-you-spinner"></div>
-        </section>
-
-        <!-- New Drama Section -->
-        <section id="new-section" style="display: none;">
-            <div class="section-header">
-                <h2 class="section-title">Drama Terbaru</h2>
-                <a href="#" class="view-all" id="view-all-new">Lihat Semua <i class="fas fa-chevron-right"></i></a>
-            </div>
-            <div class="drama-grid" id="new-grid">
-                <!-- Drama cards will be loaded here -->
-            </div>
-            <div class="spinner" id="new-spinner"></div>
         </section>
 
         <!-- Rank Section -->
@@ -681,34 +781,67 @@
         </section>
 
         <!-- Classify Section -->
-        <section id="classify-section">
+        <section id="classify-section" style="display: none;">
             <div class="section-header">
                 <h2 class="section-title">Kategori Drama</h2>
             </div>
             
+            <!-- Filter Section -->
             <div class="filter-section">
+                <!-- Negara -->
+                <div class="filter-category">
+                    <label class="filter-label">Negara</label>
+                    <div class="filter-tags" id="countryFilter">
+                        <div class="filter-tag active" data-value="all">Semua</div>
+                        <div class="filter-tag" data-value="china">China</div>
+                        <div class="filter-tag" data-value="amerika">Amerika</div>
+                        <div class="filter-tag" data-value="korea">Korea Selatan</div>
+                    </div>
+                </div>
+                
+                <!-- Audio -->
+                <div class="filter-category">
+                    <label class="filter-label">Audio</label>
+                    <div class="filter-tags" id="audioFilter">
+                        <div class="filter-tag active" data-value="all">Semua</div>
+                        <div class="filter-tag" data-value="dubbing">Sulih Suara</div>
+                        <div class="filter-tag" data-value="subtitle">Hanya Subtitle</div>
+                    </div>
+                </div>
+                
+                <!-- Status -->
+                <div class="filter-category">
+                    <label class="filter-label">Status</label>
+                    <div class="filter-tags" id="statusFilter">
+                        <div class="filter-tag active" data-value="all">Semua</div>
+                        <div class="filter-tag" data-value="vip">Anggota Saja</div>
+                    </div>
+                </div>
+                
+                <!-- Genre -->
+                <div class="filter-category">
+                    <label class="filter-label">Genre</label>
+                    <div class="filter-tags" id="genreFilter">
+                        <div class="filter-tag active" data-value="all">Semua</div>
+                        <div class="filter-tag" data-value="romance">Romansa</div>
+                        <div class="filter-tag" data-value="strong-female">Wanita Kuat</div>
+                        <div class="filter-tag" data-value="dominant-male">Pria Dominan</div>
+                        <div class="filter-tag" data-value="revenge">Balas Dendam</div>
+                        <div class="filter-tag" data-value="ceo">CEO</div>
+                        <div class="filter-tag" data-value="family">Keluarga</div>
+                    </div>
+                </div>
+                
+                <!-- Sort Options -->
                 <div class="filter-row">
-                    <div class="filter-group">
-                        <label class="filter-label">Genre</label>
-                        <select class="filter-select" id="genreSelect">
-                            <option value="1357">Romantis</option>
-                            <option value="1364">Fantasi</option>
-                            <option value="1365">Sejarah</option>
-                            <option value="1362">Komedi</option>
-                            <option value="1363">Drama</option>
-                        </select>
+                    <div class="sort-options">
+                        <button class="sort-btn active" data-sort="popular">Terpopular</button>
+                        <button class="sort-btn" data-sort="newest">Terbaru</button>
                     </div>
                     
-                    <div class="filter-group">
-                        <label class="filter-label">Urutkan</label>
-                        <select class="filter-select" id="sortSelect">
-                            <option value="1">Terbaru</option>
-                            <option value="2">Popularitas</option>
-                            <option value="3">Rating Tertinggi</option>
-                        </select>
-                    </div>
-                    
-                    <button class="btn" id="filterBtn">Terapkan Filter</button>
+                    <button class="btn" id="applyFilterBtn">
+                        <i class="fas fa-filter"></i> Terapkan Filter
+                    </button>
                 </div>
             </div>
             
@@ -728,11 +861,21 @@
             </div>
             
             <div class="player-container">
-                <iframe id="playerFrame" allowfullscreen></iframe>
+                <div id="playerPlaceholder" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #000;">
+                    <div style="text-align: center; color: white;">
+                        <i class="fas fa-play-circle" style="font-size: 60px; margin-bottom: 20px; color: var(--primary-color);"></i>
+                        <h3>Player akan dimuat di sini</h3>
+                        <p>Pilih episode untuk mulai menonton</p>
+                    </div>
+                </div>
+                <iframe id="playerFrame" allowfullscreen style="display: none;"></iframe>
             </div>
             
-            <div class="episodes-list" id="episodesList">
-                <!-- Episodes will be loaded here -->
+            <div class="episodes-container">
+                <h4 class="episodes-title">Daftar Episode</h4>
+                <div class="episodes-list" id="episodesList">
+                    <!-- Episodes will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
@@ -749,10 +892,10 @@
                 <div class="footer-column">
                     <h3 class="footer-title">Menu</h3>
                     <ul class="footer-links">
-                        <li><a href="#" data-section="for-you">Untuk Anda</a></li>
-                        <li><a href="#" data-section="new">Terbaru</a></li>
-                        <li><a href="#" data-section="rank">Ranking</a></li>
-                        <li><a href="#classify-section">Kategori</a></li>
+                        <li><a href="#" data-section="for-you">Terbaru</a></li>
+                        <li><a href="#" data-section="rank">Daftar Peringkat</a></li>
+                        <li><a href="#" data-section="classify">Kategori</a></li>
+                        <li><a href="#" class="vip-text">VIP <i class="fas fa-crown"></i></a></li>
                     </ul>
                 </div>
                 
@@ -783,94 +926,146 @@
         let currentEpisodes = [];
         let currentEpisodeIndex = 0;
         
+        // State filter
+        let currentFilters = {
+            country: 'all',
+            audio: 'all',
+            status: 'all',
+            genre: 'all',
+            sort: 'popular'
+        };
+        
+        // Map genre ke ID API
+        const genreMap = {
+            'all': 'all',
+            'romance': '1357',
+            'strong-female': '1361',
+            'dominant-male': '1360',
+            'revenge': '1359',
+            'ceo': '1358',
+            'family': '1366'
+        };
+        
+        // Data fallback untuk testing
+        const fallbackData = [
+            {
+                id: '42000000722',
+                title: 'Q. Rahasia di Balik Orang...',
+                cover: 'https://via.placeholder.com/300x450/2d2d2d/ffffff?text=Q+Rahasia',
+                year: '2023',
+                rating: '8.8',
+                description: 'Kisah misteri dan romansa yang penuh dengan rahasia tersembunyi.',
+                totalChapter: '24',
+                isVip: false
+            },
+            {
+                id: '2',
+                title: 'Love Between Fairy and Devil',
+                cover: 'https://i.mydramalist.com/r4RQX_5f.jpg',
+                year: '2022',
+                rating: '8.8',
+                description: 'Dongfang Qingcang, raja iblis yang kuat, bertemu dengan Xiao Lanhua, peri kecil yang lembut.',
+                totalChapter: '36',
+                isVip: true
+            },
+            {
+                id: '3',
+                title: 'The Untamed',
+                cover: 'https://i.mydramalist.com/2q6Kv_5c.jpg',
+                year: '2019',
+                rating: '9.0',
+                description: 'Kisah persahabatan dan petualangan Wei Wuxian dan Lan Wangji di dunia kultivasi.',
+                totalChapter: '50',
+                isVip: false
+            },
+            {
+                id: '4',
+                title: 'Eternal Love',
+                cover: 'https://i.mydramalist.com/qnXmK_5c.jpg',
+                year: '2017',
+                rating: '8.6',
+                description: 'Kisah cinta abadi antara dewa Bai Qian dan putra mahkota Ye Hua.',
+                totalChapter: '58',
+                isVip: true
+            },
+            {
+                id: '5',
+                title: 'Love Like the Galaxy',
+                cover: 'https://i.mydramalist.com/eY8nZ_5c.jpg',
+                year: '2022',
+                rating: '8.5',
+                description: 'Kisah Cheng Shao Shang dan Ling Bu Yi dalam intrik politik dan cinta.',
+                totalChapter: '56',
+                isVip: false
+            },
+            {
+                id: '6',
+                title: 'CEO di Balik Senyuman',
+                cover: 'https://via.placeholder.com/300x450/2d2d2d/ffffff?text=CEO+Senyuman',
+                year: '2023',
+                rating: '8.2',
+                description: 'Kisah CEO dingin yang jatuh cinta pada karyawan sederhana.',
+                totalChapter: '30',
+                isVip: true
+            },
+            {
+                id: '7',
+                title: 'Balas Dendam Sang Putri',
+                cover: 'https://via.placeholder.com/300x450/2d2d2d/ffffff?text=Balas+Dendam',
+                year: '2023',
+                rating: '8.4',
+                description: 'Putri yang kembali untuk membalas dendam pada mereka yang mengkhianatinya.',
+                totalChapter: '28',
+                isVip: false
+            },
+            {
+                id: '8',
+                title: 'Keluarga Kerajaan',
+                cover: 'https://via.placeholder.com/300x450/2d2d2d/ffffff?text=Keluarga+Kerajaan',
+                year: '2023',
+                rating: '8.1',
+                description: 'Drama keluarga dengan intrik dan konflik di istana kerajaan.',
+                totalChapter: '40',
+                isVip: true
+            }
+        ];
+        
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
         const suggestions = document.getElementById('suggestions');
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = {
             'for-you': document.getElementById('for-you-section'),
-            'new': document.getElementById('new-section'),
-            'rank': document.getElementById('rank-section')
+            'rank': document.getElementById('rank-section'),
+            'classify': document.getElementById('classify-section')
         };
         const grids = {
             'for-you': document.getElementById('for-you-grid'),
-            'new': document.getElementById('new-grid'),
             'rank': document.getElementById('rank-grid'),
             'classify': document.getElementById('classify-grid')
         };
         const spinners = {
             'for-you': document.getElementById('for-you-spinner'),
-            'new': document.getElementById('new-spinner'),
             'rank': document.getElementById('rank-spinner'),
             'classify': document.getElementById('classify-spinner')
         };
+        
+        // Player elements
         const playerModal = document.getElementById('playerModal');
         const closeModal = document.getElementById('closeModal');
         const playerFrame = document.getElementById('playerFrame');
+        const playerPlaceholder = document.getElementById('playerPlaceholder');
         const modalTitle = document.getElementById('modalTitle');
         const episodesList = document.getElementById('episodesList');
-        const genreSelect = document.getElementById('genreSelect');
-        const sortSelect = document.getElementById('sortSelect');
-        const filterBtn = document.getElementById('filterBtn');
-        const exploreBtn = document.getElementById('exploreBtn');
         
-        // Data fallback untuk testing
-        const fallbackData = [
-            {
-                id: '1',
-                title: 'Love Between Fairy and Devil',
-                cover: 'https://i.mydramalist.com/r4RQX_5f.jpg',
-                year: '2022',
-                rating: '8.8',
-                description: 'Dongfang Qingcang, raja iblis yang kuat, bertemu dengan Xiao Lanhua, peri kecil yang lembut.',
-                totalChapter: '36'
-            },
-            {
-                id: '2',
-                title: 'The Untamed',
-                cover: 'https://i.mydramalist.com/2q6Kv_5c.jpg',
-                year: '2019',
-                rating: '9.0',
-                description: 'Kisah persahabatan dan petualangan Wei Wuxian dan Lan Wangji di dunia kultivasi.',
-                totalChapter: '50'
-            },
-            {
-                id: '3',
-                title: 'Eternal Love',
-                cover: 'https://i.mydramalist.com/qnXmK_5c.jpg',
-                year: '2017',
-                rating: '8.6',
-                description: 'Kisah cinta abadi antara dewa Bai Qian dan putra mahkota Ye Hua.',
-                totalChapter: '58'
-            },
-            {
-                id: '4',
-                title: 'Love Like the Galaxy',
-                cover: 'https://i.mydramalist.com/eY8nZ_5c.jpg',
-                year: '2022',
-                rating: '8.5',
-                description: 'Kisah Cheng Shao Shang dan Ling Bu Yi dalam intrik politik dan cinta.',
-                totalChapter: '56'
-            },
-            {
-                id: '5',
-                title: 'Word of Honor',
-                cover: 'https://i.mydramalist.com/6n20X_5c.jpg',
-                year: '2021',
-                rating: '8.9',
-                description: 'Petualangan Zhou Zishu dan Wen Kexing dalam mencari harta karun legendaris.',
-                totalChapter: '36'
-            },
-            {
-                id: '6',
-                title: 'Who Rules The World',
-                cover: 'https://i.mydramalist.com/6nR5Z_5c.jpg',
-                year: '2022',
-                rating: '8.3',
-                description: 'Kisah Feng Xi dan Hei Fengxi dalam memperebutkan kekuasaan di dunia persilatan.',
-                totalChapter: '40'
-            }
-        ];
+        // Filter elements
+        const countryFilter = document.getElementById('countryFilter');
+        const audioFilter = document.getElementById('audioFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const genreFilter = document.getElementById('genreFilter');
+        const sortButtons = document.querySelectorAll('.sort-btn');
+        const applyFilterBtn = document.getElementById('applyFilterBtn');
+        const exploreBtn = document.getElementById('exploreBtn');
         
         // Fungsi untuk menampilkan loading spinner
         function showSpinner(section) {
@@ -906,16 +1101,65 @@
             if (!grid) return;
             
             grid.innerHTML = '';
-            fallbackData.forEach(drama => {
+            let filteredData = [...fallbackData];
+            
+            // Filter berdasarkan section
+            if (gridId === 'classify-grid') {
+                // Terapkan filter untuk kategori section
+                filteredData = applyFiltersToData(filteredData);
+            }
+            
+            filteredData.forEach(drama => {
                 renderDramaCard(drama, grid);
             });
+        }
+        
+        // Fungsi untuk menerapkan filter ke data
+        function applyFiltersToData(data) {
+            let filtered = [...data];
+            
+            // Filter status VIP
+            if (currentFilters.status === 'vip') {
+                filtered = filtered.filter(drama => drama.isVip === true);
+            }
+            
+            // Filter genre (untuk contoh, kita filter berdasarkan kata kunci)
+            if (currentFilters.genre !== 'all') {
+                const genreKeywords = {
+                    'romance': ['cinta', 'romansa', 'love'],
+                    'ceo': ['ceo', 'bos', 'direktur'],
+                    'revenge': ['balas dendam', 'revenge'],
+                    'family': ['keluarga', 'family'],
+                    'strong-female': ['wanita kuat', 'strong female'],
+                    'dominant-male': ['pria dominan', 'dominant male']
+                };
+                
+                if (genreKeywords[currentFilters.genre]) {
+                    filtered = filtered.filter(drama => {
+                        const title = drama.title.toLowerCase();
+                        const desc = drama.description.toLowerCase();
+                        return genreKeywords[currentFilters.genre].some(keyword => 
+                            title.includes(keyword) || desc.includes(keyword)
+                        );
+                    });
+                }
+            }
+            
+            // Sort data
+            if (currentFilters.sort === 'newest') {
+                filtered.sort((a, b) => b.year - a.year);
+            } else if (currentFilters.sort === 'popular') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+            
+            return filtered;
         }
         
         // Fungsi untuk merender kartu drama
         function renderDramaCard(drama, grid) {
             const card = document.createElement('div');
             card.className = 'drama-card';
-            card.dataset.id = drama.bookId || drama.id || drama._id || Math.random();
+            card.dataset.id = drama.bookId || drama.id || drama._id || drama.id;
             card.dataset.title = drama.title || drama.name || drama.bookName || 'Drama Cina';
             
             // Pastikan ada gambar cover
@@ -929,6 +1173,7 @@
                      alt="${drama.title || drama.name || 'Drama Cina'}" 
                      class="card-img"
                      onerror="this.src='https://via.placeholder.com/300x450/2d2d2d/ffffff?text=Drama'">
+                ${drama.isVip ? '<div class="card-badge">VIP</div>' : ''}
                 <div class="card-content">
                     <h3 class="card-title">${drama.title || drama.name || drama.bookName || 'Drama Cina'}</h3>
                     <div class="card-meta">
@@ -1021,7 +1266,7 @@
                 
             } catch (error) {
                 console.error(`Error loading ${section}:`, error);
-                showError(grids[section], `Gagal memuat data dari API: ${error.message}`);
+                loadFallbackData(grids[section].id);
             } finally {
                 hideSpinner(section);
             }
@@ -1102,23 +1347,36 @@
             playerModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            // Tampilkan pesan loading
-            episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Memuat episode...</div>';
+            // Reset player
+            playerFrame.style.display = 'none';
+            playerPlaceholder.style.display = 'flex';
+            
+            // Tampilkan pesan loading untuk episode
+            episodesList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: var(--text-secondary)">Memuat daftar episode...</div>';
             
             // Coba muat daftar episode
             try {
                 await loadEpisodes(dramaId);
-                
-                // Coba muat episode pertama
-                if (currentEpisodes.length > 0) {
-                    playEpisode(currentEpisodes[0].index || 0);
-                } else {
-                    playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Episode tidak tersedia untuk drama ini.</div>';
-                }
             } catch (error) {
-                console.error('Error loading player:', error);
-                playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Gagal memuat pemutar. Silakan coba drama lain.</div>';
+                console.error('Error loading episodes:', error);
+                episodesList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: var(--text-secondary)">Gagal memuat daftar episode. Silakan coba drama lain.</div>';
+                
+                // Buat episode fallback
+                createFallbackEpisodes();
             }
+        }
+        
+        // Fungsi untuk membuat episode fallback
+        function createFallbackEpisodes() {
+            currentEpisodes = [];
+            for (let i = 1; i <= 24; i++) {
+                currentEpisodes.push({
+                    index: i - 1,
+                    title: `Episode ${i}`,
+                    duration: '45:00'
+                });
+            }
+            renderEpisodesList();
         }
         
         // Fungsi untuk memuat daftar episode
@@ -1129,18 +1387,19 @@
                 
                 if (data.data && Array.isArray(data.data)) {
                     currentEpisodes = data.data;
-                    renderEpisodesList();
                 } else if (Array.isArray(data)) {
                     currentEpisodes = data;
-                    renderEpisodesList();
                 } else {
-                    currentEpisodes = [];
-                    episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Episode tidak tersedia untuk drama ini.</div>';
+                    // Jika tidak ada data episode, buat fallback
+                    createFallbackEpisodes();
+                    return;
                 }
+                
+                renderEpisodesList();
             } catch (error) {
                 console.error('Error loading episodes:', error);
-                currentEpisodes = [];
-                episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Gagal memuat daftar episode.</div>';
+                // Jika error, buat fallback episodes
+                createFallbackEpisodes();
             }
         }
         
@@ -1149,20 +1408,20 @@
             episodesList.innerHTML = '';
             
             if (currentEpisodes.length === 0) {
-                episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Tidak ada episode tersedia.</div>';
+                episodesList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: var(--text-secondary)">Tidak ada episode tersedia.</div>';
                 return;
             }
             
-            currentEpisodes.forEach((episode, index) => {
+            // Batasi jumlah episode yang ditampilkan
+            const episodesToShow = currentEpisodes.slice(0, 50);
+            
+            episodesToShow.forEach((episode, index) => {
                 const episodeItem = document.createElement('div');
                 episodeItem.className = `episode-item ${index === currentEpisodeIndex ? 'active' : ''}`;
-                episodeItem.innerHTML = `
-                    <span>Episode ${episode.index + 1 || index + 1}: ${episode.title || `Episode ${episode.index + 1 || index + 1}`}</span>
-                    <span>${episode.duration || '30:00'}</span>
-                `;
+                episodeItem.innerHTML = `Episode ${episode.index + 1 || index + 1}`;
                 
-                episodeItem.addEventListener('click', () => {
-                    playEpisode(episode.index || index);
+                episodeItem.addEventListener('click', async () => {
+                    await playEpisode(episode.index || index);
                     
                     // Update active class
                     document.querySelectorAll('.episode-item').forEach(item => {
@@ -1180,6 +1439,10 @@
             currentEpisodeIndex = episodeIndex;
             
             try {
+                // Sembunyikan placeholder, tampilkan player
+                playerPlaceholder.style.display = 'none';
+                playerFrame.style.display = 'block';
+                
                 // Coba endpoint watch terlebih dahulu
                 const watchResponse = await fetch(`${API_BASE}/watch/${currentDramaId}/${episodeIndex}?lang=${LANG}&source=search_result`);
                 const watchData = await watchResponse.json();
@@ -1207,25 +1470,139 @@
                 if (playerData.data && playerData.data.url) {
                     playerFrame.src = playerData.data.url;
                 } else {
-                    playerFrame.src = '';
-                    playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Video tidak tersedia untuk episode ini. Coba episode lain.</div>';
+                    // Jika tidak ada URL video, tampilkan pesan
+                    playerFrame.style.display = 'none';
+                    playerPlaceholder.style.display = 'flex';
+                    playerPlaceholder.innerHTML = `
+                        <div style="text-align: center; color: white;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 60px; margin-bottom: 20px; color: var(--accent-color);"></i>
+                            <h3>Video Tidak Tersedia</h3>
+                            <p>Video untuk episode ini tidak dapat dimuat.</p>
+                            <p style="font-size: 14px; margin-top: 10px;">Silakan coba episode lain.</p>
+                        </div>
+                    `;
                 }
             } catch (error) {
                 console.error('Error playing episode:', error);
-                playerFrame.src = '';
-                playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Gagal memuat video. Silakan coba lagi.</div>';
+                playerFrame.style.display = 'none';
+                playerPlaceholder.style.display = 'flex';
+                playerPlaceholder.innerHTML = `
+                    <div style="text-align: center; color: white;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 60px; margin-bottom: 20px; color: var(--primary-color);"></i>
+                        <h3>Gagal Memuat Video</h3>
+                        <p>Terjadi kesalahan saat memuat video.</p>
+                        <button class="btn" style="margin-top: 20px;" onclick="playEpisode(${episodeIndex})">
+                            <i class="fas fa-redo"></i> Coba Lagi
+                        </button>
+                    </div>
+                `;
             }
+        }
+        
+        // Fungsi untuk memuat data dengan filter
+        async function loadFilteredData() {
+            showSpinner('classify');
+            grids.classify.innerHTML = '';
+            
+            try {
+                // Bangun URL berdasarkan filter
+                let apiUrl = `${API_BASE}/classify?lang=${LANG}&pageNo=1`;
+                
+                // Tambahkan genre jika dipilih
+                if (currentFilters.genre !== 'all' && genreMap[currentFilters.genre]) {
+                    apiUrl += `&genre=${genreMap[currentFilters.genre]}`;
+                }
+                
+                // Tambahkan sort jika dipilih
+                let sortValue = 2; // default: popular
+                if (currentFilters.sort === 'newest') {
+                    sortValue = 1;
+                }
+                apiUrl += `&sort=${sortValue}`;
+                
+                console.log('Loading filtered data from:', apiUrl);
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                let dramas = [];
+                if (data.data && Array.isArray(data.data)) {
+                    dramas = data.data;
+                } else if (Array.isArray(data)) {
+                    dramas = data;
+                } else if (data.data && data.data.list && Array.isArray(data.data.list)) {
+                    dramas = data.data.list;
+                }
+                
+                if (dramas.length === 0) {
+                    // Gunakan fallback data dengan filter
+                    loadFallbackData('classify-grid');
+                } else {
+                    // Terapkan filter tambahan (status, dll)
+                    let filteredDramas = dramas;
+                    
+                    // Filter status VIP
+                    if (currentFilters.status === 'vip') {
+                        // Untuk API data, kita tidak tahu mana yang VIP
+                        // Jadi kita tampilkan semua dan beri badge VIP acak
+                        filteredDramas = filteredDramas.map(drama => ({
+                            ...drama,
+                            isVip: Math.random() > 0.5 // Acak untuk demo
+                        }));
+                    }
+                    
+                    filteredDramas.forEach(drama => {
+                        renderDramaCard(drama, grids.classify);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error loading filtered data:', error);
+                // Gunakan fallback data
+                loadFallbackData('classify-grid');
+            } finally {
+                hideSpinner('classify');
+            }
+        }
+        
+        // Inisialisasi filter tags
+        function initFilterTags() {
+            // Setup event listeners untuk semua filter tags
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const parent = this.parentElement;
+                    const filterType = parent.id.replace('Filter', '');
+                    
+                    // Hapus active dari semua tag di parent
+                    parent.querySelectorAll('.filter-tag').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Tambahkan active ke tag yang diklik
+                    this.classList.add('active');
+                    
+                    // Update current filters
+                    currentFilters[filterType] = this.dataset.value;
+                });
+            });
+            
+            // Setup event listeners untuk sort buttons
+            sortButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    sortButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilters.sort = this.dataset.sort;
+                });
+            });
         }
         
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             // Muat data awal
-            loadData(`${API_BASE}/foryou/1?lang=${LANG}`, 'for-you');
-            loadData(`${API_BASE}/new/1?lang=${LANG}&pageSize=10`, 'new');
+            loadData(`${API_BASE}/new/1?lang=${LANG}&pageSize=10`, 'for-you');
             loadData(`${API_BASE}/rank/1?lang=${LANG}`, 'rank');
             
-            // Muat data kategori default
-            loadData(`${API_BASE}/classify?lang=${LANG}&pageNo=1&genre=1357&sort=1`, 'classify');
+            // Inisialisasi filter
+            initFilterTags();
             
             // Event listener untuk navigasi
             navLinks.forEach(link => {
@@ -1239,6 +1616,12 @@
                     // Tampilkan section yang sesuai
                     const section = link.dataset.section;
                     Object.values(sections).forEach(s => s.style.display = 'none');
+                    
+                    if (section === 'classify') {
+                        // Muat data dengan filter default
+                        loadFilteredData();
+                    }
+                    
                     sections[section].style.display = 'block';
                     
                     // Scroll ke section
@@ -1263,27 +1646,28 @@
                 if (e.key === 'Enter') {
                     const query = searchInput.value.trim();
                     if (query) {
+                        // Switch ke kategori section untuk menampilkan hasil
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        document.querySelector('.nav-link[data-section="classify"]').classList.add('active');
+                        
+                        Object.values(sections).forEach(s => s.style.display = 'none');
+                        sections['classify'].style.display = 'block';
+                        
                         searchDrama(query);
                         suggestions.style.display = 'none';
                     }
                 }
             });
             
-            // Event listener untuk filter
-            filterBtn.addEventListener('click', () => {
-                const genre = genreSelect.value;
-                const sort = sortSelect.value;
-                
-                loadData(`${API_BASE}/classify?lang=${LANG}&pageNo=1&genre=${genre}&sort=${sort}`, 'classify');
-                
-                // Update judul section
-                const genreText = genreSelect.options[genreSelect.selectedIndex].text;
-                document.querySelector('#classify-section .section-title').textContent = `Kategori: ${genreText}`;
+            // Event listener untuk apply filter
+            applyFilterBtn.addEventListener('click', () => {
+                loadFilteredData();
             });
             
             // Event listener untuk tombol explore
             exploreBtn.addEventListener('click', () => {
-                sections['for-you'].scrollIntoView({ behavior: 'smooth' });
+                // Buka drama pertama sebagai contoh
+                openPlayer('42000000722', 'Q. Rahasia di Balik Orang...');
             });
             
             // Event listener untuk menutup modal
@@ -1291,6 +1675,8 @@
                 playerModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 playerFrame.src = '';
+                playerFrame.style.display = 'none';
+                playerPlaceholder.style.display = 'flex';
             });
             
             // Event listener untuk menutup modal saat klik di luar
@@ -1299,6 +1685,8 @@
                     playerModal.style.display = 'none';
                     document.body.style.overflow = 'auto';
                     playerFrame.src = '';
+                    playerFrame.style.display = 'none';
+                    playerPlaceholder.style.display = 'flex';
                 }
             });
             
@@ -1320,25 +1708,13 @@
                         if (sections[link.dataset.section]) {
                             sections[link.dataset.section].style.display = 'block';
                             
+                            if (link.dataset.section === 'classify') {
+                                loadFilteredData();
+                            }
+                            
                             // Scroll ke section
                             sections[link.dataset.section].scrollIntoView({ behavior: 'smooth' });
                         }
-                    }
-                });
-            });
-            
-            // Event listener untuk view all buttons
-            document.querySelectorAll('.view-all').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Untuk sekarang, kita akan reload data dengan lebih banyak item
-                    const sectionId = button.id.replace('view-all-', '');
-                    if (sectionId === 'for-you') {
-                        loadData(`${API_BASE}/foryou/1?lang=${LANG}`, 'for-you');
-                    } else if (sectionId === 'new') {
-                        loadData(`${API_BASE}/new/1?lang=${LANG}&pageSize=20`, 'new');
-                    } else if (sectionId === 'rank') {
-                        loadData(`${API_BASE}/rank/1?lang=${LANG}`, 'rank');
                     }
                 });
             });
