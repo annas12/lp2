@@ -277,6 +277,7 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
+            background-color: var(--light-dark);
         }
         
         .card-content {
@@ -484,6 +485,22 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Error Message */
+        .error-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+        }
+        
+        .error-message i {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
         /* Footer */
         footer {
             background-color: var(--card-bg);
@@ -631,7 +648,7 @@
         <section id="for-you-section">
             <div class="section-header">
                 <h2 class="section-title">Rekomendasi Untuk Anda</h2>
-                <a href="#" class="view-all">Lihat Semua <i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="view-all" id="view-all-for-you">Lihat Semua <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="drama-grid" id="for-you-grid">
                 <!-- Drama cards will be loaded here -->
@@ -643,7 +660,7 @@
         <section id="new-section" style="display: none;">
             <div class="section-header">
                 <h2 class="section-title">Drama Terbaru</h2>
-                <a href="#" class="view-all">Lihat Semua <i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="view-all" id="view-all-new">Lihat Semua <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="drama-grid" id="new-grid">
                 <!-- Drama cards will be loaded here -->
@@ -655,7 +672,7 @@
         <section id="rank-section" style="display: none;">
             <div class="section-header">
                 <h2 class="section-title">Top Ranking</h2>
-                <a href="#" class="view-all">Lihat Semua <i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="view-all" id="view-all-rank">Lihat Semua <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="drama-grid" id="rank-grid">
                 <!-- Drama cards will be loaded here -->
@@ -797,6 +814,64 @@
         const filterBtn = document.getElementById('filterBtn');
         const exploreBtn = document.getElementById('exploreBtn');
         
+        // Data fallback untuk testing
+        const fallbackData = [
+            {
+                id: '1',
+                title: 'Love Between Fairy and Devil',
+                cover: 'https://i.mydramalist.com/r4RQX_5f.jpg',
+                year: '2022',
+                rating: '8.8',
+                description: 'Dongfang Qingcang, raja iblis yang kuat, bertemu dengan Xiao Lanhua, peri kecil yang lembut.',
+                totalChapter: '36'
+            },
+            {
+                id: '2',
+                title: 'The Untamed',
+                cover: 'https://i.mydramalist.com/2q6Kv_5c.jpg',
+                year: '2019',
+                rating: '9.0',
+                description: 'Kisah persahabatan dan petualangan Wei Wuxian dan Lan Wangji di dunia kultivasi.',
+                totalChapter: '50'
+            },
+            {
+                id: '3',
+                title: 'Eternal Love',
+                cover: 'https://i.mydramalist.com/qnXmK_5c.jpg',
+                year: '2017',
+                rating: '8.6',
+                description: 'Kisah cinta abadi antara dewa Bai Qian dan putra mahkota Ye Hua.',
+                totalChapter: '58'
+            },
+            {
+                id: '4',
+                title: 'Love Like the Galaxy',
+                cover: 'https://i.mydramalist.com/eY8nZ_5c.jpg',
+                year: '2022',
+                rating: '8.5',
+                description: 'Kisah Cheng Shao Shang dan Ling Bu Yi dalam intrik politik dan cinta.',
+                totalChapter: '56'
+            },
+            {
+                id: '5',
+                title: 'Word of Honor',
+                cover: 'https://i.mydramalist.com/6n20X_5c.jpg',
+                year: '2021',
+                rating: '8.9',
+                description: 'Petualangan Zhou Zishu dan Wen Kexing dalam mencari harta karun legendaris.',
+                totalChapter: '36'
+            },
+            {
+                id: '6',
+                title: 'Who Rules The World',
+                cover: 'https://i.mydramalist.com/6nR5Z_5c.jpg',
+                year: '2022',
+                rating: '8.3',
+                description: 'Kisah Feng Xi dan Hei Fengxi dalam memperebutkan kekuasaan di dunia persilatan.',
+                totalChapter: '40'
+            }
+        ];
+        
         // Fungsi untuk menampilkan loading spinner
         function showSpinner(section) {
             if (spinners[section]) {
@@ -811,29 +886,60 @@
             }
         }
         
+        // Fungsi untuk menampilkan error message
+        function showError(grid, message) {
+            grid.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>${message}</h3>
+                    <p>Silakan coba lagi nanti atau gunakan data contoh.</p>
+                    <button class="btn" style="margin-top: 20px;" onclick="loadFallbackData('${grid.id}')">
+                        <i class="fas fa-redo"></i> Tampilkan Data Contoh
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Fungsi untuk memuat data fallback
+        function loadFallbackData(gridId) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            fallbackData.forEach(drama => {
+                renderDramaCard(drama, grid);
+            });
+        }
+        
         // Fungsi untuk merender kartu drama
         function renderDramaCard(drama, grid) {
             const card = document.createElement('div');
             card.className = 'drama-card';
-            card.dataset.id = drama.bookId || drama.id;
-            card.dataset.title = drama.title || drama.name;
+            card.dataset.id = drama.bookId || drama.id || drama._id || Math.random();
+            card.dataset.title = drama.title || drama.name || drama.bookName || 'Drama Cina';
+            
+            // Pastikan ada gambar cover
+            let coverUrl = drama.cover || drama.coverImage || drama.image;
+            if (!coverUrl || coverUrl.includes('undefined')) {
+                coverUrl = `https://via.placeholder.com/300x450/2d2d2d/ffffff?text=${encodeURIComponent(drama.title || 'Drama')}`;
+            }
             
             card.innerHTML = `
-                <img src="${drama.cover || 'https://via.placeholder.com/300x450?text=Drama+Cina'}" 
-                     alt="${drama.title || drama.name}" 
+                <img src="${coverUrl}" 
+                     alt="${drama.title || drama.name || 'Drama Cina'}" 
                      class="card-img"
-                     onerror="this.src='https://via.placeholder.com/300x450?text=Drama+Cina'">
+                     onerror="this.src='https://via.placeholder.com/300x450/2d2d2d/ffffff?text=Drama'">
                 <div class="card-content">
-                    <h3 class="card-title">${drama.title || drama.name}</h3>
+                    <h3 class="card-title">${drama.title || drama.name || drama.bookName || 'Drama Cina'}</h3>
                     <div class="card-meta">
-                        <span class="card-year">${drama.year || '2023'}</span>
+                        <span class="card-year">${drama.year || drama.updateTime || '2023'}</span>
                         <span class="card-rating">
-                            <i class="fas fa-star"></i> ${drama.rating || '8.0'}
+                            <i class="fas fa-star"></i> ${drama.rating || drama.score || '8.0'}
                         </span>
                     </div>
-                    <p class="card-desc">${drama.description || 'Drama Cina dengan kualitas terbaik.'}</p>
+                    <p class="card-desc">${drama.description || drama.desc || drama.intro || 'Drama Cina dengan kualitas terbaik.'}</p>
                     <div class="card-footer">
-                        <span class="card-episode">${drama.totalChapter || '20'} Episode</span>
+                        <span class="card-episode">${drama.totalChapter || drama.chapterCount || drama.episodeCount || '20'} Episode</span>
                         <div class="card-play">
                             <i class="fas fa-play"></i>
                         </div>
@@ -844,12 +950,16 @@
             // Event listener untuk memutar drama
             card.querySelector('.card-play').addEventListener('click', (e) => {
                 e.stopPropagation();
-                openPlayer(drama.bookId || drama.id, drama.title || drama.name);
+                const dramaId = card.dataset.id;
+                const dramaTitle = card.dataset.title;
+                openPlayer(dramaId, dramaTitle);
             });
             
             // Event listener untuk menampilkan detail
             card.addEventListener('click', () => {
-                openPlayer(drama.bookId || drama.id, drama.title || drama.name);
+                const dramaId = card.dataset.id;
+                const dramaTitle = card.dataset.title;
+                openPlayer(dramaId, dramaTitle);
             });
             
             grid.appendChild(card);
@@ -861,20 +971,57 @@
             grids[section].innerHTML = '';
             
             try {
-                const response = await fetch(endpoint);
-                const data = await response.json();
+                console.log(`Loading data from: ${endpoint}`);
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 
-                if (data.data && Array.isArray(data.data)) {
-                    data.data.forEach(drama => {
-                        renderDramaCard(drama, grids[section]);
-                    });
-                } else if (data.data) {
-                    // Jika data bukan array (mungkin objek tunggal)
-                    renderDramaCard(data.data, grids[section]);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                console.log(`Data received for ${section}:`, data);
+                
+                // Cek struktur data yang berbeda
+                let dramas = [];
+                
+                if (Array.isArray(data)) {
+                    dramas = data;
+                } else if (data.data && Array.isArray(data.data)) {
+                    dramas = data.data;
+                } else if (data.data && data.data.list && Array.isArray(data.data.list)) {
+                    dramas = data.data.list;
+                } else if (data.list && Array.isArray(data.list)) {
+                    dramas = data.list;
+                } else if (data.data) {
+                    // Jika data adalah objek tunggal
+                    dramas = [data.data];
+                } else {
+                    dramas = [data];
+                }
+                
+                if (dramas.length === 0) {
+                    throw new Error('Tidak ada data drama ditemukan');
+                }
+                
+                // Render drama cards
+                dramas.forEach(drama => {
+                    if (drama) {
+                        renderDramaCard(drama, grids[section]);
+                    }
+                });
+                
+                // Jika masih kosong, gunakan fallback
+                if (grids[section].children.length === 0) {
+                    throw new Error('Data tidak valid');
+                }
+                
             } catch (error) {
                 console.error(`Error loading ${section}:`, error);
-                grids[section].innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #e50914;">Gagal memuat data. Silakan coba lagi.</p>';
+                showError(grids[section], `Gagal memuat data dari API: ${error.message}`);
             } finally {
                 hideSpinner(section);
             }
@@ -889,8 +1036,17 @@
                 const response = await fetch(`${API_BASE}/search/${encodeURIComponent(query)}/${page}?lang=${LANG}`);
                 const data = await response.json();
                 
+                let dramas = [];
                 if (data.data && Array.isArray(data.data)) {
-                    data.data.forEach(drama => {
+                    dramas = data.data;
+                } else if (Array.isArray(data)) {
+                    dramas = data;
+                }
+                
+                if (dramas.length === 0) {
+                    showError(grids.classify, `Tidak ditemukan hasil untuk "${query}"`);
+                } else {
+                    dramas.forEach(drama => {
                         renderDramaCard(drama, grids.classify);
                     });
                 }
@@ -899,7 +1055,7 @@
                 document.querySelector('#classify-section .section-title').textContent = `Hasil Pencarian: "${query}"`;
             } catch (error) {
                 console.error('Error searching:', error);
-                grids.classify.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #e50914;">Gagal mencari drama. Silakan coba lagi.</p>';
+                showError(grids.classify, `Gagal mencari drama: ${error.message}`);
             } finally {
                 hideSpinner('classify');
             }
@@ -946,19 +1102,27 @@
             playerModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            // Muat daftar episode
-            await loadEpisodes(dramaId);
+            // Tampilkan pesan loading
+            episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Memuat episode...</div>';
             
-            // Muat episode pertama
-            if (currentEpisodes.length > 0) {
-                playEpisode(currentEpisodes[0].index || 0);
+            // Coba muat daftar episode
+            try {
+                await loadEpisodes(dramaId);
+                
+                // Coba muat episode pertama
+                if (currentEpisodes.length > 0) {
+                    playEpisode(currentEpisodes[0].index || 0);
+                } else {
+                    playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Episode tidak tersedia untuk drama ini.</div>';
+                }
+            } catch (error) {
+                console.error('Error loading player:', error);
+                playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Gagal memuat pemutar. Silakan coba drama lain.</div>';
             }
         }
         
         // Fungsi untuk memuat daftar episode
         async function loadEpisodes(dramaId) {
-            episodesList.innerHTML = '<p style="padding: 20px; text-align: center;">Memuat episode...</p>';
-            
             try {
                 const response = await fetch(`${API_BASE}/chapters/${dramaId}?lang=${LANG}`);
                 const data = await response.json();
@@ -966,12 +1130,17 @@
                 if (data.data && Array.isArray(data.data)) {
                     currentEpisodes = data.data;
                     renderEpisodesList();
+                } else if (Array.isArray(data)) {
+                    currentEpisodes = data;
+                    renderEpisodesList();
                 } else {
-                    episodesList.innerHTML = '<p style="padding: 20px; text-align: center;">Episode tidak tersedia.</p>';
+                    currentEpisodes = [];
+                    episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Episode tidak tersedia untuk drama ini.</div>';
                 }
             } catch (error) {
                 console.error('Error loading episodes:', error);
-                episodesList.innerHTML = '<p style="padding: 20px; text-align: center;">Gagal memuat episode.</p>';
+                currentEpisodes = [];
+                episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Gagal memuat daftar episode.</div>';
             }
         }
         
@@ -979,16 +1148,21 @@
         function renderEpisodesList() {
             episodesList.innerHTML = '';
             
+            if (currentEpisodes.length === 0) {
+                episodesList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary)">Tidak ada episode tersedia.</div>';
+                return;
+            }
+            
             currentEpisodes.forEach((episode, index) => {
                 const episodeItem = document.createElement('div');
                 episodeItem.className = `episode-item ${index === currentEpisodeIndex ? 'active' : ''}`;
                 episodeItem.innerHTML = `
-                    <span>Episode ${episode.index + 1}: ${episode.title || `Episode ${episode.index + 1}`}</span>
+                    <span>Episode ${episode.index + 1 || index + 1}: ${episode.title || `Episode ${episode.index + 1 || index + 1}`}</span>
                     <span>${episode.duration || '30:00'}</span>
                 `;
                 
                 episodeItem.addEventListener('click', () => {
-                    playEpisode(episode.index);
+                    playEpisode(episode.index || index);
                     
                     // Update active class
                     document.querySelectorAll('.episode-item').forEach(item => {
@@ -1034,12 +1208,12 @@
                     playerFrame.src = playerData.data.url;
                 } else {
                     playerFrame.src = '';
-                    playerFrame.innerHTML = '<p style="color: white; text-align: center; padding: 50px;">Video tidak tersedia untuk episode ini.</p>';
+                    playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Video tidak tersedia untuk episode ini. Coba episode lain.</div>';
                 }
             } catch (error) {
                 console.error('Error playing episode:', error);
                 playerFrame.src = '';
-                playerFrame.innerHTML = '<p style="color: white; text-align: center; padding: 50px;">Gagal memuat video. Silakan coba lagi.</p>';
+                playerFrame.innerHTML = '<div style="color: white; text-align: center; padding: 50px;">Gagal memuat video. Silakan coba lagi.</div>';
             }
         }
         
@@ -1136,14 +1310,35 @@
                         
                         // Update active class di nav
                         navLinks.forEach(l => l.classList.remove('active'));
-                        document.querySelector(`.nav-link[data-section="${link.dataset.section}"]`).classList.add('active');
+                        const navLink = document.querySelector(`.nav-link[data-section="${link.dataset.section}"]`);
+                        if (navLink) {
+                            navLink.classList.add('active');
+                        }
                         
                         // Tampilkan section yang sesuai
                         Object.values(sections).forEach(s => s.style.display = 'none');
-                        sections[link.dataset.section].style.display = 'block';
-                        
-                        // Scroll ke section
-                        sections[link.dataset.section].scrollIntoView({ behavior: 'smooth' });
+                        if (sections[link.dataset.section]) {
+                            sections[link.dataset.section].style.display = 'block';
+                            
+                            // Scroll ke section
+                            sections[link.dataset.section].scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+            
+            // Event listener untuk view all buttons
+            document.querySelectorAll('.view-all').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Untuk sekarang, kita akan reload data dengan lebih banyak item
+                    const sectionId = button.id.replace('view-all-', '');
+                    if (sectionId === 'for-you') {
+                        loadData(`${API_BASE}/foryou/1?lang=${LANG}`, 'for-you');
+                    } else if (sectionId === 'new') {
+                        loadData(`${API_BASE}/new/1?lang=${LANG}&pageSize=20`, 'new');
+                    } else if (sectionId === 'rank') {
+                        loadData(`${API_BASE}/rank/1?lang=${LANG}`, 'rank');
                     }
                 });
             });
