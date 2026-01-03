@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melolo Drama</title>
+
+<style>
+body { margin:0; font-family:Arial; background:#111; color:#fff }
+header { padding:10px; background:#000; text-align:center }
+#list img { width:100px; border-radius:6px }
+.item { display:flex; gap:10px; padding:10px; border-bottom:1px solid #222; cursor:pointer }
+.item:hover { background:#1c1c1c }
+#player { width:100%; height:220px; background:#000 }
+#eps button { margin:5px; padding:6px 10px }
+</style>
+</head>
+
+<body>
+
+<header>
+  <button onclick="loadLatest()">Latest</button>
+  <button onclick="loadTrending()">Trending</button>
+</header>
+
+<video id="player" controls autoplay></video>
+
+<div id="eps"></div>
+<div id="list"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js"></script>
+
+<script>
+let episodes = [];
+let currentEp = 0;
+
+function loadLatest() {
+  fetch("https://api.sansekai.my.id/api/melolo/latest")
+    .then(r => r.json())
+    .then(d => renderList(d.data));
+}
+
+function loadTrending() {
+  fetch("https://api.sansekai.my.id/api/melolo/trending")
+    .then(r => r.json())
+    .then(d => renderList(d.data));
+}
+
+function renderList(data) {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  document.getElementById("eps").innerHTML = "";
+  data.forEach(drama => {
+    list.innerHTML += `
+      <div class="item" onclick="openDrama(${drama.id})">
+        <img src="${drama.cover}">
+        <div>
+          <b>${drama.title}</b><br>
+          ${drama.description || ""}
+        </div>
+      </div>
+    `;
+  });
+}
+
+function openDrama(id) {
+  fetch(`https://api.sansekai.my.id/api/melolo/detail/${id}`)
+    .then(r => r.json())
+    .then(d => {
+      episodes = d.episodes;
+      currentEp = 0;
+      renderEpisodes();
+      playEpisode(0);
+    });
+}
+
+function renderEpisodes() {
+  const eps = document.getElementById("eps");
+  eps.innerHTML = "";
+  episodes.forEach((e, i) => {
+    eps.innerHTML += `<button onclick="playEpisode(${i})">EP ${e.episode}</button>`;
+  });
+}
+
+function playEpisode(i) {
+  currentEp = i;
+  const url = episodes[i].video_url;
+  const video = document.getElementById("player");
+
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(video);
+  } else {
+    video.src = url;
+  }
+}
+
+/* AUTO NEXT EPISODE */
+document.getElementById("player").addEventListener("ended", () => {
+  if (currentEp + 1 < episodes.length) {
+    playEpisode(currentEp + 1);
+  }
+});
+
+/* load awal */
+loadLatest();
+</script>
+
+</body>
+</html>
