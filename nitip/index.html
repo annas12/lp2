@@ -3,712 +3,205 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madu Vitagerd | Solusi Herbal Asam Lambung</title>
-  <meta name="description" content="Landing page profesional Madu Vitagerd untuk keluhan asam lambung, GERD, maag, perut begah, dan nyeri ulu hati." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Asam Lambung Naik</title>
+
   <style>
-    :root{
-      --green-900:#007932;
-      --green-700:#149644;
-      --green-500:#48C752;
-      --green-200:#9AFF7F;
-      --yellow:#FFFF00;
-      --gold:#F6BB34;
-      --ink:#102017;
-      --muted:#5d6b63;
-      --paper:#ffffff;
-      --soft:#f6fff4;
-      --cream:#fffced;
-      --line:rgba(0,121,50,.13);
-      --shadow:0 20px 60px rgba(0, 90, 42, .14);
-      --shadow-soft:0 12px 30px rgba(0, 90, 42, .10);
-      --radius:26px;
-      --radius-sm:18px;
-      --container:1120px;
+    :root {
+      --green-dark: #007932;
+      --green-main: #48C752;
+      --green-light: #9AFF7F;
+      --yellow: #FFFF00;
+      --gold: #F6BB34;
+      --black: #050505;
+      --red: #ff1e1e;
+      --white: #ffffff;
+      --soft-bg: #f7fff8;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-      color:var(--ink);
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 7% 0%, rgba(154,255,127,.34), transparent 32rem),
-        radial-gradient(circle at 92% 10%, rgba(246,187,52,.22), transparent 26rem),
-        linear-gradient(180deg, #fbfff8 0%, #ffffff 38%, #f8fff5 100%);
-      overflow-x:hidden;
+        radial-gradient(circle at top left, rgba(154, 255, 127, 0.18), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, #f7fff8 100%);
+      color: var(--black);
     }
 
-    img{max-width:100%;display:block}
-    a{text-decoration:none;color:inherit}
-
-    .container{width:min(var(--container), calc(100% - 32px));margin-inline:auto}
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(16,32,23,.92);
-      backdrop-filter:blur(16px);
-      color:#fff;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:10px 0;
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.1px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-    }
-    .brand-mark{
-      width:34px;height:34px;border-radius:13px;
-      background:linear-gradient(135deg,var(--green-900),var(--green-500));
-      display:grid;place-items:center;
-      box-shadow:0 10px 24px rgba(72,199,82,.28);
-    }
-    .topbar .mini-cta{
-      display:inline-flex;align-items:center;gap:8px;
-      background:var(--gold);color:#1a1809;
-      padding:8px 12px;border-radius:999px;
-      font-size:12px;
+    .page-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 0;
     }
 
-    .hero{
-      position:relative;
-      padding:76px 0 52px;
+    .landing-container {
+      width: 100%;
+      max-width: 720px;
+      background: var(--white);
+      box-shadow: 0 18px 60px rgba(0, 121, 50, 0.10);
+      overflow: hidden;
+      position: relative;
     }
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.06fr .94fr;
-      gap:34px;
-      align-items:center;
-    }
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 14px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.78);
-      color:var(--green-900);
-      font-size:13px;
-      font-weight:800;
-      box-shadow:var(--shadow-soft);
-    }
-    .pulse{
-      width:9px;height:9px;border-radius:99px;background:var(--green-500);
-      box-shadow:0 0 0 8px rgba(72,199,82,.14);
-    }
-    h1{
-      margin:18px 0 16px;
-      font-size:clamp(38px, 6vw, 68px);
-      line-height:.95;
-      letter-spacing:-2.2px;
-    }
-    .highlight{
-      color:var(--green-900);
-      position:relative;
-      display:inline-block;
-    }
-    .highlight::after{
-      content:"";
-      position:absolute;
-      inset:auto 0 6px 0;
-      height:14px;
-      background:linear-gradient(90deg, rgba(255,255,0,.72), rgba(154,255,127,.55));
-      z-index:-1;
-      border-radius:99px;
-    }
-    .lead{
-      font-size:clamp(17px,2vw,21px);
-      line-height:1.65;
-      color:#435046;
-      max-width:680px;
-      margin:0 0 22px;
-    }
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      min-height:52px;
-      padding:15px 22px;
-      border-radius:999px;
-      font-weight:900;
-      border:0;
-      cursor:pointer;
-      transition:.22s ease;
-      box-shadow:var(--shadow-soft);
-    }
-    .btn-primary{
-      background:linear-gradient(135deg,var(--green-900),var(--green-500));
-      color:white;
-    }
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(0,121,50,.24)}
-    .btn-ghost{
-      background:#fff;color:var(--green-900);border:1px solid var(--line);
-    }
-    .trust-row{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:28px;
-      max-width:640px;
-    }
-    .trust-pill{
-      background:#fff;border:1px solid var(--line);border-radius:18px;
-      padding:14px;
-      box-shadow:0 8px 22px rgba(0,0,0,.04);
-    }
-    .trust-pill b{display:block;color:var(--green-900);font-size:18px;margin-bottom:2px}
-    .trust-pill span{font-size:12px;color:var(--muted);font-weight:700}
 
-    .hero-card{
-      position:relative;
-      min-height:520px;
-      border-radius:38px;
-      padding:26px;
-      background:
-        linear-gradient(160deg, rgba(255,255,255,.82), rgba(246,255,244,.72)),
-        radial-gradient(circle at 80% 14%, rgba(255,255,0,.42), transparent 170px);
-      border:1px solid rgba(0,121,50,.14);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+    .landing-container::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(
+        90deg,
+        var(--green-dark) 0%,
+        var(--green-main) 28%,
+        var(--green-light) 52%,
+        var(--yellow) 74%,
+        var(--gold) 100%
+      );
     }
-    .hero-card::before{
-      content:"";
-      position:absolute;
-      width:320px;height:320px;border-radius:50%;
-      background:linear-gradient(135deg,var(--green-500),var(--green-900));
-      right:-92px;bottom:-96px;
-      opacity:.16;
-    }
-    .product-stage{
-      position:absolute;
-      inset:76px 34px 110px;
-      display:grid;place-items:center;
-    }
-    .product-bottle{
-      width:min(285px,70vw);
-      aspect-ratio: .64 / 1;
-      border-radius:44px 44px 32px 32px;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.42), transparent 34%),
-        linear-gradient(180deg,#fff 0 18%, #f7fff1 18% 100%);
-      border:10px solid #f9ffe9;
-      box-shadow:0 28px 70px rgba(0,74,35,.24);
-      position:relative;
-      transform:rotate(-4deg);
-    }
-    .product-bottle::before{
-      content:"";
-      position:absolute;
-      width:42%;height:54px;left:29%;top:-58px;
-      border-radius:14px 14px 8px 8px;
-      background:linear-gradient(180deg,var(--gold),#f4a618);
-      box-shadow:0 10px 20px rgba(246,187,52,.25);
-    }
-    .product-label{
-      position:absolute;
-      left:22px;right:22px;top:35%;
-      transform:translateY(-50%);
-      border-radius:26px;
-      padding:24px 16px;
-      text-align:center;
-      color:#fff;
-      background:linear-gradient(135deg,var(--green-900),var(--green-500));
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
-    }
-    .product-label small{display:block;font-weight:800;letter-spacing:2px;opacity:.82;font-size:10px}
-    .product-label strong{display:block;font-size:34px;letter-spacing:-1px;margin-top:4px}
-    .product-label span{display:block;margin-top:8px;color:#faffc9;font-size:12px;font-weight:800}
-    .floating-card{
-      position:absolute;
-      display:flex;align-items:center;gap:10px;
-      padding:14px 16px;
-      border-radius:20px;
-      background:rgba(255,255,255,.9);
-      border:1px solid rgba(0,121,50,.12);
-      box-shadow:0 18px 38px rgba(0,65,31,.12);
-      font-weight:900;
-      color:var(--ink);
-    }
-    .floating-card i{font-style:normal;width:34px;height:34px;border-radius:13px;display:grid;place-items:center;background:var(--cream)}
-    .float-1{left:20px;top:30px}.float-2{right:22px;bottom:26px}.float-3{left:24px;bottom:92px}
 
-    section{padding:58px 0}
-    .section-head{text-align:center;max-width:760px;margin:0 auto 30px}
-    .kicker{
-      display:inline-flex;padding:7px 12px;border-radius:999px;
-      color:var(--green-900);background:#edffe8;border:1px solid var(--line);
-      font-size:12px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;
+    .hero-headline {
+      width: 100%;
+      padding: 18px 16px 6px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.96);
     }
-    h2{font-size:clamp(30px,4.2vw,48px);line-height:1.06;letter-spacing:-1.3px;margin:14px 0 12px}
-    .section-head p{color:var(--muted);font-size:17px;line-height:1.7;margin:0}
 
-    .question-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .question-card{
-      background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
-      padding:20px;box-shadow:var(--shadow-soft);min-height:142px;
-      display:flex;flex-direction:column;justify-content:space-between;
+    .hero-title {
+      margin: 0;
+      font-size: clamp(20px, 4.2vw, 30px);
+      line-height: 1.12;
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      text-transform: uppercase;
+      color: var(--black);
+      white-space: nowrap;
     }
-    .question-card .icon{font-size:28px}.question-card b{line-height:1.35}
 
-    .split{
-      display:grid;grid-template-columns: .9fr 1.1fr;gap:26px;align-items:start;
+    .hero-title .red-text {
+      color: var(--red);
     }
-    .panel{
-      background:rgba(255,255,255,.82);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:28px;
-      box-shadow:var(--shadow-soft);
+
+    .hero-subtitle {
+      margin: 6px 0 0;
+      font-size: clamp(16px, 3vw, 21px);
+      line-height: 1.15;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      color: var(--black);
     }
-    .panel.green{
-      background:linear-gradient(145deg,var(--green-900),#0f9a44);
-      color:#fff;
+
+    .image-section {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
     }
-    .panel.green p,.panel.green .muted{color:rgba(255,255,255,.82)}
-    .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
-    .check-item{
-      display:flex;gap:10px;align-items:flex-start;
-      background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px;
-      box-shadow:0 8px 18px rgba(0,0,0,.035);
-      color:#263228;font-weight:700;font-size:14px;line-height:1.35;
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
     }
-    .check-item::before{content:"✓";width:22px;height:22px;border-radius:8px;background:#edffe8;color:var(--green-900);display:grid;place-items:center;flex:0 0 auto;font-weight:900}
-    .danger-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .danger-item{
-      padding:13px 14px;border-radius:16px;background:#fff7ed;border:1px solid rgba(246,187,52,.3);font-weight:800;color:#4c3710;
-      display:flex;gap:9px;align-items:center;
+
+    .reading-note {
+      width: 100%;
+      padding: 12px 18px 20px;
+      text-align: center;
+      background: #ffffff;
     }
-    .number-list{counter-reset:item;display:grid;gap:11px;margin:0;padding:0;list-style:none}
-    .number-list li{
-      counter-increment:item;display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 14px;font-weight:700;color:#354139;
+
+    .reading-note p {
+      margin: 0;
+      font-size: clamp(15px, 3vw, 18px);
+      line-height: 1.45;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: var(--black);
     }
-    .number-list li::before{content:counter(item);width:26px;height:26px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(135deg,var(--green-500),var(--green-900));color:#fff;font-size:13px;font-weight:900;flex:0 0 auto}
 
-    .story-box{
-      border-radius:34px;
-      padding:42px;
-      background:
-        linear-gradient(135deg, rgba(0,121,50,.92), rgba(72,199,82,.86)),
-        radial-gradient(circle at right, rgba(255,255,0,.45), transparent 340px);
-      color:#fff;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
+    .reading-note .red-text {
+      color: #c40000;
+      font-weight: 900;
     }
-    .story-box::after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;border:34px solid rgba(255,255,255,.09);right:-70px;top:-70px}
-    .story-box h2{margin-top:0}.story-box p{font-size:18px;line-height:1.7;color:rgba(255,255,255,.88);max-width:850px}
 
-    .product-section{background:linear-gradient(180deg,transparent,#f1ffe9 48%,transparent)}
-    .product-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:26px;align-items:center}
-    .product-card{position:relative;min-height:500px;background:#fff;border:1px solid var(--line);border-radius:34px;box-shadow:var(--shadow);overflow:hidden;padding:28px;display:grid;place-items:center}
-    .product-card::before{content:"";position:absolute;inset:auto -80px -110px auto;width:320px;height:320px;background:var(--green-200);border-radius:50%;opacity:.35}
-    .product-photo-note{position:absolute;bottom:22px;left:22px;right:22px;text-align:center;color:var(--muted);font-size:12px;font-weight:700;background:#fbfff8;border:1px dashed var(--line);border-radius:15px;padding:10px}
-    .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-    .badge{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);box-shadow:0 8px 22px rgba(0,0,0,.035);font-weight:900;color:var(--green-900);font-size:13px}
-    .benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .benefit{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;font-weight:800;line-height:1.35;box-shadow:0 8px 18px rgba(0,0,0,.035)}
+    @media (max-width: 520px) {
+      .landing-container {
+        max-width: 100%;
+      }
 
-    .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .proof-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:22px;box-shadow:var(--shadow-soft)}
-    .stars{color:#f1a81d;font-size:18px;letter-spacing:1px}.proof-card p{color:#4c5a51;line-height:1.65}.proof-card b{display:block;margin-top:12px;color:var(--green-900)}
+      .hero-headline {
+        padding: 16px 10px 5px;
+      }
 
-    .promo-card{
-      background:
-        linear-gradient(135deg,#fff, #f7fff1),
-        radial-gradient(circle at top right, rgba(255,255,0,.25), transparent 240px);
-      border:1px solid var(--line);
-      border-radius:36px;
-      padding:34px;
-      box-shadow:var(--shadow);
-      display:grid;
-      grid-template-columns:1fr .9fr;
-      gap:22px;
-      align-items:center;
-    }
-    .price-box{background:var(--green-900);color:#fff;border-radius:28px;padding:26px;text-align:center;position:relative;overflow:hidden}
-    .price-box::before{content:"PROMO";position:absolute;right:-28px;top:20px;background:var(--yellow);color:#111;padding:8px 42px;transform:rotate(28deg);font-size:12px;font-weight:900}
-    .price-box small{display:block;opacity:.76;font-weight:800}.price-box strong{display:block;font-size:44px;line-height:1;margin:8px 0;color:#fff}.price-box span{color:#efffcf;font-weight:800}
-    .promo-list{display:grid;gap:10px;margin:18px 0 0;padding:0;list-style:none}.promo-list li{display:flex;gap:10px;align-items:center;font-weight:800;color:#354139}.promo-list li::before{content:"✓";color:var(--green-900);background:#edffe8;border-radius:8px;width:24px;height:24px;display:grid;place-items:center;flex:0 0 auto}
+      .hero-title {
+        white-space: normal;
+        font-size: clamp(19px, 6.1vw, 25px);
+        line-height: 1.12;
+      }
 
-    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:22px;box-shadow:var(--shadow-soft)}
-    .step-num{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--yellow));display:grid;place-items:center;font-weight:900;margin-bottom:12px}
-    .step h3{margin:0 0 8px}.step p{margin:0;color:var(--muted);line-height:1.6}
+      .hero-title .black-line,
+      .hero-title .red-line {
+        display: block;
+      }
 
-    .faq{max-width:860px;margin:0 auto;display:grid;gap:12px}
-    details{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 18px rgba(0,0,0,.035);overflow:hidden}
-    summary{cursor:pointer;list-style:none;padding:18px 20px;font-weight:900;color:var(--ink);display:flex;justify-content:space-between;gap:18px}
-    summary::-webkit-details-marker{display:none}
-    summary::after{content:"+";color:var(--green-900);font-size:22px;line-height:1}
-    details[open] summary::after{content:"−"}
-    details p{padding:0 20px 18px;margin:0;color:var(--muted);line-height:1.7}
+      .hero-subtitle {
+        margin-top: 5px;
+        font-size: clamp(15px, 4.8vw, 19px);
+      }
 
-    .final-cta{padding-bottom:90px}.final-box{text-align:center;background:linear-gradient(135deg,var(--green-900),var(--green-500));border-radius:38px;padding:44px 24px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}.final-box h2{margin-top:0}.final-box p{color:rgba(255,255,255,.86);font-size:18px;line-height:1.65;max-width:760px;margin:0 auto 24px}.final-box .btn{background:var(--yellow);color:#111}.final-box::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.09);left:-90px;bottom:-90px}
+      .reading-note {
+        padding: 10px 14px 18px;
+      }
 
-    footer{padding:34px 0;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.disclaimer{max-width:720px;line-height:1.6}
-
-    .float-wa{position:fixed;z-index:60;right:18px;bottom:18px;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--green-900),var(--green-500));color:#fff;padding:14px 18px;border-radius:999px;font-weight:900;box-shadow:0 18px 38px rgba(0,121,50,.32)}
-    .float-wa span{font-size:20px}
-
-    @media (max-width:940px){
-      .hero-grid,.split,.product-grid,.promo-card{grid-template-columns:1fr}
-      .hero-card{min-height:440px}.question-grid,.proof-grid,.steps{grid-template-columns:repeat(2,1fr)}
-      .danger-grid,.benefit-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:620px){
-      .topbar-inner{font-size:11px}.topbar .mini-cta{display:none}
-      .hero{padding-top:48px}.hero-card{min-height:390px;border-radius:28px}.product-stage{inset:70px 18px 95px}.product-bottle{width:215px}.floating-card{font-size:12px;padding:10px 12px}.float-2{right:12px}.float-3{left:12px}
-      .trust-row,.question-grid,.check-grid,.danger-grid,.benefit-grid,.proof-grid,.steps{grid-template-columns:1fr}
-      .story-box,.promo-card{padding:26px;border-radius:28px}
-      .panel{padding:22px}.price-box strong{font-size:36px}.float-wa{left:14px;right:14px;justify-content:center}.footer-inner{display:block}.btn{width:100%}
+      .reading-note p {
+        font-size: clamp(14px, 4.2vw, 16px);
+        line-height: 1.45;
+      }
     }
   </style>
 </head>
+
 <body>
-  <!-- GANTI NOMOR WHATSAPP DI SINI -->
-  <!-- Format: 628xxxxxxxxxx tanpa tanda + -->
-  <script>
-    const WA_NUMBER = '6281234567890';
-    const WA_TEXT = encodeURIComponent('Halo kak, saya mau pesan Madu Vitagerd promo hari ini.');
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-wa]').forEach(a => {
-        a.href = `https://wa.me/${WA_NUMBER}?text=${WA_TEXT}`;
-      });
-      const d = new Date();
-      const el = document.querySelector('[data-today]');
-      if(el) el.textContent = d.toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-    });
-  </script>
+  <main class="page-wrapper">
+    <section class="landing-container">
 
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a href="#home" class="brand" aria-label="Madu Vitagerd">
-        <span class="brand-mark">🍯</span>
-        <span>Madu Vitagerd</span>
-      </a>
-      <span>Promo aktif hari ini: <span data-today>Hari ini</span></span>
-      <a data-wa class="mini-cta" href="#">Pesan via WhatsApp →</a>
-    </div>
-  </header>
+      <header class="hero-headline">
+        <h1 class="hero-title">
+          <span class="black-line">JANGAN SEPELEKAN</span>
+          <span class="red-line red-text"> ASAM LAMBUNG NAIK</span>
+        </h1>
 
-  <main id="home">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="eyebrow"><span class="pulse"></span> Untuk keluhan asam lambung, GERD, dan maag</span>
-          <h1>Jangan sepelekan <span class="highlight">asam lambung tinggi</span> sebelum makin mengganggu.</h1>
-          <p class="lead">Rasa panas di dada, mual, perut begah, sering sendawa, atau tenggorokan terasa mengganjal bisa membuat aktivitas harian terasa berat. Luangkan 2 sampai 3 menit untuk memahami penyebab, gejala, dan pilihan dukungan herbal yang lebih nyaman untuk lambung.</p>
-          <div class="hero-actions">
-            <a data-wa href="#" class="btn btn-primary">💬 Pesan Madu Vitagerd Sekarang</a>
-            <a href="#gejala" class="btn btn-ghost">Lihat gejalanya</a>
-          </div>
-          <div class="trust-row" aria-label="Keunggulan singkat">
-            <div class="trust-pill"><b>Herbal</b><span>Formulasi bahan alami</span></div>
-            <div class="trust-pill"><b>Praktis</b><span>Mudah dikonsumsi harian</span></div>
-            <div class="trust-pill"><b>COD</b><span>Pengiriman Indonesia</span></div>
-          </div>
-        </div>
+        <p class="hero-subtitle">
+          Atasi Sekarang Sebelum Kronis!
+        </p>
+      </header>
 
-        <div class="hero-card" aria-label="Ilustrasi produk Madu Vitagerd">
-          <div class="floating-card float-1"><i>🔥</i><span>Dada panas?</span></div>
-          <div class="floating-card float-2"><i>🌿</i><span>Solusi herbal</span></div>
-          <div class="floating-card float-3"><i>✅</i><span>Promo terbatas</span></div>
-          <div class="product-stage">
-            <div class="product-bottle">
-              <div class="product-label">
-                <small>MADU HERBAL</small>
-                <strong>VITAGERD</strong>
-                <span>Asam Lambung • GERD • Maag</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <section class="image-section">
+        <img
+          class="hero-image"
+          src="nitip/Krem%20Merah%20Muda%20Berwarna%20Estetik%20Presentasi%2043%20(1).png"
+          alt=""
+        />
+      </section>
 
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Pertanyaan umum</span>
-          <h2>Hal yang sering ditanyakan banyak orang</h2>
-          <p>Sebelum membeli, biasanya orang ingin tahu apa penyebabnya, gejalanya, bahayanya, dan cara mengelolanya.</p>
-        </div>
-        <div class="question-grid">
-          <div class="question-card"><span class="icon">❓</span><b>Asam lambung kronis disebabkan karena apa?</b></div>
-          <div class="question-card"><span class="icon">🩺</span><b>Apa saja yang dirasakan penderita asam lambung?</b></div>
-          <div class="question-card"><span class="icon">⚠️</span><b>Apakah asam lambung kronis berbahaya?</b></div>
-          <div class="question-card"><span class="icon">🌱</span><b>Apakah keluhan asam lambung bisa membaik?</b></div>
-        </div>
-      </div>
-    </section>
+      <section class="reading-note">
+        <p>
+          “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
+          Agar <span class="red-text">Asam Lambung Naik</span> Dapat Teratasi”
+        </p>
+      </section>
 
-    <section id="gejala">
-      <div class="container split">
-        <div class="panel green">
-          <span class="kicker" style="background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.2)">Kenali sinyal tubuh</span>
-          <h2>Gejala asam lambung tinggi yang sering dialami</h2>
-          <p class="muted">Keluhan bisa muncul berbeda pada setiap orang. Namun, beberapa tanda di bawah ini cukup sering dirasakan saat lambung sedang tidak bersahabat.</p>
-        </div>
-        <div class="panel">
-          <div class="check-grid">
-            <div class="check-item">Bau mulut</div>
-            <div class="check-item">Tenggorokan terasa mengganjal</div>
-            <div class="check-item">Mudah kenyang</div>
-            <div class="check-item">Sering bersendawa</div>
-            <div class="check-item">Suara serak</div>
-            <div class="check-item">Perut atau dada terasa sesak</div>
-            <div class="check-item">Sakit tenggorokan atau sakit saat menelan</div>
-            <div class="check-item">Mual, muntah, atau batuk kering terutama malam hari</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container split">
-        <div class="panel">
-          <span class="kicker">Penyebab</span>
-          <h2>Pemicu yang perlu diperhatikan</h2>
-          <ol class="number-list">
-            <li>Tekanan pada perut, termasuk saat hamil.</li>
-            <li>Makanan tinggi lemak, pedas, susu, gorengan, atau makanan pemicu lain.</li>
-            <li>Efek beberapa obat tertentu.</li>
-            <li>Kegemukan atau berat badan berlebih.</li>
-            <li>Gangguan jaringan ikat tertentu.</li>
-          </ol>
-        </div>
-        <div class="panel">
-          <span class="kicker">Risiko</span>
-          <h2>Kebiasaan yang bisa memperparah</h2>
-          <ol class="number-list">
-            <li>Merokok.</li>
-            <li>Makan malam terlalu larut.</li>
-            <li>Makan terlalu banyak dalam satu waktu.</li>
-            <li>Sering mengonsumsi makanan pemicu GERD.</li>
-            <li>Minuman tertentu seperti kopi, susu, atau alkohol.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Jangan ditunda</span>
-          <h2>Apa yang bisa terjadi jika sering dibiarkan?</h2>
-          <p>Keluhan yang terus berulang bisa mengganggu tidur, aktivitas, makan, dan rasa nyaman sehari-hari.</p>
-        </div>
-        <div class="danger-grid">
-          <div class="danger-item">⛔ Sesak napas dan dada</div>
-          <div class="danger-item">⛔ Radang kerongkongan</div>
-          <div class="danger-item">⛔ Sakit kepala</div>
-          <div class="danger-item">⛔ Mual dan muntah</div>
-          <div class="danger-item">⛔ Cemas berlebihan</div>
-          <div class="danger-item">⛔ Gigi mudah terganggu</div>
-          <div class="danger-item">⛔ Nyeri ulu hati</div>
-          <div class="danger-item">⛔ Dada panas</div>
-          <div class="danger-item">⛔ Gangguan tidur</div>
-          <div class="danger-item">⛔ Perut kembung</div>
-          <div class="danger-item">⛔ Badan lelah</div>
-          <div class="danger-item">⛔ Batuk kronis</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="story-box">
-          <h2>Yakin masih mau dibiarkan saja?</h2>
-          <p>Coba pikirkan bagaimana jadinya jika keluhan asam lambung yang disepelekan lama-kelamaan menghambat aktivitas, menurunkan kualitas hidup, dan mengganggu waktu bersama keluarga. Sayangi diri dan sayangi keluarga dengan mulai memperbaiki pola hidup, pola makan, dan memilih dukungan yang tepat.</p>
-          <a data-wa href="#" class="btn" style="background:#fff;color:var(--green-900)">Saya mau konsultasi via WhatsApp</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="product-section" id="produk">
-      <div class="container product-grid">
-        <div class="product-card">
-          <div class="product-bottle" style="transform:rotate(3deg);width:260px">
-            <div class="product-label">
-              <small>MADU HERBAL</small>
-              <strong>VITAGERD</strong>
-              <span>Bantu nyaman di lambung</span>
-            </div>
-          </div>
-          <div class="product-photo-note">Catatan: ganti mockup ini dengan foto produk asli agar trust lebih tinggi.</div>
-        </div>
-        <div>
-          <span class="kicker">Solusi herbal</span>
-          <h2>Madu Vitagerd, dukungan alami untuk keluhan asam lambung</h2>
-          <p class="lead" style="font-size:18px">Madu Vitagerd adalah madu herbal yang diformulasikan untuk membantu mendukung kenyamanan pencernaan, terutama bagi Anda yang sering mengalami keluhan asam lambung, maag, perut mual, begah, dan nyeri ulu hati.</p>
-          <div class="badge-row">
-            <span class="badge">🌿 Bahan herbal</span>
-            <span class="badge">✅ BPOM</span>
-            <span class="badge">🕌 Halal MUI</span>
-            <span class="badge">🚚 Bisa COD</span>
-          </div>
-          <p style="color:var(--muted);line-height:1.7">Dikemas modern agar kualitasnya tetap terjaga sampai ke tangan konsumen. Cocok untuk Anda yang ingin mulai merawat lambung dengan cara yang lebih praktis.</p>
-          <a data-wa href="#" class="btn btn-primary">Pesan promo sekarang</a>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Khasiat</span>
-          <h2>Keluhan yang sering dibantu dengan Madu Vitagerd</h2>
-          <p>Gunakan sebagai pendamping pola makan, pola tidur, dan gaya hidup yang lebih ramah lambung.</p>
-        </div>
-        <div class="benefit-grid">
-          <div class="benefit">Asam lambung tinggi</div>
-          <div class="benefit">GERD</div>
-          <div class="benefit">Sakit maag</div>
-          <div class="benefit">Perut mual</div>
-          <div class="benefit">Nyeri ulu hati</div>
-          <div class="benefit">Mulut pahit atau asam</div>
-          <div class="benefit">Perut kembung dan begah</div>
-          <div class="benefit">Dada panas</div>
-          <div class="benefit">Suara serak</div>
-          <div class="benefit">Sakit tenggorokan</div>
-          <div class="benefit">Susah tidur</div>
-          <div class="benefit">Badan lemas dan mudah lelah</div>
-          <div class="benefit">Kepala terasa ringan atau kleyengan</div>
-          <div class="benefit">Batuk malam</div>
-          <div class="benefit">Daya tahan tubuh</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Dipercaya pelanggan</span>
-          <h2>Testimoni pengguna Madu Vitagerd</h2>
-          <p>Tambahkan screenshot testimoni asli Anda di bagian ini agar landing page makin meyakinkan.</p>
-        </div>
-        <div class="proof-grid">
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Perut saya lebih nyaman setelah rutin konsumsi dan mulai atur makan. Rasanya aktivitas jadi tidak terganggu seperti sebelumnya.”</p>
-            <b>Bu Rini, 43 tahun</b>
-          </div>
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Sering begah dan sendawa, sekarang lebih enak. Pelayanan cepat, bisa tanya cara konsumsi juga lewat WhatsApp.”</p>
-            <b>Pak Hendra, 51 tahun</b>
-          </div>
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Awalnya coba satu botol. Cocok di saya, apalagi dibarengi jaga pola makan malam.”</p>
-            <b>Maya, 36 tahun</b>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="promo">
-      <div class="container">
-        <div class="promo-card">
-          <div>
-            <span class="kicker">Promo terbatas</span>
-            <h2>Harga promo Madu Vitagerd khusus hari ini</h2>
-            <p class="lead" style="font-size:18px">Buktikan manfaat alaminya. Coba 1 botol Madu Vitagerd dan rasakan perbedaannya.</p>
-            <ul class="promo-list">
-              <li>Diskon hingga 35%</li>
-              <li>Cocok untuk dewasa dan lansia</li>
-              <li>Potongan ongkir ke seluruh Indonesia</li>
-              <li>Konsultasi cara konsumsi via WhatsApp</li>
-            </ul>
-          </div>
-          <div class="price-box">
-            <small>Paket mulai dari</small>
-            <strong>Rp xxx.xxx</strong>
-            <span>Ganti dengan harga asli Anda</span>
-            <div style="height:18px"></div>
-            <a data-wa href="#" class="btn" style="background:var(--yellow);color:#111;width:100%">Ambil promo sekarang</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Informasi penting</span>
-          <h2>Pastikan nomor WhatsApp Anda benar</h2>
-          <p>Kami akan menghubungi Anda melalui WhatsApp untuk proses konfirmasi, konsultasi singkat, dan pengiriman.</p>
-        </div>
-        <div class="steps">
-          <div class="step"><div class="step-num">1</div><h3>Klik tombol pesan</h3><p>Anda akan diarahkan langsung ke WhatsApp admin resmi.</p></div>
-          <div class="step"><div class="step-num">2</div><h3>Kirim format otomatis</h3><p>Admin akan membantu konfirmasi promo dan cara konsumsi.</p></div>
-          <div class="step"><div class="step-num">3</div><h3>Pesanan diproses</h3><p>Pastikan alamat dan nomor aktif agar pengiriman tidak terkendala.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <span class="kicker">Cek keaslian</span>
-          <h2>Cara memastikan produk asli</h2>
-          <p>Jangan sampai tertukar produk abal-abal. Pastikan membeli dari kontak resmi dan cek kemasan sebelum digunakan.</p>
-        </div>
-        <div class="faq">
-          <details open>
-            <summary>Pastikan kemasan tersegel rapi</summary>
-            <p>Produk asli dikirim dengan kemasan yang layak, label jelas, dan segel dalam kondisi baik.</p>
-          </details>
-          <details>
-            <summary>Cek informasi BPOM dan Halal</summary>
-            <p>Cocokkan informasi legalitas pada kemasan dengan data resmi yang tersedia.</p>
-          </details>
-          <details>
-            <summary>Beli melalui admin resmi</summary>
-            <p>Klik tombol WhatsApp di halaman ini agar pesanan diproses oleh admin yang tepat.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="final-cta">
-      <div class="container">
-        <div class="final-box">
-          <h2>Tunggu apa lagi? Pesan Madu Vitagerd sekarang juga</h2>
-          <p>Mulai rawat lambung dari hari ini. Klik tombol di bawah, kirim pesan otomatis, lalu admin akan bantu proses pesanan Anda.</p>
-          <a data-wa href="#" class="btn">💬 Pesan Sekarang via WhatsApp</a>
-        </div>
-      </div>
     </section>
   </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div>
-        <b style="color:var(--green-900)">Madu Vitagerd</b><br>
-        Vitagerd All Right Reserved. Copyright 2026
-      </div>
-      <div class="disclaimer">
-        Disclaimer: Hasil setiap orang dapat berbeda tergantung kondisi tubuh, pola makan, pola tidur, dan gaya hidup. Produk herbal bukan pengganti pemeriksaan dokter. Jika keluhan berat, menetap, atau disertai tanda bahaya, segera konsultasikan ke tenaga medis.
-      </div>
-    </div>
-  </footer>
-
-  <a data-wa class="float-wa" href="#" aria-label="Pesan via WhatsApp"><span>💬</span> Pesan via WhatsApp</a>
 </body>
 </html>
