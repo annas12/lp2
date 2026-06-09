@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Asam Lambung Naik</title>
 
   <style>
     :root {
-      --green-dark: #007932;
-      --green-main: #48C752;
-      --green-light: #9AFF7F;
-      --black: #101010;
-      --red: #ff1f2d;
-      --red-dark: #c90013;
+      --black: #111111;
+      --red: #ff2a2a;
+      --red-dark: #c70000;
+      --green-edge: #0f6a2d;
+      --green-mid: #2f9442;
+      --green-soft: #58b85b;
+      --green-center: #6bc766;
       --white: #ffffff;
     }
 
@@ -30,114 +30,100 @@
       overflow-x: hidden;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--black);
+
+      /* background seperti contoh: pinggir gelap, tengah lebih terang */
       background:
         radial-gradient(circle at center,
-          rgba(255, 255, 255, 1) 0%,
-          rgba(255, 255, 255, 0.98) 24%,
-          rgba(246, 255, 246, 0.96) 42%,
-          rgba(224, 255, 221, 0.92) 63%,
-          rgba(172, 238, 169, 0.88) 82%,
-          rgba(106, 203, 119, 0.92) 100%
-        );
+          rgba(107, 199, 102, 0.95) 0%,
+          rgba(88, 184, 91, 0.96) 18%,
+          rgba(47, 148, 66, 0.98) 48%,
+          rgba(20, 108, 42, 1) 78%,
+          rgba(12, 86, 34, 1) 100%);
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(circle at 20% 18%, rgba(154, 255, 127, 0.20), transparent 22%),
-        radial-gradient(circle at 82% 22%, rgba(72, 199, 82, 0.18), transparent 24%),
-        radial-gradient(circle at 12% 78%, rgba(0, 121, 50, 0.10), transparent 28%),
-        radial-gradient(circle at 88% 82%, rgba(72, 199, 82, 0.14), transparent 28%);
-      filter: blur(2px);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(0, 121, 50, 0.20) 0%,
-          rgba(255, 255, 255, 0.05) 18%,
-          rgba(255, 255, 255, 0) 50%,
-          rgba(255, 255, 255, 0.05) 82%,
-          rgba(0, 121, 50, 0.20) 100%
-        );
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
     }
 
     .page {
-      position: relative;
-      z-index: 1;
       width: 100%;
       min-height: 100vh;
-      padding: 34px 18px 42px;
+      padding: 28px 16px 34px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* glow halus tambahan */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.10) 0%, transparent 28%),
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.05) 0%, transparent 16%),
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.05) 0%, transparent 16%),
+        radial-gradient(circle at 12% 82%, rgba(255,255,255,0.04) 0%, transparent 18%),
+        radial-gradient(circle at 88% 78%, rgba(255,255,255,0.04) 0%, transparent 18%);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
     }
 
     .headline {
       width: 100%;
-      max-width: 1100px;
-      margin: 0 auto 8px;
+      max-width: 980px;
+      margin: 0 auto 10px;
     }
 
     .headline h1 {
       margin: 0;
-      font-size: clamp(30px, 4.1vw, 58px);
+      font-size: clamp(30px, 4.2vw, 58px);
       line-height: 1.08;
       font-weight: 900;
-      letter-spacing: -1.3px;
+      letter-spacing: -1px;
       text-transform: uppercase;
-      color: var(--black);
-      text-wrap: balance;
-      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.72);
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,0.18),
+        0 10px 24px rgba(0,0,0,0.10);
     }
 
     .headline h1 .red {
-      color: var(--red);
+      color: #ff3131;
       text-shadow:
-        0 2px 0 rgba(255, 255, 255, 0.70),
-        0 7px 20px rgba(255, 31, 45, 0.16);
+        0 2px 0 rgba(0,0,0,0.18),
+        0 10px 24px rgba(0,0,0,0.10);
     }
 
     .headline h2 {
       margin: 10px 0 0;
       font-size: clamp(20px, 2.2vw, 34px);
-      line-height: 1.18;
+      line-height: 1.15;
       font-weight: 900;
-      letter-spacing: -0.5px;
-      color: var(--black);
-      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.70);
+      letter-spacing: -0.4px;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,0.14),
+        0 8px 18px rgba(0,0,0,0.08);
     }
 
     .visual {
       width: 100%;
       max-width: 760px;
-      margin: 4px auto 6px;
+      margin: 8px auto 10px;
       position: relative;
-    }
-
-    .visual::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 52%;
-      transform: translate(-50%, -50%);
-      width: 78%;
-      height: 74%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.30) 38%, transparent 72%);
-      filter: blur(14px);
-      z-index: -1;
     }
 
     .visual img {
@@ -145,94 +131,90 @@
       width: 100%;
       height: auto;
       margin: 0 auto;
-      border: 0;
       filter:
-        drop-shadow(0 18px 34px rgba(0, 121, 50, 0.16))
-        drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
+        drop-shadow(0 14px 26px rgba(0,0,0,0.14));
     }
 
     .note {
       width: 100%;
       max-width: 920px;
       margin: 4px auto 0;
-      padding: 0 10px;
+      padding: 0 8px;
     }
 
     .note p {
       margin: 0;
-      font-size: clamp(18px, 1.75vw, 29px);
-      line-height: 1.36;
+      font-size: clamp(18px, 1.75vw, 28px);
+      line-height: 1.35;
       font-weight: 900;
-      letter-spacing: -0.35px;
-      color: var(--black);
-      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.75);
+      letter-spacing: -0.3px;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,0.14),
+        0 8px 18px rgba(0,0,0,0.08);
     }
 
     .note .red {
-      color: var(--red-dark);
+      color: #ffdfdf;
       font-weight: 900;
     }
 
     @media (max-width: 768px) {
       .page {
-        padding: 22px 10px 30px;
+        padding: 20px 10px 28px;
       }
 
       .headline {
-        margin-bottom: 4px;
+        margin-bottom: 6px;
       }
 
       .headline h1 {
-        font-size: clamp(24px, 7.6vw, 40px);
-        line-height: 1.07;
-        letter-spacing: -0.8px;
+        font-size: clamp(24px, 7.5vw, 40px);
+        line-height: 1.08;
       }
 
       .headline h2 {
         margin-top: 8px;
-        font-size: clamp(17px, 5.1vw, 23px);
-        line-height: 1.16;
+        font-size: clamp(17px, 5vw, 23px);
       }
 
       .visual {
         max-width: 100%;
-        margin: 2px auto 6px;
+        margin: 6px auto 8px;
       }
 
       .note {
         margin-top: 2px;
-        padding: 0 8px;
       }
 
       .note p {
         font-size: clamp(15px, 4.5vw, 20px);
         line-height: 1.35;
-        letter-spacing: -0.25px;
       }
     }
   </style>
 </head>
-
 <body>
   <main class="page">
-    <section class="headline">
-      <h1>
-        JANGAN SEPELEKAN <span class="red">ASAM LAMBUNG NAIK</span>
-      </h1>
+    <div class="content">
+      <section class="headline">
+        <h1>
+          JANGAN SEPELEKAN <span class="red">ASAM LAMBUNG NAIK</span>
+        </h1>
+        <h2>Atasi Sekarang Sebelum Kronis!</h2>
+      </section>
 
-      <h2>Atasi Sekarang Sebelum Kronis!</h2>
-    </section>
+      <section class="visual">
+        <img src="./gambar2.png" alt="">
+      </section>
 
-    <section class="visual">
-      <img src="./gambar2.png" alt="" />
-    </section>
-
-    <section class="note">
-      <p>
-        “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
-        Agar <span class="red">Asam Lambung Naik</span> Dapat Teratasi”
-      </p>
-    </section>
+      <section class="note">
+        <p>
+          “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
+          Agar <span class="red">Asam Lambung Naik</span> Dapat Teratasi”
+        </p>
+      </section>
+    </div>
   </main>
 </body>
 </html>
