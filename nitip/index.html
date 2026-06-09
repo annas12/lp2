@@ -1,0 +1,116 @@
+<section class="lp-headline">
+  <h1>
+    <!-- Desktop / Tablet -->
+    <span class="desktop-title">
+      <span class="black-text">JANGAN SEPELEKAN</span>
+      <span class="red-text"> ASAM LAMBUNG NAIK</span>
+    </span>
+
+    <!-- Mobile -->
+    <span class="mobile-title black-text">JANGAN SEPELEKAN</span>
+    <span class="mobile-title red-text">ASAM LAMBUNG NAIK</span>
+
+    <span class="sub-title black-text">
+      Atasi Sekarang Sebelum Kronis!
+    </span>
+  </h1>
+</section>
+
+<style>
+  .lp-headline,
+  .lp-headline * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .lp-headline {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 10px 0px 10px;
+    margin-bottom: -14px;
+    text-align: center;
+    overflow: hidden;
+    container-type: inline-size;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .lp-headline h1 {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -1px;
+  }
+
+  .black-text {
+    color: #111111;
+  }
+
+  .red-text {
+    color: #ff1e1e;
+  }
+
+  .desktop-title {
+    display: block;
+    white-space: nowrap;
+    font-size: clamp(20px, 4cqw, 27px);
+    text-transform: uppercase;
+  }
+
+  .mobile-title {
+    display: none;
+  }
+
+  .sub-title {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    white-space: nowrap;
+    font-size: clamp(17px, 3.2cqw, 22px);
+    line-height: 1;
+  }
+
+  /* Paksa komponen setelah headline lebih nempel */
+  .lp-headline + * {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Mobile */
+  @media (max-width: 520px) {
+    .lp-headline {
+      padding: 16px 8px 0px 8px;
+      margin-bottom: -18px;
+    }
+
+    .desktop-title {
+      display: none;
+    }
+
+    .mobile-title {
+      display: block;
+      white-space: nowrap;
+      font-size: clamp(25px, 8cqw, 30px);
+      line-height: 1.04;
+      text-transform: uppercase;
+    }
+
+    .sub-title {
+      margin-top: 5px;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      white-space: normal;
+      font-size: clamp(17px, 5.4cqw, 20px);
+      line-height: 1.04;
+      letter-spacing: -0.6px;
+    }
+  }
+</style>
