@@ -15,7 +15,6 @@
       --gold: #F6BB34;
       --black: #050505;
       --red: #ff1e1e;
-      --white: #ffffff;
     }
 
     * {
@@ -31,50 +30,30 @@
       overflow-x: hidden;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--black);
+
+      /* SATU BACKGROUND UNTUK SEMUA */
       background:
-        radial-gradient(circle at top left, rgba(154, 255, 127, 0.75), transparent 32%),
-        radial-gradient(circle at top right, rgba(72, 199, 82, 0.55), transparent 34%),
-        linear-gradient(180deg, #eaffea 0%, #d9ffd8 42%, #f2fff2 100%);
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.62) 0%, rgba(154, 255, 127, 0.32) 34%, transparent 62%),
+        radial-gradient(circle at left center, rgba(72, 199, 82, 0.28) 0%, transparent 36%),
+        radial-gradient(circle at right center, rgba(0, 121, 50, 0.22) 0%, transparent 38%),
+        linear-gradient(180deg, #ddffdc 0%, #c5ffc3 45%, #eaffea 100%);
     }
 
     .page-wrapper {
       width: 100%;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(0, 121, 50, 0.28) 0%,
-          rgba(72, 199, 82, 0.18) 18%,
-          rgba(234, 255, 234, 0.98) 50%,
-          rgba(72, 199, 82, 0.18) 82%,
-          rgba(0, 121, 50, 0.28) 100%
-        );
+      padding: 0;
+      margin: 0;
     }
 
-    .landing-container {
-      width: 100%;
-      max-width: 720px;
-      min-height: 100vh;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.88), transparent 38%),
-        linear-gradient(180deg, #e8ffe7 0%, #ccffc9 45%, #f0fff0 100%);
-      box-shadow: 0 22px 80px rgba(0, 121, 50, 0.20);
-      position: relative;
-    }
-
-    .landing-container::before {
-      content: "";
-      display: block;
+    .top-color-line {
       width: 100%;
       height: 8px;
       background: linear-gradient(
         90deg,
         var(--green-dark) 0%,
-        var(--green-main) 28%,
-        var(--green-light) 52%,
+        var(--green-main) 25%,
+        var(--green-light) 50%,
         var(--yellow) 74%,
         var(--gold) 100%
       );
@@ -82,16 +61,18 @@
 
     .hero-headline {
       width: 100%;
-      padding: 24px 16px 8px;
+      padding: 22px 14px 4px;
       text-align: center;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(232, 255, 231, 0.45));
+      background: transparent;
+      overflow: hidden;
     }
 
     .hero-title {
       margin: 0;
-      font-size: clamp(22px, 4.2vw, 31px);
-      line-height: 1.1;
+      padding: 0;
+      width: 100%;
+      font-size: clamp(20px, 2.35vw, 34px);
+      line-height: 1.08;
       font-weight: 900;
       letter-spacing: -0.8px;
       text-transform: uppercase;
@@ -104,9 +85,10 @@
     }
 
     .hero-subtitle {
-      margin: 8px 0 0;
-      font-size: clamp(17px, 3vw, 23px);
-      line-height: 1.12;
+      margin: 7px 0 0;
+      padding: 0;
+      font-size: clamp(17px, 1.85vw, 25px);
+      line-height: 1.1;
       font-weight: 900;
       letter-spacing: -0.4px;
       color: var(--black);
@@ -117,31 +99,32 @@
       margin: 0;
       padding: 0;
       line-height: 0;
-      background:
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.50) 0%, rgba(154, 255, 127, 0.28) 42%, rgba(72, 199, 82, 0.22) 100%),
-        linear-gradient(180deg, #eaffea 0%, #d6ffd3 100%);
+      text-align: center;
+      background: transparent;
     }
 
     .hero-image {
       display: block;
-      width: 100%;
+      width: min(100%, 760px);
       max-width: 100%;
       height: auto;
       margin: 0 auto;
+      padding: 0;
       border: 0;
+      background: transparent;
     }
 
     .reading-note {
       width: 100%;
-      padding: 12px 16px 22px;
+      padding: 10px 14px 24px;
       text-align: center;
-      background:
-        linear-gradient(180deg, rgba(214, 255, 211, 0.96) 0%, rgba(232, 255, 231, 0.98) 100%);
+      background: transparent;
     }
 
     .reading-note p {
       margin: 0;
-      font-size: clamp(15px, 3vw, 18px);
+      padding: 0;
+      font-size: clamp(15px, 1.55vw, 20px);
       line-height: 1.45;
       font-weight: 800;
       letter-spacing: -0.3px;
@@ -153,14 +136,14 @@
       font-weight: 900;
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 768px) {
       .hero-headline {
-        padding: 20px 10px 6px;
+        padding: 20px 10px 4px;
       }
 
       .hero-title {
         white-space: normal;
-        font-size: clamp(21px, 6.2vw, 28px);
+        font-size: clamp(22px, 6vw, 34px);
         line-height: 1.08;
       }
 
@@ -171,15 +154,19 @@
 
       .hero-subtitle {
         margin-top: 6px;
-        font-size: clamp(16px, 4.8vw, 21px);
+        font-size: clamp(16px, 4.8vw, 23px);
+      }
+
+      .hero-image {
+        width: 100%;
       }
 
       .reading-note {
-        padding: 10px 14px 20px;
+        padding: 10px 12px 22px;
       }
 
       .reading-note p {
-        font-size: clamp(14px, 4.3vw, 16px);
+        font-size: clamp(14px, 4.2vw, 17px);
         line-height: 1.45;
       }
     }
@@ -188,32 +175,30 @@
 
 <body>
   <main class="page-wrapper">
-    <section class="landing-container">
+    <div class="top-color-line"></div>
 
-      <header class="hero-headline">
-        <h1 class="hero-title">
-          <span class="black-line">JANGAN SEPELEKAN</span>
-          <span class="red-line red-text"> ASAM LAMBUNG NAIK</span>
-        </h1>
+    <header class="hero-headline">
+      <h1 class="hero-title">
+        <span class="black-line">JANGAN SEPELEKAN</span>
+        <span class="red-line red-text"> ASAM LAMBUNG NAIK</span>
+      </h1>
 
-        <p class="hero-subtitle">Atasi Sekarang Sebelum Kronis!</p>
-      </header>
+      <p class="hero-subtitle">Atasi Sekarang Sebelum Kronis!</p>
+    </header>
 
-      <section class="image-section">
-        <img
-          class="hero-image"
-          src="./Krem%20Merah%20Muda%20Berwarna%20Estetik%20Presentasi%2043%20%281%29.png"
-          alt=""
-        />
-      </section>
+    <section class="image-section">
+      <img
+        class="hero-image"
+        src="./Krem%20Merah%20Muda%20Berwarna%20Estetik%20Presentasi%2043%20%281%29.png"
+        alt=""
+      />
+    </section>
 
-      <section class="reading-note">
-        <p>
-          “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
-          Agar <span class="red-text">Asam Lambung Naik</span> Dapat Teratasi”
-        </p>
-      </section>
-
+    <section class="reading-note">
+      <p>
+        “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
+        Agar <span class="red-text">Asam Lambung Naik</span> Dapat Teratasi”
+      </p>
     </section>
   </main>
 </body>
