@@ -6,158 +6,214 @@
   <title>Asam Lambung Naik</title>
 
   <style>
-    :root {
-      --green-dark: #007932;
-      --green-main: #48C752;
-      --green-light: #9AFF7F;
-      --black: #111111;
-      --red: #ff2b2b;
-      --white: #ffffff;
+    :root{
+      --green-dark:#0b8e3a;
+      --green-main:#35c94a;
+      --green-soft:#72df63;
+      --green-light:#a8f18e;
+      --yellow:#fff12b;
+      --white:#ffffff;
+      --black:#111111;
+      --red:#ff2b2b;
+      --shadow-green:#0b6a2d;
     }
 
-    * {
-      box-sizing: border-box;
+    *{
+      box-sizing:border-box;
     }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      overflow-x: hidden;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--black);
+    html, body{
+      margin:0;
+      padding:0;
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--white);
       background:
-        radial-gradient(circle at top left, rgba(72, 199, 82, 0.10), transparent 28%),
-        radial-gradient(circle at top right, rgba(0, 121, 50, 0.08), transparent 30%),
-        radial-gradient(circle at bottom center, rgba(154, 255, 127, 0.12), transparent 35%),
-        linear-gradient(180deg, #ffffff 0%, #f8fff8 45%, #f2fff2 100%);
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.16), transparent 18%),
+        radial-gradient(circle at 85% 12%, rgba(255,255,255,0.14), transparent 18%),
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.08), transparent 26%),
+        radial-gradient(circle at 10% 75%, rgba(255,255,255,0.08), transparent 20%),
+        radial-gradient(circle at 92% 78%, rgba(255,255,255,0.10), transparent 20%),
+        linear-gradient(180deg, #48cc4f 0%, #34c148 38%, #2eb943 68%, #56d65d 100%);
     }
 
-    body {
-      display: flex;
-      justify-content: center;
+    body{
+      position:relative;
     }
 
-    .page {
-      width: 100%;
-      max-width: 1200px;
-      min-height: 100vh;
-      padding: 28px 20px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    /* efek samar seperti contoh */
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      width:280px;
+      height:280px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.08);
+      filter:blur(30px);
+      pointer-events:none;
+      z-index:0;
     }
 
-    .headline {
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto 8px;
+    body::before{
+      top:80px;
+      left:-80px;
     }
 
-    .headline h1 {
-      margin: 0;
-      font-size: clamp(30px, 4.2vw, 58px);
-      line-height: 1.08;
-      font-weight: 900;
-      letter-spacing: -1px;
-      text-transform: uppercase;
-      color: var(--black);
+    body::after{
+      bottom:120px;
+      right:-60px;
     }
 
-    .headline h1 .red {
-      color: var(--red);
+    .page{
+      position:relative;
+      z-index:1;
+      width:100%;
+      min-height:100vh;
+      padding:22px 14px 30px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
     }
 
-    .headline h2 {
-      margin: 10px 0 0;
-      font-size: clamp(20px, 2.2vw, 34px);
-      line-height: 1.15;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      color: var(--black);
+    .headline{
+      width:100%;
+      max-width:980px;
+      margin:0 auto 6px;
     }
 
-    .visual {
-      width: 100%;
-      max-width: 760px;
-      margin: 8px auto 10px;
+    .headline h1{
+      margin:0;
+      font-size:clamp(28px, 4vw, 56px);
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:-1px;
+      text-transform:uppercase;
     }
 
-    .visual img {
-      display: block;
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
+    .headline .line-top{
+      display:block;
+      color:#f8fff8;
+      text-shadow:
+        0 2px 0 rgba(7,88,28,0.55),
+        0 0 10px rgba(255,255,255,0.08);
     }
 
-    .note {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
+    .headline .line-main{
+      display:block;
+      margin-top:2px;
+      color:var(--yellow);
+      text-shadow:
+        -2px -2px 0 var(--shadow-green),
+         2px -2px 0 var(--shadow-green),
+        -2px  2px 0 var(--shadow-green),
+         2px  2px 0 var(--shadow-green),
+         0px  4px 0 rgba(7,88,28,0.45);
     }
 
-    .note p {
-      margin: 0;
-      font-size: clamp(18px, 1.8vw, 30px);
-      line-height: 1.35;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--black);
+    .headline h2{
+      margin:10px 0 0;
+      font-size:clamp(19px, 2.2vw, 34px);
+      line-height:1.15;
+      font-weight:900;
+      letter-spacing:-0.4px;
+      color:#fafffa;
+      text-shadow:0 2px 0 rgba(7,88,28,0.35);
     }
 
-    .note .red {
-      color: #cc0000;
-      font-weight: 900;
+    .visual{
+      width:100%;
+      max-width:760px;
+      margin:8px auto 8px;
     }
 
-    @media (max-width: 768px) {
-      .page {
-        padding: 18px 12px 26px;
+    .visual img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:0 auto;
+      filter:drop-shadow(0 10px 28px rgba(8,82,30,0.22));
+    }
+
+    .note{
+      width:100%;
+      max-width:900px;
+      margin:6px auto 0;
+      padding:0 10px;
+    }
+
+    .note p{
+      margin:0;
+      font-size:clamp(17px, 1.75vw, 28px);
+      line-height:1.35;
+      font-weight:900;
+      letter-spacing:-0.3px;
+      color:#fafffa;
+      text-shadow:0 2px 0 rgba(7,88,28,0.28);
+    }
+
+    .note .em-yellow{
+      color:var(--yellow);
+      text-shadow:
+        -1px -1px 0 rgba(7,88,28,0.65),
+         1px -1px 0 rgba(7,88,28,0.65),
+        -1px  1px 0 rgba(7,88,28,0.65),
+         1px  1px 0 rgba(7,88,28,0.65);
+    }
+
+    @media (max-width: 768px){
+      .page{
+        padding:16px 10px 24px;
       }
 
-      .headline {
-        margin-bottom: 6px;
+      .headline{
+        margin-bottom:4px;
       }
 
-      .headline h1 {
-        font-size: clamp(26px, 8vw, 42px);
-        line-height: 1.08;
+      .headline h1{
+        font-size:clamp(24px, 7.4vw, 40px);
+        line-height:1.05;
       }
 
-      .headline h2 {
-        margin-top: 8px;
-        font-size: clamp(18px, 5.3vw, 24px);
-        line-height: 1.15;
+      .headline h2{
+        margin-top:8px;
+        font-size:clamp(17px, 5vw, 24px);
       }
 
-      .visual {
-        max-width: 100%;
-        margin: 6px auto 8px;
+      .visual{
+        max-width:100%;
+        margin:6px auto 6px;
       }
 
-      .note p {
-        font-size: clamp(16px, 4.7vw, 20px);
-        line-height: 1.35;
+      .note{
+        margin-top:4px;
+      }
+
+      .note p{
+        font-size:clamp(15px, 4.5vw, 20px);
+        line-height:1.35;
       }
     }
   </style>
 </head>
-
 <body>
   <main class="page">
     <section class="headline">
       <h1>
-        JANGAN SEPELEKAN <span class="red">ASAM LAMBUNG NAIK</span>
+        <span class="line-top">JANGAN SEPELEKAN</span>
+        <span class="line-main">ASAM LAMBUNG NAIK</span>
       </h1>
+
       <h2>Atasi Sekarang Sebelum Kronis!</h2>
     </section>
 
     <section class="visual">
       <img
-        src="./gambar1.png"
+        src="./Krem%20Merah%20Muda%20Berwarna%20Estetik%20Presentasi%2043%20%281%29.png"
         alt=""
       />
     </section>
@@ -165,7 +221,7 @@
     <section class="note">
       <p>
         “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
-        Agar <span class="red">Asam Lambung Naik</span> Dapat Teratasi”
+        Agar <span class="em-yellow">Asam Lambung Naik</span> Dapat Teratasi”
       </p>
     </section>
   </main>
