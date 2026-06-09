@@ -3,225 +3,234 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Asam Lambung Naik</title>
 
   <style>
-    :root{
-      --green-dark:#0b8e3a;
-      --green-main:#35c94a;
-      --green-soft:#72df63;
-      --green-light:#a8f18e;
-      --yellow:#fff12b;
-      --white:#ffffff;
-      --black:#111111;
-      --red:#ff2b2b;
-      --shadow-green:#0b6a2d;
+    :root {
+      --green-dark: #007932;
+      --green-main: #48C752;
+      --green-light: #9AFF7F;
+      --black: #101010;
+      --red: #ff1f2d;
+      --red-dark: #c90013;
+      --white: #ffffff;
     }
 
-    *{
-      box-sizing:border-box;
+    * {
+      box-sizing: border-box;
     }
 
-    html, body{
-      margin:0;
-      padding:0;
-      width:100%;
-      min-height:100%;
-      overflow-x:hidden;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--white);
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--black);
       background:
-        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.16), transparent 18%),
-        radial-gradient(circle at 85% 12%, rgba(255,255,255,0.14), transparent 18%),
-        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.08), transparent 26%),
-        radial-gradient(circle at 10% 75%, rgba(255,255,255,0.08), transparent 20%),
-        radial-gradient(circle at 92% 78%, rgba(255,255,255,0.10), transparent 20%),
-        linear-gradient(180deg, #48cc4f 0%, #34c148 38%, #2eb943 68%, #56d65d 100%);
+        radial-gradient(circle at center,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.98) 24%,
+          rgba(246, 255, 246, 0.96) 42%,
+          rgba(224, 255, 221, 0.92) 63%,
+          rgba(172, 238, 169, 0.88) 82%,
+          rgba(106, 203, 119, 0.92) 100%
+        );
     }
 
-    body{
-      position:relative;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(154, 255, 127, 0.20), transparent 22%),
+        radial-gradient(circle at 82% 22%, rgba(72, 199, 82, 0.18), transparent 24%),
+        radial-gradient(circle at 12% 78%, rgba(0, 121, 50, 0.10), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(72, 199, 82, 0.14), transparent 28%);
+      filter: blur(2px);
     }
 
-    /* efek samar seperti contoh */
-    body::before,
-    body::after{
-      content:"";
-      position:fixed;
-      inset:auto;
-      width:280px;
-      height:280px;
-      border-radius:50%;
-      background:rgba(255,255,255,0.08);
-      filter:blur(30px);
-      pointer-events:none;
-      z-index:0;
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0, 121, 50, 0.20) 0%,
+          rgba(255, 255, 255, 0.05) 18%,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 0.05) 82%,
+          rgba(0, 121, 50, 0.20) 100%
+        );
     }
 
-    body::before{
-      top:80px;
-      left:-80px;
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 100vh;
+      padding: 34px 18px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
-    body::after{
-      bottom:120px;
-      right:-60px;
+    .headline {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto 8px;
     }
 
-    .page{
-      position:relative;
-      z-index:1;
-      width:100%;
-      min-height:100vh;
-      padding:22px 14px 30px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
+    .headline h1 {
+      margin: 0;
+      font-size: clamp(30px, 4.1vw, 58px);
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -1.3px;
+      text-transform: uppercase;
+      color: var(--black);
+      text-wrap: balance;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.72);
     }
 
-    .headline{
-      width:100%;
-      max-width:980px;
-      margin:0 auto 6px;
-    }
-
-    .headline h1{
-      margin:0;
-      font-size:clamp(28px, 4vw, 56px);
-      line-height:1.05;
-      font-weight:900;
-      letter-spacing:-1px;
-      text-transform:uppercase;
-    }
-
-    .headline .line-top{
-      display:block;
-      color:#f8fff8;
+    .headline h1 .red {
+      color: var(--red);
       text-shadow:
-        0 2px 0 rgba(7,88,28,0.55),
-        0 0 10px rgba(255,255,255,0.08);
+        0 2px 0 rgba(255, 255, 255, 0.70),
+        0 7px 20px rgba(255, 31, 45, 0.16);
     }
 
-    .headline .line-main{
-      display:block;
-      margin-top:2px;
-      color:var(--yellow);
-      text-shadow:
-        -2px -2px 0 var(--shadow-green),
-         2px -2px 0 var(--shadow-green),
-        -2px  2px 0 var(--shadow-green),
-         2px  2px 0 var(--shadow-green),
-         0px  4px 0 rgba(7,88,28,0.45);
+    .headline h2 {
+      margin: 10px 0 0;
+      font-size: clamp(20px, 2.2vw, 34px);
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--black);
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.70);
     }
 
-    .headline h2{
-      margin:10px 0 0;
-      font-size:clamp(19px, 2.2vw, 34px);
-      line-height:1.15;
-      font-weight:900;
-      letter-spacing:-0.4px;
-      color:#fafffa;
-      text-shadow:0 2px 0 rgba(7,88,28,0.35);
+    .visual {
+      width: 100%;
+      max-width: 760px;
+      margin: 4px auto 6px;
+      position: relative;
     }
 
-    .visual{
-      width:100%;
-      max-width:760px;
-      margin:8px auto 8px;
+    .visual::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: 78%;
+      height: 74%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.30) 38%, transparent 72%);
+      filter: blur(14px);
+      z-index: -1;
     }
 
-    .visual img{
-      display:block;
-      width:100%;
-      height:auto;
-      margin:0 auto;
-      filter:drop-shadow(0 10px 28px rgba(8,82,30,0.22));
+    .visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border: 0;
+      filter:
+        drop-shadow(0 18px 34px rgba(0, 121, 50, 0.16))
+        drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
     }
 
-    .note{
-      width:100%;
-      max-width:900px;
-      margin:6px auto 0;
-      padding:0 10px;
+    .note {
+      width: 100%;
+      max-width: 920px;
+      margin: 4px auto 0;
+      padding: 0 10px;
     }
 
-    .note p{
-      margin:0;
-      font-size:clamp(17px, 1.75vw, 28px);
-      line-height:1.35;
-      font-weight:900;
-      letter-spacing:-0.3px;
-      color:#fafffa;
-      text-shadow:0 2px 0 rgba(7,88,28,0.28);
+    .note p {
+      margin: 0;
+      font-size: clamp(18px, 1.75vw, 29px);
+      line-height: 1.36;
+      font-weight: 900;
+      letter-spacing: -0.35px;
+      color: var(--black);
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.75);
     }
 
-    .note .em-yellow{
-      color:var(--yellow);
-      text-shadow:
-        -1px -1px 0 rgba(7,88,28,0.65),
-         1px -1px 0 rgba(7,88,28,0.65),
-        -1px  1px 0 rgba(7,88,28,0.65),
-         1px  1px 0 rgba(7,88,28,0.65);
+    .note .red {
+      color: var(--red-dark);
+      font-weight: 900;
     }
 
-    @media (max-width: 768px){
-      .page{
-        padding:16px 10px 24px;
+    @media (max-width: 768px) {
+      .page {
+        padding: 22px 10px 30px;
       }
 
-      .headline{
-        margin-bottom:4px;
+      .headline {
+        margin-bottom: 4px;
       }
 
-      .headline h1{
-        font-size:clamp(24px, 7.4vw, 40px);
-        line-height:1.05;
+      .headline h1 {
+        font-size: clamp(24px, 7.6vw, 40px);
+        line-height: 1.07;
+        letter-spacing: -0.8px;
       }
 
-      .headline h2{
-        margin-top:8px;
-        font-size:clamp(17px, 5vw, 24px);
+      .headline h2 {
+        margin-top: 8px;
+        font-size: clamp(17px, 5.1vw, 23px);
+        line-height: 1.16;
       }
 
-      .visual{
-        max-width:100%;
-        margin:6px auto 6px;
+      .visual {
+        max-width: 100%;
+        margin: 2px auto 6px;
       }
 
-      .note{
-        margin-top:4px;
+      .note {
+        margin-top: 2px;
+        padding: 0 8px;
       }
 
-      .note p{
-        font-size:clamp(15px, 4.5vw, 20px);
-        line-height:1.35;
+      .note p {
+        font-size: clamp(15px, 4.5vw, 20px);
+        line-height: 1.35;
+        letter-spacing: -0.25px;
       }
     }
   </style>
 </head>
+
 <body>
   <main class="page">
     <section class="headline">
       <h1>
-        <span class="line-top">JANGAN SEPELEKAN</span>
-        <span class="line-main">ASAM LAMBUNG NAIK</span>
+        JANGAN SEPELEKAN <span class="red">ASAM LAMBUNG NAIK</span>
       </h1>
 
       <h2>Atasi Sekarang Sebelum Kronis!</h2>
     </section>
 
     <section class="visual">
-      <img
-        src="./gambar2.png"
-        alt=""
-      />
+      <img src="./gambar2.png" alt="" />
     </section>
 
     <section class="note">
       <p>
         “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
-        Agar <span class="em-yellow">Asam Lambung Naik</span> Dapat Teratasi”
+        Agar <span class="red">Asam Lambung Naik</span> Dapat Teratasi”
       </p>
     </section>
   </main>
