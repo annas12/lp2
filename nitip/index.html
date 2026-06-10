@@ -3,1031 +3,467 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Asam Lambung Naik</title>
 
   <style>
-    :root {
-      --green-900: #075c22;
-      --green-800: #0b7430;
-      --green-700: #12893a;
-      --green-600: #22a846;
-      --green-500: #35c84a;
-      --green-300: #8ff08b;
-      --green-100: #eaffea;
+    :root{
+      --green-1:#44d44f;
+      --green-2:#35c84a;
+      --green-3:#27b742;
+      --green-4:#1f9d39;
+      --green-dark:#167b2c;
 
-      --yellow: #fff22f;
-      --red: #ff2f2f;
-      --red-dark: #c90000;
-
-      --white: #ffffff;
-      --black: #101010;
-      --text: #1f2933;
-      --muted: #647067;
-
-      --radius-lg: 28px;
-      --radius-md: 18px;
-      --shadow-soft: 0 18px 45px rgba(0, 72, 25, 0.16);
-      --shadow-card: 0 12px 30px rgba(0, 72, 25, 0.12);
-      --container: 1120px;
+      --white:#ffffff;
+      --black:#111111;
+      --yellow:#fff22f;
+      --red:#ff2d2d;
     }
 
-    * {
-      box-sizing: border-box;
+    *{
+      box-sizing:border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body{
+      margin:0;
+      padding:0;
+      width:100%;
+      min-height:100%;
+      overflow-x:hidden;
+      font-family:Arial, Helvetica, sans-serif;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      overflow-x: hidden;
+    body{
       background:
-        radial-gradient(circle at center top,
+        radial-gradient(circle at center,
           rgba(255,255,255,0.72) 0%,
-          rgba(255,255,255,0.48) 16%,
-          rgba(216,255,216,0.30) 34%,
-          rgba(94,220,100,0.14) 54%,
-          rgba(35,184,69,0.00) 68%
+          rgba(255,255,255,0.52) 14%,
+          rgba(233,255,232,0.34) 28%,
+          rgba(148,241,142,0.20) 42%,
+          rgba(68,212,79,0.08) 58%,
+          rgba(68,212,79,0.00) 68%
         ),
         radial-gradient(circle at center,
-          #70df65 0%,
-          #55d65b 24%,
-          #39c84e 52%,
-          #28b342 78%,
-          #1c9637 100%
+          #72e165 0%,
+          #56d95a 18%,
+          #44d44f 38%,
+          #30c249 62%,
+          #23b240 82%,
+          #1c9f39 100%
         );
+      position:relative;
     }
 
     body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      z-index: 0;
-      pointer-events: none;
-      border-radius: 999px;
-      filter: blur(12px);
-      opacity: 0.4;
+    body::after{
+      content:"";
+      position:fixed;
+      pointer-events:none;
+      z-index:0;
+      border-radius:50%;
+      filter:blur(8px);
+      opacity:.42;
     }
 
-    body::before {
-      width: 240px;
-      height: 240px;
-      left: -80px;
-      top: 110px;
-      background: rgba(255,255,255,0.35);
+    body::before{
+      width:220px;
+      height:220px;
+      top:80px;
+      left:-60px;
+      background:radial-gradient(circle, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.08) 42%, transparent 75%);
     }
 
-    body::after {
-      width: 300px;
-      height: 300px;
-      right: -110px;
-      bottom: 110px;
-      background: rgba(255,255,255,0.28);
+    body::after{
+      width:260px;
+      height:260px;
+      right:-70px;
+      bottom:110px;
+      background:radial-gradient(circle, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 40%, transparent 75%);
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .page{
+      position:relative;
+      z-index:1;
+      width:100%;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:26px 12px 34px;
     }
 
-    a {
-      text-decoration: none;
+    .container{
+      width:100%;
+      max-width:980px;
+      text-align:center;
     }
 
-    .page {
-      position: relative;
-      z-index: 1;
+    .headline{
+      max-width:940px;
+      margin:0 auto 8px;
     }
 
-    .container {
-      width: min(100% - 28px, var(--container));
-      margin: 0 auto;
+    .headline h1{
+      margin:0;
+      text-transform:uppercase;
+      line-height:1.02;
+      letter-spacing:-1.2px;
+      font-weight:900;
     }
 
-    section {
-      padding: 38px 0;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 26px 0 44px;
-      text-align: center;
-    }
-
-    .hero-inner {
-      width: 100%;
-    }
-
-    .hero-title {
-      margin: 0;
-      text-transform: uppercase;
-      font-weight: 900;
-      line-height: 1.02;
-      letter-spacing: -1.2px;
-    }
-
-    .hero-title .line-top {
-      display: block;
-      font-size: clamp(26px, 4vw, 58px);
-      color: var(--white);
+    .headline .line-top{
+      display:block;
+      font-size:clamp(28px, 4.2vw, 58px);
+      color:var(--white);
       text-shadow:
-        -2px -2px 0 var(--green-900),
-         2px -2px 0 var(--green-900),
-        -2px  2px 0 var(--green-900),
-         2px  2px 0 var(--green-900),
-         0 5px 0 rgba(7, 92, 34, 0.32);
+        -2px -2px 0 var(--green-dark),
+         2px -2px 0 var(--green-dark),
+        -2px  2px 0 var(--green-dark),
+         2px  2px 0 var(--green-dark),
+         0 5px 0 rgba(10,92,24,0.28),
+         0 12px 24px rgba(0,0,0,0.10);
     }
 
-    .hero-title .line-main {
-      display: block;
-      margin-top: 5px;
-      font-size: clamp(34px, 5.3vw, 76px);
-      color: var(--yellow);
+    .headline .line-main{
+      display:block;
+      margin-top:4px;
+      font-size:clamp(34px, 5.3vw, 76px);
+      color:var(--yellow);
       text-shadow:
-        -3px -3px 0 var(--green-900),
-         3px -3px 0 var(--green-900),
-        -3px  3px 0 var(--green-900),
-         3px  3px 0 var(--green-900),
-         0 8px 0 rgba(7, 92, 34, 0.30);
+        -2px -2px 0 var(--green-dark),
+         2px -2px 0 var(--green-dark),
+        -2px  2px 0 var(--green-dark),
+         2px  2px 0 var(--green-dark),
+        -3px  0px 0 var(--green-dark),
+         3px  0px 0 var(--green-dark),
+         0px -3px 0 var(--green-dark),
+         0px  3px 0 var(--green-dark),
+         0 6px 0 rgba(10,92,24,0.28),
+         0 14px 26px rgba(0,0,0,0.12);
     }
 
-    .hero-subtitle {
-      margin: 14px 0 0;
-      color: var(--white);
-      font-size: clamp(18px, 2.3vw, 34px);
-      line-height: 1.15;
-      font-weight: 900;
+    .headline h2{
+      margin:12px 0 0;
+      font-size:clamp(20px, 2.3vw, 34px);
+      line-height:1.12;
+      font-weight:900;
+      letter-spacing:-0.5px;
+      color:var(--white);
       text-shadow:
-        -1px -1px 0 rgba(7, 92, 34, 0.55),
-         1px -1px 0 rgba(7, 92, 34, 0.55),
-        -1px  1px 0 rgba(7, 92, 34, 0.55),
-         1px  1px 0 rgba(7, 92, 34, 0.55);
+        -1px -1px 0 rgba(14,104,29,0.65),
+         1px -1px 0 rgba(14,104,29,0.65),
+        -1px  1px 0 rgba(14,104,29,0.65),
+         1px  1px 0 rgba(14,104,29,0.65),
+         0 8px 18px rgba(0,0,0,0.08);
     }
 
-    .hero-visual {
-      width: min(100%, 760px);
-      margin: 8px auto 10px;
-      position: relative;
+    .visual{
+      width:100%;
+      max-width:760px;
+      margin:6px auto 8px;
+      position:relative;
     }
 
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      inset: 8% 12%;
-      z-index: -1;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(255,255,255,0.28), transparent 70%);
-      filter: blur(20px);
+    .visual::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:82%;
+      height:82%;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 38%, transparent 72%);
+      filter:blur(18px);
+      z-index:-1;
     }
 
-    .hero-visual img {
-      width: 100%;
-      filter: drop-shadow(0 16px 28px rgba(0,0,0,0.14));
+    .visual img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:0 auto;
+      filter:drop-shadow(0 14px 28px rgba(0,0,0,0.12));
     }
 
-    .hero-note {
-      margin: 10px auto 0;
-      max-width: 920px;
-      color: var(--white);
-      font-size: clamp(16px, 1.8vw, 28px);
-      line-height: 1.35;
-      font-weight: 900;
+    .note{
+      max-width:920px;
+      margin:10px auto 0;
+      padding:0 6px;
+    }
+
+    .note p{
+      margin:0;
+      font-size:clamp(18px, 1.8vw, 28px);
+      line-height:1.34;
+      font-weight:900;
+      letter-spacing:-0.3px;
+      color:var(--white);
       text-shadow:
-        -1px -1px 0 rgba(7, 92, 34, 0.55),
-         1px -1px 0 rgba(7, 92, 34, 0.55),
-        -1px  1px 0 rgba(7, 92, 34, 0.55),
-         1px  1px 0 rgba(7, 92, 34, 0.55);
+        -1px -1px 0 rgba(14,104,29,0.52),
+         1px -1px 0 rgba(14,104,29,0.52),
+        -1px  1px 0 rgba(14,104,29,0.52),
+         1px  1px 0 rgba(14,104,29,0.52),
+         0 8px 18px rgba(0,0,0,0.08);
     }
 
-    .hero-note .highlight {
-      color: var(--yellow);
+    .note .highlight{
+      color:var(--yellow);
+      text-shadow:
+        -1px -1px 0 var(--green-dark),
+         1px -1px 0 var(--green-dark),
+        -1px  1px 0 var(--green-dark),
+         1px  1px 0 var(--green-dark);
     }
 
-    .section-card {
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(255,255,255,0.78);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
-      padding: clamp(22px, 4vw, 46px);
-      backdrop-filter: blur(10px);
-    }
-
-    .section-head {
-      max-width: 760px;
-      margin: 0 auto 26px;
-      text-align: center;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--green-100);
-      color: var(--green-900);
-      border: 1px solid rgba(7, 92, 34, 0.14);
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .section-head h2,
-    .panel h2,
-    .story-box h2,
-    .product-copy h2 {
-      margin: 0;
-      color: var(--green-900);
-      font-size: clamp(26px, 3.2vw, 44px);
-      line-height: 1.12;
-      font-weight: 900;
-      letter-spacing: -0.8px;
-    }
-
-    .section-head p,
-    .panel p,
-    .story-box p,
-    .product-copy p {
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.7;
-    }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .question-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .question-card,
-    .danger-item,
-    .benefit,
-    .proof-card,
-    .step {
-      background: var(--white);
-      border: 1px solid rgba(7, 92, 34, 0.10);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-card);
-    }
-
-    .question-card {
-      padding: 20px;
-      text-align: left;
-    }
-
-    .question-card .icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 14px;
-      border-radius: 14px;
-      background: var(--green-100);
-      font-size: 21px;
-    }
-
-    .question-card b {
-      color: var(--black);
-      font-size: 16px;
-      line-height: 1.35;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .panel {
-      padding: clamp(22px, 3vw, 34px);
-      background: rgba(255,255,255,0.94);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .panel.green {
-      color: var(--white);
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 36%),
-        linear-gradient(135deg, var(--green-900), var(--green-600));
-    }
-
-    .panel.green h2,
-    .panel.green p {
-      color: var(--white);
-    }
-
-    .check-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .check-item,
-    .number-list li,
-    .promo-list li {
-      position: relative;
-      padding: 14px 14px 14px 42px;
-      border-radius: 16px;
-      background: #f7fff7;
-      border: 1px solid rgba(7, 92, 34, 0.10);
-      color: var(--text);
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .check-item::before,
-    .promo-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 14px;
-      top: 13px;
-      width: 20px;
-      height: 20px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--green-600);
-      color: var(--white);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .number-list,
-    .promo-list {
-      margin: 18px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      counter-reset: item;
-    }
-
-    .number-list li {
-      counter-increment: item;
-    }
-
-    .number-list li::before {
-      content: counter(item);
-      position: absolute;
-      left: 14px;
-      top: 13px;
-      width: 21px;
-      height: 21px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--green-700);
-      color: var(--white);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .danger-grid,
-    .benefit-grid,
-    .proof-grid,
-    .steps {
-      display: grid;
-      gap: 14px;
-    }
-
-    .danger-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .danger-item {
-      padding: 16px;
-      color: var(--black);
-      font-weight: 900;
-      text-align: left;
-    }
-
-    .story-box {
-      padding: clamp(26px, 5vw, 54px);
-      border-radius: var(--radius-lg);
-      color: var(--white);
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.20), transparent 34%),
-        linear-gradient(135deg, var(--green-900), var(--green-600));
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-
-    .story-box h2,
-    .story-box p {
-      color: var(--white);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 50px;
-      padding: 14px 22px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-weight: 900;
-      line-height: 1.2;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 72, 25, 0.18);
-    }
-
-    .btn-primary {
-      color: var(--white);
-      background: linear-gradient(135deg, var(--green-800), var(--green-500));
-    }
-
-    .btn-light {
-      color: var(--green-900);
-      background: var(--white);
-    }
-
-    .btn-yellow {
-      width: 100%;
-      color: var(--black);
-      background: var(--yellow);
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 26px;
-      align-items: center;
-    }
-
-    .product-card {
-      padding: 30px;
-      border-radius: var(--radius-lg);
-      background: rgba(255,255,255,0.94);
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-
-    .product-bottle {
-      width: min(260px, 82%);
-      aspect-ratio: 0.72;
-      margin: 0 auto 16px;
-      border-radius: 26px 26px 42px 42px;
-      background:
-        linear-gradient(180deg, #fff7cf, #f2b64a 38%, #8b431a 100%);
-      box-shadow: 0 22px 38px rgba(60, 30, 0, 0.22);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(2deg);
-    }
-
-    .product-label {
-      width: 78%;
-      padding: 20px 12px;
-      border-radius: 18px;
-      color: var(--green-900);
-      background: rgba(255,255,255,0.90);
-      display: grid;
-      gap: 6px;
-    }
-
-    .product-label small {
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .product-label strong {
-      font-size: 34px;
-      line-height: 0.95;
-      font-weight: 900;
-    }
-
-    .product-label span,
-    .product-photo-note {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .badge {
-      padding: 10px 13px;
-      border-radius: 999px;
-      color: var(--green-900);
-      background: var(--green-100);
-      border: 1px solid rgba(7, 92, 34, 0.12);
-      font-weight: 900;
-      font-size: 14px;
-    }
-
-    .benefit-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .benefit {
-      padding: 15px 16px;
-      font-weight: 900;
-      background: #f7fff7;
-    }
-
-    .proof-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .proof-card {
-      padding: 22px;
-      text-align: left;
-    }
-
-    .stars {
-      color: #f6b800;
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .proof-card p {
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .promo-card {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 22px;
-      align-items: center;
-      padding: clamp(26px, 4vw, 46px);
-      border-radius: var(--radius-lg);
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.20), transparent 30%),
-        linear-gradient(135deg, var(--green-900), var(--green-600));
-      color: var(--white);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .promo-card h2,
-    .promo-card p {
-      color: var(--white);
-    }
-
-    .price-box {
-      padding: 26px;
-      border-radius: var(--radius-md);
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.22);
-      text-align: center;
-    }
-
-    .price-box small,
-    .price-box span {
-      display: block;
-      color: rgba(255,255,255,0.84);
-      font-weight: 700;
-    }
-
-    .price-box strong {
-      display: block;
-      margin: 8px 0;
-      color: var(--yellow);
-      font-size: clamp(30px, 4vw, 46px);
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .steps {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .step {
-      padding: 22px;
-      text-align: left;
-    }
-
-    .step-num {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      color: var(--white);
-      background: var(--green-700);
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
-
-    .step h3 {
-      margin: 0 0 8px;
-      color: var(--green-900);
-      font-size: 20px;
-    }
-
-    .step p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .floating-cta {
-      position: fixed;
-      z-index: 20;
-      left: 50%;
-      bottom: 16px;
-      transform: translateX(-50%);
-      width: min(94%, 560px);
-      padding: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      box-shadow: 0 14px 34px rgba(0, 72, 25, 0.22);
-      backdrop-filter: blur(12px);
-    }
-
-    .floating-cta .btn {
-      width: 100%;
-    }
-
-    @media (max-width: 900px) {
-      .question-grid,
-      .danger-grid,
-      .benefit-grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 768px){
+      .page{
+        padding:18px 10px 24px;
       }
 
-      .split,
-      .product-grid,
-      .promo-card,
-      .steps,
-      .proof-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      section {
-        padding: 28px 0;
+      .headline{
+        margin-bottom:6px;
       }
 
-      .container {
-        width: min(100% - 20px, var(--container));
+      .headline .line-top{
+        font-size:clamp(24px, 7vw, 40px);
+        line-height:1.04;
       }
 
-      .hero {
-        padding-top: 18px;
-        min-height: auto;
+      .headline .line-main{
+        margin-top:3px;
+        font-size:clamp(29px, 8.5vw, 50px);
+        line-height:1.02;
       }
 
-      .hero-title .line-top {
-        font-size: clamp(23px, 7vw, 38px);
+      .headline h2{
+        margin-top:10px;
+        font-size:clamp(17px, 5vw, 23px);
+        line-height:1.14;
       }
 
-      .hero-title .line-main {
-        font-size: clamp(30px, 9vw, 48px);
+      .visual{
+        max-width:100%;
+        margin:6px auto 8px;
       }
 
-      .hero-subtitle {
-        font-size: clamp(17px, 5vw, 23px);
+      .note{
+        margin-top:8px;
+        padding:0 2px;
       }
 
-      .question-grid,
-      .danger-grid,
-      .benefit-grid,
-      .check-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-card,
-      .panel,
-      .story-box,
-      .promo-card {
-        border-radius: 22px;
-      }
-
-      .floating-cta {
-        bottom: 10px;
+      .note p{
+        font-size:clamp(15px, 4.5vw, 19px);
+        line-height:1.35;
       }
     }
   </style>
 </head>
-
 <body>
   <main class="page">
-
-    <section class="hero">
-      <div class="container hero-inner">
-        <h1 class="hero-title">
+    <div class="container">
+      <section class="headline">
+        <h1>
           <span class="line-top">JANGAN SEPELEKAN</span>
           <span class="line-main">ASAM LAMBUNG NAIK</span>
         </h1>
+        <h2>Atasi Sekarang Sebelum Kronis!</h2>
+      </section>
 
-        <h2 class="hero-subtitle">Atasi Sekarang Sebelum Kronis!</h2>
+      <section class="visual">
+        <img src="./gambar2.png" alt="">
+      </section>
 
-        <div class="hero-visual">
-          <img src="./gambar2.png" alt="" />
-        </div>
-
-        <p class="hero-note">
-          “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br />
+      <section class="note">
+        <p>
+          “Luangkan Waktu Selama 2-3 Menit Untuk Membaca Website Ini<br>
           Agar <span class="highlight">Asam Lambung Naik</span> Dapat Teratasi”
         </p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container section-card">
-        <div class="section-head">
-          <span class="kicker">Pertanyaan umum</span>
-          <h2>Hal yang sering ditanyakan banyak orang</h2>
-          <p>Sebelum membeli, biasanya orang ingin tahu apa penyebabnya, gejalanya, bahayanya, dan cara mengelolanya.</p>
-        </div>
-
-        <div class="grid question-grid">
-          <div class="question-card">
-            <span class="icon">❓</span>
-            <b>Asam lambung kronis disebabkan karena apa?</b>
-          </div>
-
-          <div class="question-card">
-            <span class="icon">🩺</span>
-            <b>Apa saja yang dirasakan penderita asam lambung?</b>
-          </div>
-
-          <div class="question-card">
-            <span class="icon">⚠️</span>
-            <b>Apakah asam lambung kronis berbahaya?</b>
-          </div>
-
-          <div class="question-card">
-            <span class="icon">🌱</span>
-            <b>Apakah keluhan asam lambung bisa membaik?</b>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gejala">
-      <div class="container split">
-        <div class="panel green">
-          <span class="kicker" style="background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.25)">Kenali sinyal tubuh</span>
-          <h2>Gejala asam lambung tinggi yang sering dialami</h2>
-          <p>Keluhan bisa muncul berbeda pada setiap orang. Namun, beberapa tanda di bawah ini cukup sering dirasakan saat lambung sedang tidak bersahabat.</p>
-        </div>
-
-        <div class="panel">
-          <div class="check-grid">
-            <div class="check-item">Bau mulut</div>
-            <div class="check-item">Tenggorokan terasa mengganjal</div>
-            <div class="check-item">Mudah kenyang</div>
-            <div class="check-item">Sering bersendawa</div>
-            <div class="check-item">Suara serak</div>
-            <div class="check-item">Perut atau dada terasa sesak</div>
-            <div class="check-item">Sakit tenggorokan atau sakit saat menelan</div>
-            <div class="check-item">Mual, muntah, atau batuk kering terutama malam hari</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container split">
-        <div class="panel">
-          <span class="kicker">Penyebab</span>
-          <h2>Pemicu yang perlu diperhatikan</h2>
-
-          <ol class="number-list">
-            <li>Tekanan pada perut, termasuk saat hamil.</li>
-            <li>Makanan tinggi lemak, pedas, susu, gorengan, atau makanan pemicu lain.</li>
-            <li>Efek beberapa obat tertentu.</li>
-            <li>Kegemukan atau berat badan berlebih.</li>
-            <li>Gangguan jaringan ikat tertentu.</li>
-          </ol>
-        </div>
-
-        <div class="panel">
-          <span class="kicker">Risiko</span>
-          <h2>Kebiasaan yang bisa memperparah</h2>
-
-          <ol class="number-list">
-            <li>Merokok.</li>
-            <li>Makan malam terlalu larut.</li>
-            <li>Makan terlalu banyak dalam satu waktu.</li>
-            <li>Sering mengonsumsi makanan pemicu GERD.</li>
-            <li>Minuman tertentu seperti kopi, susu, atau alkohol.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container section-card">
-        <div class="section-head">
-          <span class="kicker">Jangan ditunda</span>
-          <h2>Apa yang bisa terjadi jika sering dibiarkan?</h2>
-          <p>Keluhan yang terus berulang bisa mengganggu tidur, aktivitas, makan, dan rasa nyaman sehari-hari.</p>
-        </div>
-
-        <div class="danger-grid">
-          <div class="danger-item">⛔ Sesak napas dan dada</div>
-          <div class="danger-item">⛔ Radang kerongkongan</div>
-          <div class="danger-item">⛔ Sakit kepala</div>
-          <div class="danger-item">⛔ Mual dan muntah</div>
-          <div class="danger-item">⛔ Cemas berlebihan</div>
-          <div class="danger-item">⛔ Gigi mudah terganggu</div>
-          <div class="danger-item">⛔ Nyeri ulu hati</div>
-          <div class="danger-item">⛔ Dada panas</div>
-          <div class="danger-item">⛔ Gangguan tidur</div>
-          <div class="danger-item">⛔ Perut kembung</div>
-          <div class="danger-item">⛔ Badan lelah</div>
-          <div class="danger-item">⛔ Batuk kronis</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="story-box">
-          <h2>Yakin masih mau dibiarkan saja?</h2>
-          <p>Coba pikirkan bagaimana jadinya jika keluhan asam lambung yang disepelekan lama-kelamaan menghambat aktivitas, menurunkan kualitas hidup, dan mengganggu waktu bersama keluarga. Sayangi diri dan sayangi keluarga dengan mulai memperbaiki pola hidup, pola makan, dan memilih dukungan yang tepat.</p>
-          <a data-wa href="#" class="btn btn-light">Saya mau konsultasi via WhatsApp</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="produk">
-      <div class="container product-grid">
-        <div class="product-card">
-          <div class="product-bottle">
-            <div class="product-label">
-              <small>MADU HERBAL</small>
-              <strong>VITAGERD</strong>
-              <span>Bantu nyaman di lambung</span>
-            </div>
-          </div>
-          <div class="product-photo-note">Catatan: ganti mockup ini dengan foto produk asli agar trust lebih tinggi.</div>
-        </div>
-
-        <div class="panel product-copy">
-          <span class="kicker">Solusi herbal</span>
-          <h2>Madu Vitagerd, dukungan alami untuk keluhan asam lambung</h2>
-          <p>Madu Vitagerd adalah madu herbal yang diformulasikan untuk membantu mendukung kenyamanan pencernaan, terutama bagi Anda yang sering mengalami keluhan asam lambung, maag, perut mual, begah, dan nyeri ulu hati.</p>
-
-          <div class="badge-row">
-            <span class="badge">🌿 Bahan herbal</span>
-            <span class="badge">✅ BPOM</span>
-            <span class="badge">🕌 Halal MUI</span>
-            <span class="badge">🚚 Bisa COD</span>
-          </div>
-
-          <p>Dikemas modern agar kualitasnya tetap terjaga sampai ke tangan konsumen. Cocok untuk Anda yang ingin mulai merawat lambung dengan cara yang lebih praktis.</p>
-          <a data-wa href="#" class="btn btn-primary">Pesan promo sekarang</a>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container section-card">
-        <div class="section-head">
-          <span class="kicker">Khasiat</span>
-          <h2>Keluhan yang sering dibantu dengan Madu Vitagerd</h2>
-          <p>Gunakan sebagai pendamping pola makan, pola tidur, dan gaya hidup yang lebih ramah lambung.</p>
-        </div>
-
-        <div class="benefit-grid">
-          <div class="benefit">Asam lambung tinggi</div>
-          <div class="benefit">GERD</div>
-          <div class="benefit">Sakit maag</div>
-          <div class="benefit">Perut mual</div>
-          <div class="benefit">Nyeri ulu hati</div>
-          <div class="benefit">Mulut pahit atau asam</div>
-          <div class="benefit">Perut kembung dan begah</div>
-          <div class="benefit">Dada panas</div>
-          <div class="benefit">Suara serak</div>
-          <div class="benefit">Sakit tenggorokan</div>
-          <div class="benefit">Susah tidur</div>
-          <div class="benefit">Badan lemas dan mudah lelah</div>
-          <div class="benefit">Kepala terasa ringan atau kleyengan</div>
-          <div class="benefit">Batuk malam</div>
-          <div class="benefit">Daya tahan tubuh</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container section-card">
-        <div class="section-head">
-          <span class="kicker">Dipercaya pelanggan</span>
-          <h2>Testimoni pengguna Madu Vitagerd</h2>
-          <p>Tambahkan screenshot testimoni asli Anda di bagian ini agar landing page makin meyakinkan.</p>
-        </div>
-
-        <div class="proof-grid">
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Perut saya lebih nyaman setelah rutin konsumsi dan mulai atur makan. Rasanya aktivitas jadi tidak terganggu seperti sebelumnya.”</p>
-            <b>Bu Rini, 43 tahun</b>
-          </div>
-
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Sering begah dan sendawa, sekarang lebih enak. Pelayanan cepat, bisa tanya cara konsumsi juga lewat WhatsApp.”</p>
-            <b>Pak Hendra, 51 tahun</b>
-          </div>
-
-          <div class="proof-card">
-            <div class="stars">★★★★★</div>
-            <p>“Awalnya coba satu botol. Cocok di saya, apalagi dibarengi jaga pola makan malam.”</p>
-            <b>Maya, 36 tahun</b>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="promo">
-      <div class="container">
-        <div class="promo-card">
-          <div>
-            <span class="kicker">Promo terbatas</span>
-            <h2>Harga promo Madu Vitagerd khusus hari ini</h2>
-            <p>Buktikan manfaat alaminya. Coba 1 botol Madu Vitagerd dan rasakan perbedaannya.</p>
-
-            <ul class="promo-list">
-              <li>Diskon hingga 35%</li>
-              <li>Cocok untuk dewasa dan lansia</li>
-              <li>Potongan ongkir ke seluruh Indonesia</li>
-              <li>Konsultasi cara konsumsi via WhatsApp</li>
-            </ul>
-          </div>
-
-          <div class="price-box">
-            <small>Paket mulai dari</small>
-            <strong>Rp xxx.xxx</strong>
-            <span>Ganti dengan harga asli Anda</span>
-            <div style="height:18px"></div>
-            <a data-wa href="#" class="btn btn-yellow">Ambil promo sekarang</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding-bottom: 110px;">
-      <div class="container section-card">
-        <div class="section-head">
-          <span class="kicker">Informasi penting</span>
-          <h2>Pastikan nomor WhatsApp Anda benar</h2>
-          <p>Kami akan menghubungi Anda melalui WhatsApp untuk proses konfirmasi, konsultasi singkat, dan pengiriman.</p>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <h3>Klik tombol pesan</h3>
-            <p>Anda akan diarahkan langsung ke WhatsApp admin resmi.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-num">2</div>
-            <h3>Kirim format otomatis</h3>
-            <p>Admin akan membantu konfirmasi promo dan cara konsumsi.</p>
-          </div>
-
-          <div class="step">
-            <div class="step-num">3</div>
-            <h3>Pesanan diproses</h3>
-            <p>Pastikan alamat dan nomor aktif agar pengiriman tidak terkendala.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
+  <!-- FAQ / Pertanyaan Umum -->
+<section class="faq-slim-section">
+  <div class="faq-slim-wrap">
 
-  <div class="floating-cta">
-    <a data-wa href="#" class="btn btn-primary">Konsultasi & Ambil Promo via WhatsApp</a>
+    <div class="faq-slim-head">
+      <span class="faq-kicker">Pertanyaan Umum</span>
+      <h2>Hal yang sering ditanyakan banyak orang</h2>
+      <p>
+        Sebelum membeli, biasanya orang ingin tahu apa penyebabnya, gejalanya,
+        bahayanya, dan cara mengelolanya.
+      </p>
+    </div>
+
+    <div class="faq-slim-list">
+
+      <div class="faq-slim-item">
+        <div class="faq-icon">❓</div>
+        <div class="faq-text">
+          Asam lambung kronis disebabkan karena apa?
+        </div>
+      </div>
+
+      <div class="faq-slim-item">
+        <div class="faq-icon">🩺</div>
+        <div class="faq-text">
+          Apa saja yang dirasakan penderita asam lambung?
+        </div>
+      </div>
+
+      <div class="faq-slim-item">
+        <div class="faq-icon">⚠️</div>
+        <div class="faq-text">
+          Apakah asam lambung kronis berbahaya?
+        </div>
+      </div>
+
+      <div class="faq-slim-item">
+        <div class="faq-icon">🌱</div>
+        <div class="faq-text">
+          Apakah keluhan asam lambung bisa membaik?
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
 
-  <script>
-    const WA_NUMBER = "6281234567890";
-    const WA_TEXT = "Halo kak, saya mau konsultasi dan ambil promo Madu Vitagerd.";
+<style>
+  .faq-slim-section {
+    width: 100%;
+    padding: 54px 14px;
+    background: transparent;
+  }
 
-    document.querySelectorAll("[data-wa]").forEach((button) => {
-      const text = encodeURIComponent(WA_TEXT);
-      button.href = `https://wa.me/${WA_NUMBER}?text=${text}`;
-    });
-  </script>
+  .faq-slim-wrap {
+    width: min(100%, 1060px);
+    margin: 0 auto;
+  }
+
+  .faq-slim-head {
+    max-width: 760px;
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+
+  .faq-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(0, 121, 50, 0.16);
+    color: #075c22;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .faq-slim-head h2 {
+    margin: 14px 0 10px;
+    color: #075c22;
+    font-size: clamp(28px, 3.6vw, 48px);
+    line-height: 1.08;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+
+  .faq-slim-head p {
+    margin: 0;
+    color: rgba(17, 17, 17, 0.68);
+    font-size: clamp(15px, 1.5vw, 17px);
+    line-height: 1.65;
+    font-weight: 500;
+  }
+
+  .faq-slim-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .faq-slim-item {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 121, 50, 0.10);
+    box-shadow: 0 12px 28px rgba(0, 72, 25, 0.10);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .faq-slim-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(0, 72, 25, 0.15);
+  }
+
+  .faq-icon {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #eaffea;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .faq-text {
+    color: #111111;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 900;
+    text-align: left;
+  }
+
+  @media (max-width: 900px) {
+    .faq-slim-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .faq-slim-section {
+      padding: 38px 10px;
+    }
+
+    .faq-slim-head {
+      margin-bottom: 20px;
+    }
+
+    .faq-slim-head h2 {
+      font-size: clamp(25px, 7vw, 34px);
+    }
+
+    .faq-slim-list {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .faq-slim-item {
+      min-height: auto;
+      padding: 13px 14px;
+      border-radius: 15px;
+    }
+
+    .faq-icon {
+      flex-basis: 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      font-size: 18px;
+    }
+
+    .faq-text {
+      font-size: 14px;
+    }
+  }
+</style>
 </body>
 </html>
