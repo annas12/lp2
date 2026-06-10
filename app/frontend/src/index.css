@@ -1,0 +1,136 @@
+
+Action: file_editor create /app/frontend/src/index.css --file-text "@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color-primary: #2e7d32;
+    --color-primary-hover: #1b5e20;
+    --color-secondary: #1b5e20;
+    --color-accent: #fbc02d;
+    --color-accent-hover: #f9a825;
+    --color-bg: #ffffff;
+    --color-bg-alt: #f4f9f4;
+    --color-text: #1c281f;
+    --color-text-muted: #4a5d4e;
+    --color-border: #ebf3ea;
+    --color-whatsapp: #25d366;
+    --color-whatsapp-hover: #1da851;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: \"Work Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\",
+        Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-text);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+    font-family: \"Lora\", Georgia, serif;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 124 14% 13%;
+        --card: 0 0% 100%;
+        --card-foreground: 124 14% 13%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 124 14% 13%;
+        --primary: 123 46% 34%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 124 33% 96%;
+        --secondary-foreground: 124 14% 13%;
+        --muted: 124 33% 96%;
+        --muted-foreground: 124 11% 33%;
+        --accent: 49 96% 56%;
+        --accent-foreground: 124 14% 13%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 120 25% 93%;
+        --input: 120 25% 93%;
+        --ring: 123 46% 34%;
+        --radius: 0.75rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer components {
+    .container-page {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .section-padding {
+        @apply py-16 md:py-24;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 min-h-[56px] px-8 rounded-full font-semibold text-[18px] shadow-md hover:shadow-xl transition-all active:scale-[0.98] text-white;
+        background: var(--color-primary);
+    }
+    .btn-primary:hover {
+        background: var(--color-primary-hover);
+    }
+
+    .btn-whatsapp {
+        @apply inline-flex items-center justify-center gap-2 min-h-[56px] px-8 rounded-full font-bold text-[18px] shadow-md hover:shadow-xl transition-all active:scale-[0.98] text-white;
+        background: var(--color-whatsapp);
+    }
+    .btn-whatsapp:hover {
+        background: var(--color-whatsapp-hover);
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 min-h-[56px] px-8 rounded-full font-semibold text-[18px] border-2 transition-all active:scale-[0.98];
+        background: #ffffff;
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+    .btn-secondary:hover {
+        background: var(--color-bg-alt);
+    }
+
+    .card-soft {
+        @apply rounded-2xl bg-white border shadow-sm hover:shadow-md transition-shadow p-6;
+        border-color: var(--color-border);
+    }
+
+    .badge-trust {
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-[14px] md:text-[15px] font-semibold;
+        background: var(--color-bg-alt);
+        color: var(--color-primary-hover);
+        border: 1px solid var(--color-border);
+    }
+}
+
+/* Hide visual edits debug wrappers (Emergent platform) */
+[data-debug-wrapper=\"true\"] {
+    display: contents !important;
+}
+"
+Observation: Overwrite successful: /app/frontend/src/index.css
