@@ -147,3 +147,9 @@ export const AUTHENTICITY_TIPS = [
 ];
 "
 Observation: Create successful: /app/frontend/src/data/siteContent.js
+
+The hero product image is not loading. Let me fix the image URL with a more reliable Unsplash image.
+Action: file_editor str_replace /app/frontend/src/data/siteContent.js --old-str "export const PRODUCT_IMAGE =
+    \"https://images.unsplash.com/photo-1587049352847-81a56d773c1c?q=80&w=1000&auto=format&fit=crop\";" --new-str "export const PRODUCT_IMAGE =
+    \"https://images.unsplash.com/photo-1587049352851-8d4e89133924?q=80&w=1000&auto=format&fit=crop\";"
+Observation: Edit was successful.
