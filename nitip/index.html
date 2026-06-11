@@ -250,30 +250,97 @@
       line-height: 1.55;
     }
 
-    .product-benefits {
-      margin: 18px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 9px;
+    /* MANFAAT NUTRIFLAKES - VERSI RAPI */
+    .benefits-section {
+      width: 100%;
+      background: #ffffff;
+      padding: 0 0 54px;
     }
 
-    .product-benefits li {
-      font-size: 18px;
-      line-height: 1.35;
-      font-weight: 800;
-      color: #000000;
+    .benefits-content {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 26px 20px 0;
     }
 
-    .source-note {
+    .benefits-intro {
       max-width: 900px;
-      margin: 24px auto 0;
-      padding: 14px 18px;
-      background: #f7f7f7;
-      border-left: 5px solid #2ecc71;
-      color: #555555;
-      font-size: 14px;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+
+    .benefits-intro h3 {
+      margin: 0;
+      color: #000000;
+      font-size: 26px;
+      line-height: 1.32;
+      font-weight: 900;
+    }
+
+    .benefits-intro h3 span {
+      color: #e32612;
+    }
+
+    .benefits-subtitle {
+      margin: 24px 0 14px;
+      padding: 12px 16px;
+      background: #fff7c7;
+      border-radius: 12px;
+      color: #000000;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px 42px;
+    }
+
+    .benefit-line {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 2px 0;
+      text-align: left;
+    }
+
+    .benefit-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 10px;
+      background: #ecffe9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .benefit-line p {
+      margin: 0;
+      color: #000000;
+      font-size: 20px;
+      line-height: 1.16;
+      font-weight: 900;
+    }
+
+    .benefits-note {
+      max-width: 900px;
+      margin: 28px auto 0;
+      padding: 17px 22px;
+      background: rgba(232, 247, 237, 0.9);
+      border: 1px solid rgba(36, 122, 77, 0.18);
+      border-left: 6px solid #2ecc71;
+      border-radius: 14px;
+      color: #000000;
+      font-size: 16px;
       line-height: 1.5;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
@@ -314,7 +381,8 @@
 
       .faq-grid,
       .info-list,
-      .product-box {
+      .product-box,
+      .benefits-list {
         grid-template-columns: 1fr;
       }
 
@@ -361,9 +429,28 @@
         font-size: 26px;
       }
 
-      .product-text p,
-      .product-benefits li {
+      .product-text p {
         font-size: 16px;
+      }
+
+      .benefits-content {
+        padding: 24px 18px 0;
+      }
+
+      .benefits-intro h3 {
+        font-size: 22px;
+      }
+
+      .benefits-subtitle {
+        font-size: 20px;
+      }
+
+      .benefits-list {
+        gap: 8px;
+      }
+
+      .benefit-line p {
+        font-size: 18px;
       }
     }
 
@@ -490,14 +577,62 @@
         font-size: 22px;
       }
 
-      .product-text p,
-      .product-benefits li {
+      .product-text p {
         font-size: 14px;
       }
 
-      .source-note {
-        font-size: 12px;
-        padding: 12px 14px;
+      .benefits-section {
+        padding-bottom: 42px;
+      }
+
+      .benefits-content {
+        padding: 20px 14px 0;
+      }
+
+      .benefits-intro {
+        margin-bottom: 20px;
+      }
+
+      .benefits-intro h3 {
+        font-size: 18px;
+        line-height: 1.3;
+      }
+
+      .benefits-subtitle {
+        margin: 20px 0 12px;
+        padding: 10px 12px;
+        font-size: 17px;
+        border-radius: 10px;
+      }
+
+      .benefits-list {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .benefit-line {
+        gap: 9px;
+        padding: 2px 0;
+      }
+
+      .benefit-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 18px;
+        border-radius: 9px;
+      }
+
+      .benefit-line p {
+        font-size: 15px;
+        line-height: 1.16;
+      }
+
+      .benefits-note {
+        margin-top: 22px;
+        padding: 14px;
+        font-size: 13px;
+        line-height: 1.45;
       }
     }
   </style>
@@ -564,9 +699,7 @@
           <div class="info-icon">🍽️</div>
           <div class="info-text">
             <h3>Makan terlalu banyak</h3>
-            <p>
-              Perut terlalu penuh membuat tekanan di lambung naik, jadi asam lebih mudah “muncrat balik” ke atas.
-            </p>
+            <p>Perut terlalu penuh membuat tekanan di lambung naik, jadi asam lebih mudah “muncrat balik” ke atas.</p>
           </div>
         </div>
 
@@ -574,9 +707,7 @@
           <div class="info-icon">🛏️</div>
           <div class="info-text">
             <h3>Langsung tiduran setelah makan</h3>
-            <p>
-              Ini salah satu pemicu paling sering. Usahakan beri jeda sebelum tidur dan jangan langsung berbaring setelah makan.
-            </p>
+            <p>Ini salah satu pemicu paling sering. Usahakan beri jeda sebelum tidur dan jangan langsung berbaring setelah makan.</p>
           </div>
         </div>
 
@@ -584,9 +715,7 @@
           <div class="info-icon">🌶️</div>
           <div class="info-text">
             <h3>Makanan pemicu</h3>
-            <p>
-              Contohnya gorengan, makanan berlemak, pedas, cokelat, makanan asam, kopi, teh, soda, jus jeruk, dan tomat.
-            </p>
+            <p>Contohnya gorengan, makanan berlemak, pedas, cokelat, makanan asam, kopi, teh, soda, jus jeruk, dan tomat.</p>
           </div>
         </div>
 
@@ -594,9 +723,7 @@
           <div class="info-icon">⚖️</div>
           <div class="info-text">
             <h3>Berat badan berlebih</h3>
-            <p>
-              Perut yang lebih besar bisa menekan lambung, sehingga asam lebih mudah naik. Obesitas juga termasuk faktor risiko GERD.
-            </p>
+            <p>Perut yang lebih besar bisa menekan lambung, sehingga asam lebih mudah naik. Obesitas juga termasuk faktor risiko GERD.</p>
           </div>
         </div>
 
@@ -604,9 +731,7 @@
           <div class="info-icon">🚬</div>
           <div class="info-text">
             <h3>Merokok</h3>
-            <p>
-              Rokok bisa mengganggu fungsi katup bawah kerongkongan, jadi asam lebih mudah naik ke atas.
-            </p>
+            <p>Rokok bisa mengganggu fungsi katup bawah kerongkongan, jadi asam lebih mudah naik ke atas.</p>
           </div>
         </div>
 
@@ -614,9 +739,7 @@
           <div class="info-icon">😣</div>
           <div class="info-text">
             <h3>Stres dan pola tidur buruk</h3>
-            <p>
-              Stres bukan selalu penyebab langsung, tapi bisa memperparah gejala karena pola makan jadi kacau, tidur terganggu, dan tubuh lebih sensitif.
-            </p>
+            <p>Stres bukan selalu penyebab langsung, tapi bisa memperparah gejala karena pola makan jadi kacau, tidur terganggu, dan tubuh lebih sensitif.</p>
           </div>
         </div>
 
@@ -624,14 +747,10 @@
           <div class="info-icon">🩻</div>
           <div class="info-text">
             <h3>Hernia hiatus atau kondisi medis tertentu</h3>
-            <p>
-              Pada sebagian orang, ada masalah struktur atau fungsi lambung sehingga asam lebih gampang naik.
-            </p>
+            <p>Pada sebagian orang, ada masalah struktur atau fungsi lambung sehingga asam lebih gampang naik.</p>
           </div>
         </div>
       </div>
-
-      
     </div>
   </section>
 
@@ -646,9 +765,7 @@
           <div class="info-icon">🔥</div>
           <div class="info-text">
             <h3>Dada terasa panas</h3>
-            <p>
-              Sensasi panas seperti terbakar di dada sering disebut heartburn dan bisa muncul setelah makan atau saat berbaring.
-            </p>
+            <p>Sensasi panas seperti terbakar di dada sering disebut heartburn dan bisa muncul setelah makan atau saat berbaring.</p>
           </div>
         </div>
 
@@ -656,9 +773,7 @@
           <div class="info-icon">👄</div>
           <div class="info-text">
             <h3>Mulut terasa pahit atau asam</h3>
-            <p>
-              Asam yang naik ke kerongkongan bisa membuat mulut terasa pahit, asam, atau tidak nyaman.
-            </p>
+            <p>Asam yang naik ke kerongkongan bisa membuat mulut terasa pahit, asam, atau tidak nyaman.</p>
           </div>
         </div>
 
@@ -666,9 +781,7 @@
           <div class="info-icon">🤢</div>
           <div class="info-text">
             <h3>Mual dan perut begah</h3>
-            <p>
-              Perut bisa terasa penuh, kembung, mual, cepat kenyang, atau tidak nyaman di sekitar ulu hati.
-            </p>
+            <p>Perut bisa terasa penuh, kembung, mual, cepat kenyang, atau tidak nyaman di sekitar ulu hati.</p>
           </div>
         </div>
 
@@ -676,9 +789,7 @@
           <div class="info-icon">💨</div>
           <div class="info-text">
             <h3>Sering sendawa</h3>
-            <p>
-              Sendawa berulang bisa muncul saat lambung terasa penuh atau saat gas di pencernaan meningkat.
-            </p>
+            <p>Sendawa berulang bisa muncul saat lambung terasa penuh atau saat gas di pencernaan meningkat.</p>
           </div>
         </div>
 
@@ -686,9 +797,7 @@
           <div class="info-icon">🌙</div>
           <div class="info-text">
             <h3>Batuk malam atau tenggorokan tidak nyaman</h3>
-            <p>
-              Pada sebagian orang, asam yang naik bisa mengganggu tenggorokan, terutama saat malam atau setelah rebahan.
-            </p>
+            <p>Pada sebagian orang, asam yang naik bisa mengganggu tenggorokan, terutama saat malam atau setelah rebahan.</p>
           </div>
         </div>
 
@@ -696,14 +805,10 @@
           <div class="info-icon">😮‍💨</div>
           <div class="info-text">
             <h3>Napas terasa tidak lega</h3>
-            <p>
-              Rasa panas, penuh, atau tidak nyaman di dada kadang membuat napas terasa kurang lega, walau penyebab pastinya perlu diperiksa.
-            </p>
+            <p>Rasa panas, penuh, atau tidak nyaman di dada kadang membuat napas terasa kurang lega, walau penyebab pastinya perlu diperiksa.</p>
           </div>
         </div>
       </div>
-
-
     </div>
   </section>
 
@@ -718,9 +823,7 @@
           <div class="info-icon">⚠️</div>
           <div class="info-text">
             <h3>Aktivitas harian terganggu</h3>
-            <p>
-              Begah, mual, dada panas, dan rasa tidak nyaman bisa membuat kerja, ibadah, tidur, dan makan jadi terganggu.
-            </p>
+            <p>Begah, mual, dada panas, dan rasa tidak nyaman bisa membuat kerja, ibadah, tidur, dan makan jadi terganggu.</p>
           </div>
         </div>
 
@@ -728,9 +831,7 @@
           <div class="info-icon">😴</div>
           <div class="info-text">
             <h3>Tidur jadi tidak nyenyak</h3>
-            <p>
-              Gejala sering terasa lebih mengganggu saat malam karena posisi tubuh berbaring membuat asam lebih mudah naik.
-            </p>
+            <p>Gejala sering terasa lebih mengganggu saat malam karena posisi tubuh berbaring membuat asam lebih mudah naik.</p>
           </div>
         </div>
 
@@ -738,9 +839,7 @@
           <div class="info-icon">🧱</div>
           <div class="info-text">
             <h3>Kerongkongan bisa iritasi</h3>
-            <p>
-              Bila asam sering naik, dinding kerongkongan bisa ikut teriritasi dan menimbulkan rasa panas atau nyeri.
-            </p>
+            <p>Bila asam sering naik, dinding kerongkongan bisa ikut teriritasi dan menimbulkan rasa panas atau nyeri.</p>
           </div>
         </div>
 
@@ -748,9 +847,7 @@
           <div class="info-icon">🍽️</div>
           <div class="info-text">
             <h3>Nafsu makan bisa menurun</h3>
-            <p>
-              Banyak orang jadi takut makan karena khawatir kambuh, akhirnya pola makan makin tidak teratur.
-            </p>
+            <p>Banyak orang jadi takut makan karena khawatir kambuh, akhirnya pola makan makin tidak teratur.</p>
           </div>
         </div>
 
@@ -758,9 +855,7 @@
           <div class="info-icon">🗣️</div>
           <div class="info-text">
             <h3>Tenggorokan dan suara bisa terganggu</h3>
-            <p>
-              Asam yang naik dapat membuat tenggorokan terasa mengganjal, suara serak, atau batuk yang muncul berulang.
-            </p>
+            <p>Asam yang naik dapat membuat tenggorokan terasa mengganjal, suara serak, atau batuk yang muncul berulang.</p>
           </div>
         </div>
 
@@ -768,15 +863,14 @@
           <div class="info-icon">🚑</div>
           <div class="info-text">
             <h3>Keluhan berat perlu diperiksa</h3>
-            <p>
-              Segera periksa jika nyeri dada berat, sulit menelan, muntah darah, BAB hitam, berat badan turun drastis, atau keluhan makin sering.
-            </p>
+            <p>Segera periksa jika nyeri dada berat, sulit menelan, muntah darah, BAB hitam, berat badan turun drastis, atau keluhan makin sering.</p>
           </div>
         </div>
       </div>
 
       <div class="highlight-box">
         Asam Lambung Naik Bisa Jadi Penyakit Kronis Jika Tidak Diatasi!
+      </div>
     </div>
   </section>
 
@@ -791,42 +885,34 @@
           <div class="info-icon">🥣</div>
           <div class="info-text">
             <h3>Jaga Pola Makan</h3>
-            <p>
-              Hindari makan terlalu penuh. Lebih baik makan secukupnya, perlahan, dan jangan menunggu sampai perut terlalu kosong.
-            </p>
+            <p>Hindari makan terlalu penuh. Lebih baik makan secukupnya, perlahan, dan jangan menunggu sampai perut terlalu kosong.</p>
           </div>
         </div>
 
-      
         <div class="info-item">
           <div class="info-icon">🚶</div>
           <div class="info-text">
             <h3>Kurangi Stres dan Sering Olahraga</h3>
-            <p>
-              Pikiran yang bahagian dan badan yang lebih sehat dapat membantu mengurangi tekanan pada area perut dan lambung.
-            </p>
+            <p>Pikiran yang bahagia dan badan yang lebih sehat dapat membantu mengurangi tekanan pada area perut dan lambung.</p>
           </div>
         </div>
 
         <div class="info-item">
           <div class="info-icon">🌿</div>
           <div class="info-text">
-            <h3>Pilih asupan yang bersifat Gastroprotektif</h3>
-            <p>
-              Saat lambung sensitif, pilih makanan atau minuman yang lebih ringan, dan bersifat gastroprotektif bagi lambung.
-            </p>
+            <h3>Pilih Asupan yang Bersifat Gastroprotektif</h3>
+            <p>Saat lambung sensitif, pilih makanan atau minuman yang lebih ringan dan bersifat gastroprotektif bagi lambung.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  
   <section class="product-section">
-<section class="section-block">
     <div class="title-bar">
       <h2>Kenalkan NUTRIFLAKES</h2>
     </div>
+
     <div class="product-box">
       <div class="product-image">
         <img src="nutriflakes.png" alt="Nutriflakes Original">
@@ -834,7 +920,7 @@
 
       <div class="product-text">
         <h3>
-          Sereal Umbi Garut (Gastroprotektif) Yang ampuh atasi asam lambung naik, bahkan kalo sudah kronis
+          Sereal Umbi Garut Gastroprotektif untuk Membantu Mengatasi Asam Lambung Naik
         </h3>
 
         <p>
@@ -842,52 +928,141 @@
         </p>
 
         <p>
-          Cocok untuk Anda yang ingin menyembuhkan asam lambung naik dan  mulai menjaga pola makan dengan pilihan yang lebih lembut dan mudah diseduh.
+          Cocok untuk Anda yang ingin mulai menjaga pola makan dengan pilihan yang lebih lembut dan mudah diseduh.
         </p>
-
-        
       </div>
     </div>
-
-   
   </section>
-<section class="benefits-section">
-  <div class="title-bar">
-    <h2>Manfaat Nutriflakes</h2>
-  </div>
 
-  <div class="benefits-content">
-    <div class="benefits-intro">
-      <h3>
-        Nutriflakes diformulasikan untuk membantu menyembuhkan asam lambung naik dan mengurangi berbagai keluhan yang sering dirasakan saat lambung sedang tidak nyaman.
-      </h3>
+  <section class="benefits-section">
+    <div class="title-bar">
+      <h2>Manfaat Nutriflakes</h2>
     </div>
 
-    <div class="benefits-grid">
-      <div class="benefit-item">🔥 Membantu mengurangi Asam Lambung Tinggi</div>
-      <div class="benefit-item">🌿 Membantu mengurangi gejala GERD</div>
-      <div class="benefit-item">🥣 Membantu mengurangi Sakit Maag</div>
-      <div class="benefit-item">🤢 Membantu mengurangi Perut Mual</div>
-      <div class="benefit-item">⚡ Membantu mengurangi Nyeri Ulu Hati</div>
-      <div class="benefit-item">👄 Membantu mengurangi Mulut Pahit atau Asam</div>
-      <div class="benefit-item">🫧 Membantu mengurangi Perut Kembung atau Begah</div>
-      <div class="benefit-item">🔥 Membantu mengurangi Dada Panas</div>
-      <div class="benefit-item">😮‍💨 Membantu mengurangi rasa tidak nyaman di Dada</div>
-      <div class="benefit-item">🗣️ Membantu mengurangi Tenggorokan Tidak Nyaman</div>
-      <div class="benefit-item">🎙️ Membantu mengurangi Suara Serak akibat lambung naik</div>
-      <div class="benefit-item">😵‍💫 Membantu mengurangi Kepala Kliyengan</div>
-      <div class="benefit-item">💆 Membantu mengurangi Sakit Kepala</div>
-      <div class="benefit-item">😴 Membantu tidur lebih nyaman saat lambung tenang</div>
-      <div class="benefit-item">😣 Membantu tubuh terasa lebih nyaman saat stres</div>
-      <div class="benefit-item">💪 Membantu tubuh tidak mudah lemas dan lelah</div>
-      <div class="benefit-item">🌱 Membantu menjaga kenyamanan pencernaan</div>
-      <div class="benefit-item">🛡️ Membantu menjaga daya tahan tubuh</div>
-    </div>
+    <div class="benefits-content">
+      <div class="benefits-intro">
+        <h3>
+          Nutriflakes diformulasikan untuk membantu merawat lambung dan mengurangi berbagai keluhan yang sering dirasakan saat <span>Asam Lambung Naik</span>.
+        </h3>
+      </div>
 
-    <div class="benefits-note">
-      Nutriflakes bukan obat dan tidak menggantikan pengobatan dokter. Hasil setiap orang bisa berbeda, tergantung kondisi tubuh, pola makan, dan kebiasaan harian.
+      <div class="benefits-subtitle">Keluhan Lambung & Pencernaan</div>
+
+      <div class="benefits-list">
+        <div class="benefit-line">
+          <div class="benefit-icon">🔥</div>
+          <p>Membantu mengurangi asam lambung tinggi</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🌿</div>
+          <p>Membantu mengurangi gejala GERD</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🥣</div>
+          <p>Membantu mengurangi sakit maag</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🤢</div>
+          <p>Membantu mengurangi perut mual</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">⚡</div>
+          <p>Membantu mengurangi nyeri ulu hati</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🫧</div>
+          <p>Membantu mengurangi perut kembung dan begah</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🌱</div>
+          <p>Membantu menjaga kenyamanan pencernaan</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🧬</div>
+          <p>Membantu mendukung kesehatan lambung dan usus</p>
+        </div>
+      </div>
+
+      <div class="benefits-subtitle">Keluhan Dada, Mulut & Tenggorokan</div>
+
+      <div class="benefits-list">
+        <div class="benefit-line">
+          <div class="benefit-icon">🔥</div>
+          <p>Membantu mengurangi dada panas</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">😮‍💨</div>
+          <p>Membantu mengurangi rasa tidak nyaman di dada</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">👄</div>
+          <p>Membantu mengurangi mulut pahit atau asam</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🗣️</div>
+          <p>Membantu mengurangi tenggorokan tidak nyaman</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🎙️</div>
+          <p>Membantu mengurangi suara serak akibat lambung naik</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🌙</div>
+          <p>Membantu tubuh lebih nyaman saat gejala muncul malam hari</p>
+        </div>
+      </div>
+
+      <div class="benefits-subtitle">Kenyamanan Tubuh Harian</div>
+
+      <div class="benefits-list">
+        <div class="benefit-line">
+          <div class="benefit-icon">😵‍💫</div>
+          <p>Membantu mengurangi kepala kliyengan</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">💆</div>
+          <p>Membantu tubuh terasa lebih nyaman saat kepala tegang</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">😴</div>
+          <p>Membantu tidur lebih nyaman saat lambung tenang</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">😣</div>
+          <p>Membantu tubuh terasa lebih nyaman saat stres</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">💪</div>
+          <p>Membantu tubuh tidak mudah lemas dan lelah</p>
+        </div>
+
+        <div class="benefit-line">
+          <div class="benefit-icon">🛡️</div>
+          <p>Membantu menjaga daya tahan tubuh</p>
+        </div>
+      </div>
+
+      <div class="benefits-note">
+        <strong>Catatan:</strong> Nutriflakes bukan obat dan tidak menggantikan pengobatan dokter. Hasil setiap orang bisa berbeda, tergantung kondisi tubuh, pola makan, dan kebiasaan harian.
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
 </body>
 </html>
