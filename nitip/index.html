@@ -114,30 +114,22 @@
       text-align: center;
     }
 
-    .faq-content p {
-      margin: 0 auto 24px;
-      max-width: 780px;
-      color: #333333;
-      font-size: 17px;
-      line-height: 1.6;
-    }
-
     .faq-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 18px 36px;
     }
 
     .faq-card {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: #f7fff7;
-      border: 1px solid #ccefd3;
-      border-radius: 14px;
-      padding: 18px 22px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 8px 0;
       text-align: left;
-      min-height: 92px;
+      min-height: auto;
     }
 
     .faq-icon {
@@ -160,10 +152,6 @@
       font-size: 20px;
       line-height: 1.3;
       font-weight: 900;
-    }
-
-    .faq-card h3 span {
-      color: #e32612;
     }
 
     @media (max-width: 768px) {
@@ -204,6 +192,7 @@
 
       .faq-grid {
         grid-template-columns: 1fr;
+        gap: 14px;
       }
 
       .faq-card h3 {
@@ -254,19 +243,18 @@
       }
 
       .faq-content {
-        padding: 22px 12px 0;
+        padding: 22px 18px 0;
       }
 
-      .faq-content p {
-        font-size: 14px;
-        line-height: 1.6;
-        margin-bottom: 18px;
+      .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
 
       .faq-card {
         gap: 12px;
-        padding: 15px 14px;
-        min-height: 78px;
+        padding: 8px 0;
+        min-height: auto;
       }
 
       .faq-icon {
@@ -274,6 +262,7 @@
         height: 42px;
         min-width: 42px;
         font-size: 21px;
+        border-radius: 12px;
       }
 
       .faq-card h3 {
@@ -310,7 +299,6 @@
     </div>
 
     <div class="faq-content">
-
       <div class="faq-grid">
         <div class="faq-card">
           <div class="faq-icon">❓</div>
